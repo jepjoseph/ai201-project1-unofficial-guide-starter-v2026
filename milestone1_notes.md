@@ -92,24 +92,71 @@ Based on these examples, one complete document may already be a reasonable chunk
 
 ## Starter Index Results
 
-- **Documents loaded:** Not run yet.
-- **Chunks created:** Not run yet.
-- **Average chunk length:** Not run yet.
-- **Shortest chunk:** Not run yet.
-- **Longest chunk:** Not run yet.
-- **Indexing time:** Not run yet.
+- **Documents loaded:** 88
+- **Total document characters:** 27,908
+- **Average document length:** Approximately 317 characters
+- **Chunks created:** 88
+- **Average chunk length:** 317 characters
+- **Shortest chunk:** 178 characters
+- **Longest chunk:** 549 characters
+- **Chunking function:** `chunker.py::fallback_split`
+- **Indexing time:** 18.6 seconds
+
+### Initial Index Observation
+
+The starter created 88 chunks from 88 documents, so each document
+produced one chunk. The starter uses an 800-character limit, but the
+longest cleaned document contained only 549 characters. Therefore, none
+of the `campus_life` documents needed to be divided by the starter
+chunker.
+
+This result establishes the baseline. It does not yet prove that keeping
+every document as one chunk is the best final strategy. I will evaluate
+that decision during Milestone 3.
 
 ## Baseline Question
 
 - **Question:** Is the housing lottery random?
-- **Best distance:** Not run yet.
-- **Current cutoff:** Not run yet.
-- **Answer:** Not run yet.
-- **Sources:** Not run yet.
+- **Best distance:** 0.254
+- **Current cutoff:** 0.6
+- **Gate result:** Passed because 0.254 is below the 0.6 cutoff.
+- **Model calls:** 1
+- **Token usage:** 677 total tokens — 617 input and 60 output
+
+### Answer
+
+> The housing lottery is not entirely random in the way most people
+> assume. While rising sophomores get a number drawn at random, juniors
+> andseniors are ordered by accumulated credit hours first, with random
+> tie-breaks used only after that.
+>
+> Source: `admin_housing_lottery.txt`
+
+### Sources Retrieved
+
+1. `admin_housing_lottery.txt`
+2. `admin_parking_permits.txt`
+3. `advising_registration.txt`
+4. `housing_morrow_house.txt`
+5. `housing_tamsin_court.txt`
+
+### Baseline Result
+
+The retrieval system returned a relevant answer and named
+`admin_housing_lottery.txt` as its source. The answer is supported by
+the retrieved document. It contains a minor spacing error in “andseniors,”
+but that does not change the meaning of the answer.
 
 ## Required Advice Threads Count
+Command used:
 
-- **Number immediately before “chunks total”:** Not run yet.
+```powershell
+
+- **Command:** `python app.py --corpus advice_threads chunks -n 1`
+- **Number immediately before “chunks total”:** 26
+- **Function shown:** `chunker.py::fallback_split`
+- **Displayed sample source:** `thread_bike_commute.txt#0`
+- **Note:** My selected project corpus remains `campus_life`.
 
 ### Preliminary corpus finding
 
@@ -122,9 +169,15 @@ starter chunking results before choosing my final strategy.
 
 This file is your working notebook; these observations do not belong in the Sample Chunks section of README.md yet.
 
-Your Milestone 1 checklist now has four completed items:
+## Milestone 1 Completion Checklist
 
-✅ python test.py passes.
-✅ You selected campus_life.
-✅ Your name and corpus are recorded in README.md.
-✅ You read at least four corpus documents.
+- [x] `python test.py` passes.
+- [x] Selected `campus_life`.
+- [x] Recorded my name and corpus in `README.md`.
+- [x] Read at least four `campus_life` documents.
+- [x] Ran `python app.py --corpus campus_life index`.
+- [x] Recorded the document and chunk statistics.
+- [x] Asked, “Is the housing lottery random?”
+- [x] Confirmed that the response names a source document.
+- [x] Recorded the required `advice_threads` chunk count: 26.
+- [ ] Committed and pushed the completed Milestone 1 work.
