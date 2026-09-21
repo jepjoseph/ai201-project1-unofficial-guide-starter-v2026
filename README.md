@@ -117,14 +117,41 @@ Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1a
      visible. Milestone 4. -->
 
 **Question:**
+How much do washing and drying each cost at Old Brewhouse?
 
 **Answer:**
 
+```text
+At Old Brewhouse, both washing and drying cost $1.50 each (housing_old_brewhouse.txt and housing_old_brewhouse_laundry.txt).
+
+Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
 ```
 
+The best retrieved distance was `0.221`, which passed the final relevance
+cutoff of `0.62`. The generated answer was supported by
+`housing_old_brewhouse.txt` and `housing_old_brewhouse_laundry.txt`, and it
+named both source documents.
+
+I also tested the relevance gate with the out-of-corpus question, “What is the
+capital of Mongolia?” Its best distance was `0.825`, so the gate stopped it and
+returned:
+
+```text
+I don't have enough information about that.
 ```
 
-**My relevance cutoff:**
+The refusal used zero model calls.
+
+**My relevance cutoff:** `0.62`
+
+The highest best distance among the five in-corpus questions was `0.4158`.
+The lowest best distance among the five out-of-corpus questions was `0.8246`.
+This created a gap of `0.4088`. I selected `0.62` because it is approximately
+the midpoint of that gap:
+
+```text
+(0.4158 + 0.8246) / 2 = 0.6202
+```
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -135,9 +162,22 @@ Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1a
 
      Milestone 4. -->
 
-| Question | In corpus? | Best distance |
-| -------- | ---------- | ------------- |
-|          |            |               |
+This cutoff allowed all five in-corpus questions to pass and caused all five
+out-of-corpus questions to be refused.
+
+| Question                                                                                 | In corpus? | Best distance |
+| ---------------------------------------------------------------------------------------- | ---------- | ------------- |
+|                                                                                          |            |               |
+| How are juniors and seniors ordered in the housing lottery?                              | Yes        | 0.2250        |
+| How long is the wait at Kestrel Commons between 12:15 and 1:00?                          | Yes        | 0.2129        |
+| Why should students complete the CS 210 labs even though they are only 10% of the grade? | Yes        | 0.4158        |
+| How much do washing and drying each cost at Old Brewhouse?                               | Yes        | 0.2213        |
+| Which campus shuttle stop may be skipped when the driver is behind schedule?             | Yes        | 0.3853        |
+| What is the capital of Mongolia?                                                         | No         | 0.8246        |
+| How do I change the oil in a diesel engine?                                              | No         | 0.9340        |
+| Who won the 1994 World Cup?                                                              | No         | 0.8859        |
+| What is the recommended dosage of ibuprofen for a headache?                              | No         | 0.8442        |
+| How do I write a for loop in Rust?                                                       | No         | 0.8960        |
 
 ## How I Used AI
 

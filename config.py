@@ -47,10 +47,14 @@ TOP_K = 5               # how many chunks to pull back per question
 #
 # LOWER IS BETTER: 0.3 is a close match, 0.9 is unrelated.
 #
-# 0.6 is a reasonable starting point, not a right answer. Milestone 4 has you
+# 0.6 was a reasonable starting point, not a right answer. Milestone 4 has you
 # measure your own two groups of distances and put the cutoff in the gap.
 # Most corpora land somewhere between 0.45 and 0.75.
-THRESHOLD = 0.6
+
+# The highest best distance for the five in-corpus questions was 0.4158.
+# The lowest best distance for the five out-of-corpus questions was 0.8246.
+# A cutoff of 0.62 lies approximately halfway between those groups.
+THRESHOLD = 0.62
 
 
 # ─── Models ──────────────────────────────────────────────────────────────────
