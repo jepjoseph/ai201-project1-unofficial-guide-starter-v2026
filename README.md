@@ -26,63 +26,89 @@ The Unofficial Guide is a retrieval-augmented generation system built over the c
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
-800-character starter limit
-88 documents
-88 chunks
-178–549 characters
-fallback_split
+**Chunk size:** 500 characters  
+**Overlap:** 0 characters
 
-<!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
+The starter used fixed 800-character windows with 120 characters of overlap.
+On the `campus_life` corpus, it produced 88 chunks from 88 documents, with
+chunk lengths ranging from 178 to 549 characters. Because almost every
+document was shorter than the starter limit, the starter kept every document
+as one chunk.
 
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
+When I read the documents and inspected five starter chunks, I found that the
+posts were short and usually focused on one course, residence, dining hall, or
+administrative subject. The sampled chunks contained complete thoughts, so I
+did not want to divide every document into smaller sentence-level pieces.
+However, the longer housing documents contained several paragraph-level
+subtopics, including building information, advantages, problems, laundry, and
+noise.
 
-     Milestone 3. -->
+I replaced the fixed-character starter with a paragraph-aware strategy using a
+500-character target. It keeps 86 of the 88 documents intact and splits only
+the two longer, multi-topic housing documents:
+`housing_innisfree_hall.txt` and `housing_old_brewhouse.txt`. Splits occur only
+between paragraphs, so the function does not cut sentences at arbitrary
+character positions.
+
+I selected zero character overlap because the strategy preserves complete
+paragraphs rather than sliding character windows. When a document produces
+more than one chunk, its title is repeated at the beginning of the later chunk
+so that the subject remains identifiable without duplicating the surrounding
+content. The final strategy produced 90 chunks averaging 310 characters, with
+lengths ranging from 170 to 461 characters.
 
 ## Sample Chunks
 
-<!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
+**Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
 
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
+```text
+On the add/drop deadline
 
-     Milestone 3. -->
-
-**Chunk 1** — source: `— produced by:`
-
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 ```
 
+**Chunk 2** — source: `course_biol_160_exams.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+BIOL 160 Cell Biology — assessment
+
+Four unit tests and a cumulative final. Not curved.
+
+The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
 ```
 
-**Chunk 2** — source: `— produced by:`
+**Chunk 3** — source: `course_math_220_exams.txt#0` — produced by: `chunker.py::split_documents`
 
+```text
+MATH 220 Linear Algebra — assessment
+
+Two midterms and a cumulative final. Curved to a b- median.
+
+The problem sets are the course; the lectures make sense afterwards rather than during.
 ```
 
+**Chunk 4** — source: `dining_the_ridgeway_cafe.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+The Ridgeway Café
+
+Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The thing worth going for is the only place on campus with real espresso. The thing to know is that seating is tight; about 40 seats for a building of 900.
+
+Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
 ```
 
-**Chunk 3** — source: `— produced by:`
+**Chunk 5** — source: `housing_morrow_house.txt#0` — produced by: `chunker.py::split_documents`
 
-```
+```text
+Morrow House — what it's actually like
 
-```
+Just finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hallbathrooms.
 
-**Chunk 4** — source: `— produced by:`
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
 
-```
+The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
 
-```
-
-**Chunk 5** — source: `— produced by:`
-
-```
-
+Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiethours.
 ```
 
 ## Sample Answer
