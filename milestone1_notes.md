@@ -148,6 +148,7 @@ the retrieved document. It contains a minor spacing error in “andseniors,”
 but that does not change the meaning of the answer.
 
 ## Required Advice Threads Count
+
 Command used:
 
 ```powershell
@@ -180,4 +181,5 @@ This file is your working notebook; these observations do not belong in the Samp
 - [x] Asked, “Is the housing lottery random?”
 - [x] Confirmed that the response names a source document.
 - [x] Recorded the required `advice_threads` chunk count: 26.
-- [ ] Committed and pushed the completed Milestone 1 work.
+- [x] Committed and pushed the completed Milestone 1 work.
+```

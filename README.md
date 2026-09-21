@@ -181,13 +181,9 @@ out-of-corpus questions to be refused.
 
 ## How I Used AI
 
-1. Understanding the provided corpora: I asked AI where the documents created by python app.py corpora came from and whether every student received the same text. AI explained that the corpora were supplied with the starter project and were written for the course rather than downloaded from the internet. I compared that explanation with corpora/README.md, which confirmed that the documents were course-created and that no real people were named. This helped me understand that campus_life was a fixed project dataset rather than live university information.
+**1.** Understanding the provided corpora: I asked AI where the documents created by python app.py corpora came from and whether every student received the same text. AI explained that the corpora were supplied with the starter project and were written for the course rather than downloaded from the internet. I compared that explanation with corpora/README.md, which confirmed that the documents were course-created and that no real people were named. This helped me understand that campus_life was a fixed project dataset rather than live university information.
 
-2. Evaluating the starter chunking behavior: I asked AI to help me examine four campus_life documents and distinguish direct observations from chunking interpretations. The initial interpretation was that a complete document might be a reasonable chunk because the documents were short and focused. I did not accept that as a final chunking decision. I ran the starter index and recorded that 88 documents produced 88 chunks, with lengths ranging from 178 to 549 characters. I kept the conclusion preliminary until I could implement and inspect my own chunking strategy in Milestone 3.
-
-**1.**
-
-**2.**
+**2.** Evaluating the starter chunking behavior: I asked AI to help me examine four campus_life documents and distinguish direct observations from chunking interpretations. The initial interpretation was that a complete document might be a reasonable chunk because the documents were short and focused. I did not accept that as a final chunking decision. I ran the starter index and recorded that 88 documents produced 88 chunks, with lengths ranging from 178 to 549 characters. I kept the conclusion preliminary until I could implement and inspect my own chunking strategy in Milestone 3.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
