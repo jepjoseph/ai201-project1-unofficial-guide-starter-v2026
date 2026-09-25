@@ -210,17 +210,45 @@ out-of-corpus questions to be refused.
 
      Milestone 1. -->
 
-| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
-| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
-| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
-| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
-| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
-| 4.                                     |        |       |       |       |         |
-| 5.                                     |        |       |       |       |         |
+| Criterion                                               | Original target | Run 1 | Run 2 | Run 3 | Before verdict |
+| ------------------------------------------------------- | --------------- | ----- | ----- | ----- | -------------- |
+| 1. Retrieved chunks contain the answer                  | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 2. Every answer names a source                          | 5 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 3. Gate refuses out-of-corpus questions                 | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 4. Sampled chunks stand alone and have intact sentences | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 5. Named documents support the answers                  | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+Produced by: run_eval.py::main
+Retrieval: store.py::search
+Chunks produced by: chunker.py::split_documents
+
+Criterion 1 — retrieved chunk for the shuttle question:
+RETRIEVED: transit_shuttle.txt#0
+DISTANCE: 0.3853
+It's free with a student ID. The stop outside Fenwick Court is the one that
+gets skipped when the driver is behind, which is worth knowing if you live there.
+
+Criterion 2 — generated answer, shuttle question, run 1:
+The stop outside Fenwick Court may be skipped when the driver is behind
+schedule (from transit_shuttle.txt).
+
+Criterion 3 — run_eval.py::check_out_of_scope:
+What is the capital of Mongolia? | 0.825 | refused
+
+Criterion 4 — sampled chunk:
+Chunk 2 | source: course_biol_160_exams.txt#0
+Four unit tests and a cumulative final. Not curved.
+The unit tests come fast, roughly every three weeks; falling behind once
+is very hard to recover from.
+
+Criterion 5 — named supporting document:
+SOURCE DOCUMENT: transit_shuttle.txt
+It's free with a student ID. The stop outside Fenwick Court is the one that
+gets skipped when the driver is behind, which is worth knowing if you live there.
 
 ## Verdicts
 
