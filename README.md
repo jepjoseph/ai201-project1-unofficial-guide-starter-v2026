@@ -339,3 +339,12 @@ No original criterion remained missed after the improvement. The test set does n
      Milestone 5. -->
 
 For a future evaluation, I would tighten criterion 1 to require the **first** retrieved chunk to contain the answer for at least four of five questions, rather than allowing the answer anywhere among five results. I would also include a question whose complete answer requires more than one chunk, with its expected facts written before testing. These are lessons for a future test; I did not rewrite my original Unit 1 target after seeing the results.
+
+### Stretch feature declared before implementation
+
+I will test a second chunking strategy as a separate index variant. My
+`TOP_K = 1` result depends entirely on the first chunk containing enough
+context. I will keep the same five questions and acceptance targets, run each
+three times against the new variant, and compare the third run log with my
+`TOP_K = 1` after log. I will report whether the change helped, hurt, or made
+no measurable difference.
