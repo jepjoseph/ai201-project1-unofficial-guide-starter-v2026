@@ -185,6 +185,8 @@ out-of-corpus questions to be refused.
 
 **2.** Evaluating the starter chunking behavior: I asked AI to help me examine four campus_life documents and distinguish direct observations from chunking interpretations. The initial interpretation was that a complete document might be a reasonable chunk because the documents were short and focused. I did not accept that as a final chunking decision. I ran the starter index and recorded that 88 documents produced 88 chunks, with lengths ranging from 178 to 549 characters. I kept the conclusion preliminary until I could implement and inspect my own chunking strategy in Milestone 3.
 
+**3.** For Unit 2, I used AI to help organize the run logs and question whether the scorer’s phrase matches proved my acceptance criteria. I checked the verdicts against the saved answers, retrieved chunks, source documents, and original criteria. AI also helped me identify the risk of using only one retrieved chunk.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -335,3 +337,5 @@ No original criterion remained missed after the improvement. The test set does n
      differently, and why?
 
      Milestone 5. -->
+
+For a future evaluation, I would tighten criterion 1 to require the **first** retrieved chunk to contain the answer for at least four of five questions, rather than allowing the answer anywhere among five results. I would also include a question whose complete answer requires more than one chunk, with its expected facts written before testing. These are lessons for a future test; I did not rewrite my original Unit 1 target after seeing the results.
