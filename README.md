@@ -194,21 +194,9 @@ out-of-corpus questions to be refused.
 
 # Unit 2
 
-<!-- These sections get ADDED to what's already above. Don't delete or rewrite
-     unit 1 — the point is that someone can see what you said before you knew
-     how it went. -->
-
 ## Run Log — Before
 
-<!-- Your five criteria, three runs each. `python run_eval.py --label before`
-     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
-     writes it all into results/ for you. Targets come from criteria.md; the
-     verdict column is your call.
-
-     Criterion 3 is measured in one deterministic pass rather than three, so
-     the same number goes in all three run columns. That's correct, not lazy.
-
-     Milestone 1. -->
+I ran `python run_eval.py --label before` against `campus_life` with `top-k: 5` and a relevance cutoff of `0.62`. Each in-corpus question was asked three times with caching off. The complete report is in `results/run_2026-09-23_2103_before.md`.
 
 | Criterion                                               | Original target | Run 1 | Run 2 | Run 3 | Before verdict |
 | ------------------------------------------------------- | --------------- | ----- | ----- | ----- | -------------- |
@@ -218,85 +206,77 @@ out-of-corpus questions to be refused.
 | 4. Sampled chunks stand alone and have intact sentences | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
 | 5. Named documents support the answers                  | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
 
-<!-- Underneath, paste the REAL output for each criterion from one of your
-     runs — the actual text your system produced, not a description of it.
-     Name the file and function that produced it. -->
+Retrieval, the relevance gate, and the five-chunk sample were deterministic in this test, so their counts repeat across the three columns. I checked source naming and source support against the generated answers from all three runs. A `pass` from `scorer.py` alone was not enough to establish all five criteria: that scorer only checks for the expected phrase in the generated answer.
 
-Produced by: run_eval.py::main
-Retrieval: store.py::search
-Chunks produced by: chunker.py::split_documents
+### Real output — before
 
-Criterion 1 — retrieved chunk for the shuttle question:
+The answers and gate results below were produced by `run_eval.py::main` and `run_eval.py::check_out_of_scope`. Retrieved passages came from `store.py::search`; chunks were produced by `chunker.py::split_documents`. The full 15-answer output is in `results/run_2026-09-23_2103_before.md`.
+
+**Criteria 1, 2, and 5 — answer-bearing chunk, generated answer, and supporting source:**
+
+```text
+Question: Which campus shuttle stop may be skipped when the driver is behind schedule?
+
 RETRIEVED: transit_shuttle.txt#0
 DISTANCE: 0.3853
-It's free with a student ID. The stop outside Fenwick Court is the one that
-gets skipped when the driver is behind, which is worth knowing if you live there.
+It's free with a student ID. The stop outside Fenwick Court is the one
+that gets skipped when the driver is behind, which is worth knowing
+if you live there.
 
-Criterion 2 — generated answer, shuttle question, run 1:
+Run 1 answer:
 The stop outside Fenwick Court may be skipped when the driver is behind
 schedule (from transit_shuttle.txt).
+```
 
-Criterion 3 — run_eval.py::check_out_of_scope:
-What is the capital of Mongolia? | 0.825 | refused
+The text above is in the retrieved chunk and in the named `transit_shuttle.txt` document. I also checked the answer-bearing chunk and named documents for the other four questions.
 
-Criterion 4 — sampled chunk:
+**Criterion 3 — out-of-corpus gate output:**
+
+```text
+What is the capital of Mongolia? | best distance 0.825 | refused
+How do I change the oil in a diesel engine? | best distance 0.934 | refused
+Who won the 1994 World Cup? | best distance 0.886 | refused
+What is the recommended dosage of ibuprofen for a headache? | best distance 0.844 | refused
+How do I write a for loop in Rust? | best distance 0.896 | refused
+```
+
+**Criterion 4 — one of the five sampled chunks:** Produced by `chunker.py::split_documents` and printed by `python app.py --corpus campus_life chunks -n 5`.
+
+```text
 Chunk 2 | source: course_biol_160_exams.txt#0
+BIOL 160 Cell Biology — assessment
+
 Four unit tests and a cumulative final. Not curved.
+
 The unit tests come fast, roughly every three weeks; falling behind once
 is very hard to recover from.
+```
 
-Criterion 5 — named supporting document:
-SOURCE DOCUMENT: transit_shuttle.txt
-It's free with a student ID. The stop outside Fenwick Court is the one that
-gets skipped when the driver is behind, which is worth knowing if you live there.
+This chunk can answer “How many unit tests does BIOL 160 have?” without a neighboring chunk. I inspected all five printed chunks for a standalone answerable fact and intact sentence boundaries.
 
 ## Verdicts
 
-<!-- MET or MISSED for each of the five, against the target you wrote last
-     unit — not a new one. Plus a sentence on how you decided. That sentence
-     matters most where it was close.
+| #   | Criterion                        | Verdict | How I decided                                                     |
+| --- | -------------------------------- | ------- | ----------------------------------------------------------------- |
+| 1   | Answer in retrieved chunks       | MET     | Answer found for 5/5 questions in all three runs.                 |
+| 2   | Answer names a source            | MET     | All 15 answers named a document.                                  |
+| 3   | Gate refuses unrelated questions | MET     | The gate refused 5/5.                                             |
+| 4   | Chunks stand alone               | MET     | All five sampled chunks were answerable and had intact sentences. |
+| 5   | Named source supports answer     | MET     | Sources supported 5/5 answers in all three runs.                  |
 
-     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
-     The target has to hold, not show up occasionally.
-
-     Milestone 2. -->
-
-| #   | Criterion | Verdict | How I decided |
-| --- | --------- | ------- | ------------- |
-| 1   |           |         |               |
-| 2   |           |         |               |
-| 3   |           |         |               |
-| 4   |           |         |               |
-| 5   |           |         |               |
+I made no revisions to the original criteria in `criteria.md`.
 
 ## Diagnoses
 
-<!-- For each miss: which stage caused it, and how. The stage alone isn't
-     enough — you need the mechanism.
+None of my five original acceptance criteria was missed, so there was no failed criterion to assign to a pipeline stage. These targets were safe for this particular five-question set: the answer was already in the first retrieved chunk for every question.
 
-     Not a diagnosis: "Question 3 didn't work."
-     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
-                       one sentence that got split across two chunks, so
-                       neither chunk on its own contains it."
-
-     The five stages: loading → chunking → embedding → retrieval → generation.
-
-     Look for a pattern. If three misses all ask about numbers, that's one
-     problem, not three.
-
-     Missed nothing? Say so, then say honestly whether your targets were set
-     low, and which one you'd tighten and to what.
-
-     Milestone 3. -->
+I did find a **retrieval-stage weakness** that the original targets did not count as a miss. For the shuttle question, `store.py::search` returned the correct `transit_shuttle.txt#0` chunk first, followed by four dining chunks that did not answer the question. The mechanism was that `TOP_K = 5` included the four next-ranked chunks even though the first chunk already contained the full answer. I chose to measure whether reducing that extra context preserved the five original targets.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I changed only the RAG setting `TOP_K` in `config.py` from `5` to `1`. The corpus, existing index, chunking strategy, embedding model, five questions, scorer, relevance cutoff, and grounding prompt remained the same.
 
-**Why I picked it:**
-
-<!-- Connect it to a specific diagnosis above in one sentence. If you can't,
-     you picked a fix because it sounded impressive. -->
+**Why I picked it:** The before-run diagnosis showed four unnecessary dining chunks retrieved with the shuttle answer. Since the first chunk contained the answer for each of my five questions, I tested whether retrieving one chunk would remove those distractors without losing answer facts or source citations. One chunk might be insufficient for questions that need multiple sources; the after run tests only the existing five questions.
 
 ### Run Log — After
 

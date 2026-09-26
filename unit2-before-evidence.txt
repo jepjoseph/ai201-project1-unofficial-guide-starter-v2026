@@ -1,0 +1,258 @@
+# Run log — before
+
+- Produced by: `run_eval.py::main`
+- Retrieval: `store.py::search`, chunks from `chunker.py::split_documents`
+- Corpus: `campus_life` (index variant `default`)
+- top-k: 5 · relevance cutoff: 0.62
+- Runs per question: 3, caching off
+- When: 2026-09-23 21:03
+
+This table is one row per QUESTION. The run log your README asks for is
+one row per CRITERION, so aggregate these into it — criterion 1 is how many
+of your questions had the answer in the retrieved chunks, and so on.
+
+| Question | Run 1 | Run 2 | Run 3 |
+|---|---|---|---|
+| How are juniors and seniors ordered in the housing lottery? | pass | pass | pass |
+| How long is the wait at Kestrel Commons between 12:15 and 1:00? | pass | pass | pass |
+| Why should students complete the CS 210 labs even though they are only 10% of the grade? | pass | pass | pass |
+| How much do washing and drying each cost at Old Brewhouse? | pass | pass | pass |
+| Which campus shuttle stop may be skipped when the driver is behind schedule? | pass | pass | pass |
+
+---
+
+## The relevance gate on out-of-corpus questions
+
+Produced by `run_eval.py::check_out_of_scope`, cutoff 0.62. Refused 5 of 5.
+
+Retrieval is deterministic and the gate is a comparison against a
+fixed number, so these do not vary between runs — one pass over the
+list is the whole measurement.
+
+| Out-of-scope question | Best distance | Gate |
+|---|---|---|
+| What is the capital of Mongolia? | 0.825 | refused |
+| How do I change the oil in a diesel engine? | 0.934 | refused |
+| Who won the 1994 World Cup? | 0.886 | refused |
+| What is the recommended dosage of ibuprofen for a headache? | 0.844 | refused |
+| How do I write a for loop in Rust? | 0.896 | refused |
+
+---
+
+## Real output
+
+This is what the system actually produced. Paste the relevant parts
+into your README underneath the table — the rubric asks for real
+output as text, not a description of it.
+
+### How are juniors and seniors ordered in the housing lottery? — run 1
+
+- Best distance: 0.2250 (passed the gate)
+- Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, housing_innisfree_hall.txt, housing_tamsin_court.txt
+
+```
+Juniors and seniors in the housing lottery are ordered by accumulated credit hours first, with any ties broken randomly. 
+
+Source: admin_housing_lottery.txt
+```
+
+### How are juniors and seniors ordered in the housing lottery? — run 2
+
+- Best distance: 0.2250 (passed the gate)
+- Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, housing_innisfree_hall.txt, housing_tamsin_court.txt
+
+```
+Juniors and seniors are ordered by accumulated credit hours first, with a random tie-break used only for ties. 
+
+Source: admin_housing_lottery.txt
+```
+
+### How are juniors and seniors ordered in the housing lottery? — run 3
+
+- Best distance: 0.2250 (passed the gate)
+- Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt, advising_registration.txt, housing_innisfree_hall.txt, housing_tamsin_court.txt
+
+```
+Juniors and seniors are ordered by accumulated credit hours first, with a random tie-break used only when necessary. 
+
+Source: `admin_housing_lottery.txt`
+```
+
+### How long is the wait at Kestrel Commons between 12:15 and 1:00? — run 1
+
+- Best distance: 0.2129 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons.txt, dining_kestrel_commons_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_walking.txt
+
+```
+The wait at Kestrel Commons between 12:15 and 1:00 is 20 to 25 minutes. 
+
+Source: `dining_kestrel_commons.txt` (and also mentioned in `dining_kestrel_commons_followup.txt`).
+```
+
+### How long is the wait at Kestrel Commons between 12:15 and 1:00? — run 2
+
+- Best distance: 0.2129 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons.txt, dining_kestrel_commons_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_walking.txt
+
+```
+The wait at Kestrel Commons is 20 to 25 minutes between 12:15 and 1:00. 
+
+Source: dining_kestrel_commons.txt (and also mentioned in dining_kestrel_commons_followup.txt)
+```
+
+### How long is the wait at Kestrel Commons between 12:15 and 1:00? — run 3
+
+- Best distance: 0.2129 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons.txt, dining_kestrel_commons_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_walking.txt
+
+```
+The wait at Kestrel Commons between 12:15 and 1:00 is 20 to 25 minutes. 
+
+Source: `dining_kestrel_commons.txt` (also mentioned in `dining_kestrel_commons_followup.txt`).
+```
+
+### Why should students complete the CS 210 labs even though they are only 10% of the grade? — run 1
+
+- Best distance: 0.4158 (passed the gate)
+- Sources retrieved: course_cs_210.txt, course_cs_210_exams.txt, course_cs_340_exams.txt, course_phys_130.txt, course_stat_150.txt
+
+```
+Students should complete the CS 210 labs because the exams reuse the lab problems. 
+
+Source: `course_cs_210_exams.txt` (and `course_cs_210.txt`)
+```
+
+### Why should students complete the CS 210 labs even though they are only 10% of the grade? — run 2
+
+- Best distance: 0.4158 (passed the gate)
+- Sources retrieved: course_cs_210.txt, course_cs_210_exams.txt, course_cs_340_exams.txt, course_phys_130.txt, course_stat_150.txt
+
+```
+Students should complete the CS 210 labs because the exams reuse the lab problems. 
+
+Sources: `course_cs_210.txt` and `course_cs_210_exams.txt`
+```
+
+### Why should students complete the CS 210 labs even though they are only 10% of the grade? — run 3
+
+- Best distance: 0.4158 (passed the gate)
+- Sources retrieved: course_cs_210.txt, course_cs_210_exams.txt, course_cs_340_exams.txt, course_phys_130.txt, course_stat_150.txt
+
+```
+Students should complete the CS 210 labs because the exams reuse the lab problems (from `course_cs_210_exams.txt` and `course_cs_210.txt`).
+```
+
+### How much do washing and drying each cost at Old Brewhouse? — run 1
+
+- Best distance: 0.2213 (passed the gate)
+- Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
+
+```
+At Old Brewhouse, both washing and drying cost $1.50 each. 
+
+Source: housing_old_brewhouse.txt (and housing_old_brewhouse_laundry.txt)
+```
+
+### How much do washing and drying each cost at Old Brewhouse? — run 2
+
+- Best distance: 0.2213 (passed the gate)
+- Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
+
+```
+At Old Brewhouse, both washing and drying cost $1.50 each (housing_old_brewhouse.txt and housing_old_brewhouse_laundry.txt).
+```
+
+### How much do washing and drying each cost at Old Brewhouse? — run 3
+
+- Best distance: 0.2213 (passed the gate)
+- Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
+
+```
+At Old Brewhouse, both washing and drying cost $1.50 each (housing_old_brewhouse.txt and housing_old_brewhouse_laundry.txt).
+```
+
+### Which campus shuttle stop may be skipped when the driver is behind schedule? — run 1
+
+- Best distance: 0.3853 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons_followup.txt, dining_north_kitchen_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_shuttle.txt
+
+```
+The stop outside Fenwick Court may be skipped when the driver is behind schedule (from transit_shuttle.txt).
+```
+
+### Which campus shuttle stop may be skipped when the driver is behind schedule? — run 2
+
+- Best distance: 0.3853 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons_followup.txt, dining_north_kitchen_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_shuttle.txt
+
+```
+The campus shuttle stop outside Fenwick Court is the one that gets skipped when the driver is behind schedule (from transit_shuttle.txt).
+```
+
+### Which campus shuttle stop may be skipped when the driver is behind schedule? — run 3
+
+- Best distance: 0.3853 (passed the gate)
+- Sources retrieved: dining_halden_hall_followup.txt, dining_kestrel_commons_followup.txt, dining_north_kitchen_followup.txt, dining_the_ridgeway_cafe_followup.txt, transit_shuttle.txt
+
+```
+The campus shuttle stop outside Fenwick Court is the one that gets skipped when the driver is behind schedule (transit_shuttle.txt).
+```
+
+===== FIVE-CHUNK SAMPLE FOR CRITERION 4 =====
+
+90 chunks total. Showing 5, spread across the corpus.
+
+Paste these into your README under Sample Chunks. The rubric asks
+for the source file and the function that produced them ù both are
+printed for you below.
+
+======================================================================
+Chunk 1  |  source: admin_add_drop_deadline.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer window ù through the end of week six ù but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
+
+======================================================================
+Chunk 2  |  source: course_biol_160_exams.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+BIOL 160 Cell Biology ù assessment
+
+Four unit tests and a cumulative final. Not curved.
+
+The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
+
+======================================================================
+Chunk 3  |  source: course_math_220_exams.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+MATH 220 Linear Algebra ù assessment
+
+Two midterms and a cumulative final. Curved to a b- median.
+
+The problem sets are the course; the lectures make sense afterwards rather than during.
+
+======================================================================
+Chunk 4  |  source: dining_the_ridgeway_cafe.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+The Ridgeway CafΘ
+
+Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The thing worth going for is the only place on campus with real espresso. The thing to know is that seating is tight; about 40 seats for a building of 900.
+
+Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
+
+======================================================================
+Chunk 5  |  source: housing_morrow_house.txt#0  |  produced by: chunker.py::split_documents
+======================================================================
+Morrow House ù what it's actually like
+
+Just finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.
+
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
+
+The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
+
+Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.
+
+For each one, ask: could someone answer a question using only this,
+without reading what came before or after?
+

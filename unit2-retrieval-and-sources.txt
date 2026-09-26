@@ -1,0 +1,299 @@
+
+======================================================================
+QUESTION 1: How are juniors and seniors ordered in the housing lottery?
+EXPECTED FACT: credit hours
+======================================================================
+
+RETRIEVED: admin_housing_lottery.txt#0
+DISTANCE: 0.2250
+On the housing lottery
+
+The housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.
+
+RETRIEVED: advising_registration.txt#0
+DISTANCE: 0.6784
+Registration and your adviser
+
+You need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.
+
+Registration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.
+
+RETRIEVED: housing_tamsin_court.txt#0
+DISTANCE: 0.6982
+Tamsin Court ù what it's actually like
+
+I lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.
+
+The good: the most independent housing on campus, and the only option with a full kitchen.
+
+The bad: the most expensive tier by a wide margin, and isolating if you're new.
+
+Laundry costs in-unit washer-dryer. On noise: quiet, structurally ù concrete floors between units.
+
+RETRIEVED: admin_parking_permits.txt#0
+DISTANCE: 0.7381
+On the parking permits
+
+Student permits for the west lots go on sale in August and sell out in about three days. The east lot never sells out because it's a 12-minute walk. There is no waitlist ù people who miss the window park on Verrill Street and walk in, which is legal but unmarked and confuses everyone.
+
+RETRIEVED: housing_innisfree_hall.txt#0
+DISTANCE: 0.7384
+Innisfree Hall ù what it's actually like
+
+Transferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.
+
+The good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.
+
+The bad: no air conditioning, which matters for the first three weeks of September.
+
+SOURCE DOCUMENT: admin_housing_lottery.txt
+On the housing lottery
+
+The housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.
+
+
+======================================================================
+QUESTION 2: How long is the wait at Kestrel Commons between 12:15 and 1:00?
+EXPECTED FACT: 20 to 25 minutes
+======================================================================
+
+RETRIEVED: dining_kestrel_commons_followup.txt#0
+DISTANCE: 0.2129
+Re: Kestrel Commons
+
+Adding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.
+
+RETRIEVED: dining_kestrel_commons.txt#0
+DISTANCE: 0.3978
+Kestrel Commons
+
+I'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.
+
+Hours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.
+
+RETRIEVED: dining_halden_hall_followup.txt#0
+DISTANCE: 0.4152
+Re: Halden Hall
+
+Adding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.
+
+RETRIEVED: transit_walking.txt#0
+DISTANCE: 0.4289
+Walking times across campus
+
+Rough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway CafΘ: 3 minutes.
+
+Add four minutes in winter. The path past the pond genuinely ices over and people take the long way round.
+
+RETRIEVED: dining_the_ridgeway_cafe_followup.txt#0
+DISTANCE: 0.4313
+Re: The Ridgeway CafΘ
+
+Adding to what people have said about The Ridgeway CafΘ. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.
+
+SOURCE DOCUMENT: dining_kestrel_commons.txt
+Kestrel Commons
+
+I'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.
+
+Hours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.
+
+
+SOURCE DOCUMENT: dining_kestrel_commons_followup.txt
+Re: Kestrel Commons
+
+Adding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.
+
+
+======================================================================
+QUESTION 3: Why should students complete the CS 210 labs even though they are only 10% of the grade?
+EXPECTED FACT: exams reuse the lab problems
+======================================================================
+
+RETRIEVED: course_cs_210_exams.txt#0
+DISTANCE: 0.4158
+CS 210 Data Structures ù assessment
+
+Two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.
+
+Do the labs even though they're only 10% ù the exams reuse the lab problems.
+
+RETRIEVED: course_cs_210.txt#0
+DISTANCE: 0.4982
+CS 210 Data Structures
+
+I'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.
+
+Expect 8 to 10 hours a week outside class.
+
+The one piece of advice: do the labs even though they're only 10% ù the exams reuse the lab problems.
+
+RETRIEVED: course_stat_150.txt#0
+DISTANCE: 0.6480
+STAT 150 Applied Statistics
+
+Transferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.
+
+Expect 5 to 6 hours a week outside class.
+
+The one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.
+
+RETRIEVED: course_cs_340_exams.txt#0
+DISTANCE: 0.6573
+CS 340 Databases ù assessment
+
+One midterm and a final, both open-book. Lightly curved, usually two or three points.
+
+Start the term project in week three, not week eight; everyone learns this the hard way.
+
+RETRIEVED: course_phys_130.txt#0
+DISTANCE: 0.6631
+PHYS 130 Mechanics
+
+Just finished a year in this building. Format is lecture with a compulsory lab that meets fortnightly. Assessment: three midterms, no final, plus a lab practical. Not curved, but the lowest midterm is dropped.
+
+Expect 7 hours a week, plus 3 on lab weeks.
+
+The one piece of advice: the lab practical is worth 20% and almost nobody prepares for it.
+
+SOURCE DOCUMENT: course_cs_210.txt
+CS 210 Data Structures
+
+I'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.
+
+Expect 8 to 10 hours a week outside class.
+
+The one piece of advice: do the labs even though they're only 10% ù the exams reuse the lab problems.
+
+
+SOURCE DOCUMENT: course_cs_210_exams.txt
+CS 210 Data Structures ù assessment
+
+Two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.
+
+Do the labs even though they're only 10% ù the exams reuse the lab problems.
+
+
+======================================================================
+QUESTION 4: How much do washing and drying each cost at Old Brewhouse?
+EXPECTED FACT: $1.50
+======================================================================
+
+RETRIEVED: housing_old_brewhouse.txt#1
+DISTANCE: 0.2213
+Old Brewhouse ù what it's actually like
+
+Laundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.
+
+RETRIEVED: housing_old_brewhouse_laundry.txt#0
+DISTANCE: 0.2413
+Laundry in Old Brewhouse
+
+Machines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.
+
+Best time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.
+
+RETRIEVED: housing_fenwick_court_laundry.txt#0
+DISTANCE: 0.3976
+Laundry in Fenwick Court
+
+Machines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.
+
+Best time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.
+
+RETRIEVED: housing_calder_annexe_laundry.txt#0
+DISTANCE: 0.4108
+Laundry in Calder Annexe
+
+Machines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.
+
+Best time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.
+
+RETRIEVED: housing_innisfree_hall_laundry.txt#0
+DISTANCE: 0.4267
+Laundry in Innisfree Hall
+
+Machines take $1.75 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.
+
+Best time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.
+
+SOURCE DOCUMENT: housing_old_brewhouse.txt
+Old Brewhouse ù what it's actually like
+
+Took this last spring. Built 1902 as a brewery, converted to housing in 1998. Rooms are doubles and triples with unusual floor plans, no two alike.
+
+The good: the most characterful building on campus and people get attached to it.
+
+The bad: the heating is uneven ù some rooms run hot all winter and can't be adjusted.
+
+Laundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.
+
+
+SOURCE DOCUMENT: housing_old_brewhouse_laundry.txt
+Laundry in Old Brewhouse
+
+Machines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.
+
+Best time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.
+
+
+======================================================================
+QUESTION 5: Which campus shuttle stop may be skipped when the driver is behind schedule?
+EXPECTED FACT: Fenwick Court
+======================================================================
+
+RETRIEVED: transit_shuttle.txt#0
+DISTANCE: 0.3853
+The campus shuttle
+
+Runs a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.
+
+It's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.
+
+RETRIEVED: dining_north_kitchen_followup.txt#0
+DISTANCE: 0.5580
+Re: North Kitchen
+
+Adding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: closed all summer and during reading week. Nobody tells you this at orientation.
+
+RETRIEVED: dining_halden_hall_followup.txt#0
+DISTANCE: 0.5675
+Re: Halden Hall
+
+Adding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.
+
+RETRIEVED: dining_kestrel_commons_followup.txt#0
+DISTANCE: 0.5748
+Re: Kestrel Commons
+
+Adding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.
+
+RETRIEVED: dining_the_ridgeway_cafe_followup.txt#0
+DISTANCE: 0.5847
+Re: The Ridgeway CafΘ
+
+Adding to what people have said about The Ridgeway CafΘ. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.
+
+SOURCE DOCUMENT: transit_shuttle.txt
+The campus shuttle
+
+Runs a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.
+
+It's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.
+

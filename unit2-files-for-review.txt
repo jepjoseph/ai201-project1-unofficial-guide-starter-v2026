@@ -1,0 +1,1234 @@
+UNIT 2 PROJECT FILES
+
+===== FILE: .\README.md =====
+# The Unofficial Guide
+
+**Student:** Jean Pierre Joseph
+**Selected corpus:** `campus_life`
+
+> **This file is your submission.** Fill it in as you go — most sections get
+> written during the milestone that produces them, not at the end.
+>
+> How the starter works, and every command you'll need, is in `RUNNING.md`.
+> Leave that file alone.
+>
+> **Paste everything as text.** No screenshots, no video. A typed table gets
+> full credit; a picture of the same table gets none.
+>
+> Delete these instruction blocks as you replace them. The `<!-- -->` comments
+> are notes to you and don't show up when the page renders — you can leave them
+> or remove them.
+
+---
+
+# Unit 1
+
+## What This Does
+
+The Unofficial Guide is a retrieval-augmented generation system built over the campus_life corpus, a collection of 88 short documents containing unofficial student information. It answers questions about administrative procedures, dining halls, courses, housing, transportation, study resources, and other aspects of campus life. When a user asks a question, the system searches a local vector store for semantically related document chunks and uses the retrieved information to generate a grounded answer. Each generated answer identifies the source document so the user can see where the information came from.
+
+## Chunking Strategy
+
+**Chunk size:** 500 characters  
+**Overlap:** 0 characters
+
+The starter used fixed 800-character windows with 120 characters of overlap.
+On the `campus_life` corpus, it produced 88 chunks from 88 documents, with
+chunk lengths ranging from 178 to 549 characters. Because almost every
+document was shorter than the starter limit, the starter kept every document
+as one chunk.
+
+When I read the documents and inspected five starter chunks, I found that the
+posts were short and usually focused on one course, residence, dining hall, or
+administrative subject. The sampled chunks contained complete thoughts, so I
+did not want to divide every document into smaller sentence-level pieces.
+However, the longer housing documents contained several paragraph-level
+subtopics, including building information, advantages, problems, laundry, and
+noise.
+
+I replaced the fixed-character starter with a paragraph-aware strategy using a
+500-character target. It keeps 86 of the 88 documents intact and splits only
+the two longer, multi-topic housing documents:
+`housing_innisfree_hall.txt` and `housing_old_brewhouse.txt`. Splits occur only
+between paragraphs, so the function does not cut sentences at arbitrary
+character positions.
+
+I selected zero character overlap because the strategy preserves complete
+paragraphs rather than sliding character windows. When a document produces
+more than one chunk, its title is repeated at the beginning of the later chunk
+so that the subject remains identifiable without duplicating the surrounding
+content. The final strategy produced 90 chunks averaging 310 characters, with
+lengths ranging from 170 to 461 characters.
+
+## Sample Chunks
+
+**Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
+```
+
+**Chunk 2** — source: `course_biol_160_exams.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+BIOL 160 Cell Biology — assessment
+
+Four unit tests and a cumulative final. Not curved.
+
+The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
+```
+
+**Chunk 3** — source: `course_math_220_exams.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+MATH 220 Linear Algebra — assessment
+
+Two midterms and a cumulative final. Curved to a b- median.
+
+The problem sets are the course; the lectures make sense afterwards rather than during.
+```
+
+**Chunk 4** — source: `dining_the_ridgeway_cafe.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+The Ridgeway Café
+
+Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The thing worth going for is the only place on campus with real espresso. The thing to know is that seating is tight; about 40 seats for a building of 900.
+
+Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
+```
+
+**Chunk 5** — source: `housing_morrow_house.txt#0` — produced by: `chunker.py::split_documents`
+
+```text
+Morrow House — what it's actually like
+
+Just finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hallbathrooms.
+
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
+
+The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
+
+Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiethours.
+```
+
+## Sample Answer
+
+<!-- One complete question and answer, pasted as text, with the source line
+     visible. Milestone 4. -->
+
+**Question:**
+How much do washing and drying each cost at Old Brewhouse?
+
+**Answer:**
+
+```text
+At Old Brewhouse, both washing and drying cost $1.50 each (housing_old_brewhouse.txt and housing_old_brewhouse_laundry.txt).
+
+Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
+```
+
+The best retrieved distance was `0.221`, which passed the final relevance
+cutoff of `0.62`. The generated answer was supported by
+`housing_old_brewhouse.txt` and `housing_old_brewhouse_laundry.txt`, and it
+named both source documents.
+
+I also tested the relevance gate with the out-of-corpus question, “What is the
+capital of Mongolia?” Its best distance was `0.825`, so the gate stopped it and
+returned:
+
+```text
+I don't have enough information about that.
+```
+
+The refusal used zero model calls.
+
+**My relevance cutoff:** `0.62`
+
+The highest best distance among the five in-corpus questions was `0.4158`.
+The lowest best distance among the five out-of-corpus questions was `0.8246`.
+This created a gap of `0.4088`. I selected `0.62` because it is approximately
+the midpoint of that gap:
+
+```text
+(0.4158 + 0.8246) / 2 = 0.6202
+```
+
+<!-- The number you set in config.py, and how you got there.
+
+     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
+     that it clearly doesn't, and wrote down the best distance for each. What
+     did those two groups look like? Where was the gap? Put the actual numbers
+     here — the table below wants all ten rows.
+
+     Milestone 4. -->
+
+This cutoff allowed all five in-corpus questions to pass and caused all five
+out-of-corpus questions to be refused.
+
+| Question                                                                                 | In corpus? | Best distance |
+| ---------------------------------------------------------------------------------------- | ---------- | ------------- |
+|                                                                                          |            |               |
+| How are juniors and seniors ordered in the housing lottery?                              | Yes        | 0.2250        |
+| How long is the wait at Kestrel Commons between 12:15 and 1:00?                          | Yes        | 0.2129        |
+| Why should students complete the CS 210 labs even though they are only 10% of the grade? | Yes        | 0.4158        |
+| How much do washing and drying each cost at Old Brewhouse?                               | Yes        | 0.2213        |
+| Which campus shuttle stop may be skipped when the driver is behind schedule?             | Yes        | 0.3853        |
+| What is the capital of Mongolia?                                                         | No         | 0.8246        |
+| How do I change the oil in a diesel engine?                                              | No         | 0.9340        |
+| Who won the 1994 World Cup?                                                              | No         | 0.8859        |
+| What is the recommended dosage of ibuprofen for a headache?                              | No         | 0.8442        |
+| How do I write a for loop in Rust?                                                       | No         | 0.8960        |
+
+## How I Used AI
+
+**1.** Understanding the provided corpora: I asked AI where the documents created by python app.py corpora came from and whether every student received the same text. AI explained that the corpora were supplied with the starter project and were written for the course rather than downloaded from the internet. I compared that explanation with corpora/README.md, which confirmed that the documents were course-created and that no real people were named. This helped me understand that campus_life was a fixed project dataset rather than live university information.
+
+**2.** Evaluating the starter chunking behavior: I asked AI to help me examine four campus_life documents and distinguish direct observations from chunking interpretations. The initial interpretation was that a complete document might be a reasonable chunk because the documents were short and focused. I did not accept that as a final chunking decision. I ran the starter index and recorded that 88 documents produced 88 chunks, with lengths ranging from 178 to 549 characters. I kept the conclusion preliminary until I could implement and inspect my own chunking strategy in Milestone 3.
+
+<!-- ── Stretch features ─────────────────────────────────────────────────────
+     Doing one? Say so here BEFORE you start. A feature this README never
+     claims earns nothing.
+     ───────────────────────────────────────────────────────────────────────── -->
+
+---
+
+# Unit 2
+
+<!-- These sections get ADDED to what's already above. Don't delete or rewrite
+     unit 1 — the point is that someone can see what you said before you knew
+     how it went. -->
+
+## Run Log — Before
+
+<!-- Your five criteria, three runs each. `python run_eval.py --label before`
+     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
+     writes it all into results/ for you. Targets come from criteria.md; the
+     verdict column is your call.
+
+     Criterion 3 is measured in one deterministic pass rather than three, so
+     the same number goes in all three run columns. That's correct, not lazy.
+
+     Milestone 1. -->
+
+| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
+| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
+| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
+| 4.                                     |        |       |       |       |         |
+| 5.                                     |        |       |       |       |         |
+
+<!-- Underneath, paste the REAL output for each criterion from one of your
+     runs — the actual text your system produced, not a description of it.
+     Name the file and function that produced it. -->
+
+## Verdicts
+
+<!-- MET or MISSED for each of the five, against the target you wrote last
+     unit — not a new one. Plus a sentence on how you decided. That sentence
+     matters most where it was close.
+
+     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
+     The target has to hold, not show up occasionally.
+
+     Milestone 2. -->
+
+| #   | Criterion | Verdict | How I decided |
+| --- | --------- | ------- | ------------- |
+| 1   |           |         |               |
+| 2   |           |         |               |
+| 3   |           |         |               |
+| 4   |           |         |               |
+| 5   |           |         |               |
+
+## Diagnoses
+
+<!-- For each miss: which stage caused it, and how. The stage alone isn't
+     enough — you need the mechanism.
+
+     Not a diagnosis: "Question 3 didn't work."
+     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
+                       one sentence that got split across two chunks, so
+                       neither chunk on its own contains it."
+
+     The five stages: loading → chunking → embedding → retrieval → generation.
+
+     Look for a pattern. If three misses all ask about numbers, that's one
+     problem, not three.
+
+     Missed nothing? Say so, then say honestly whether your targets were set
+     low, and which one you'd tighten and to what.
+
+     Milestone 3. -->
+
+## The Improvement
+
+**What I changed:**
+
+**Why I picked it:**
+
+<!-- Connect it to a specific diagnosis above in one sentence. If you can't,
+     you picked a fix because it sounded impressive. -->
+
+### Run Log — After
+
+<!-- Same format, same five criteria, three runs each.
+     `python run_eval.py --label after` -->
+
+| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
+| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
+| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
+| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
+| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
+| 4.                                     |        |       |       |       |         |
+| 5.                                     |        |       |       |       |         |
+
+**Did it help?**
+
+<!-- Say plainly whether it did, and how you know. If it made things worse,
+     say that — a change that backfired, honestly reported, earns full credit
+     and is more interesting than one that worked. What matters is that you can
+     tell.
+
+     Milestone 4. -->
+
+## What's Still Broken
+
+<!-- For each criterion still missed after your fix: what you'd do about it,
+     and why you stopped where you did.
+
+     "I ran out of time" is fine if it's true. Pretending nothing is left is
+     not.
+
+     Milestone 5. -->
+
+## What I'd Do Differently
+
+<!-- Knowing what you know now — which of your five criteria would you write
+     differently, and why?
+
+     Milestone 5. -->
+
+===== FILE: .\corpora\README.md =====
+# The corpora
+
+Three corpora ship with this starter for your project, plus a fourth
+(`practice`) that your instructor uses in class. Pick one of the three in
+Milestone 1.
+
+They are deliberately different from each other in **shape** — how long the
+documents are, and how the useful information sits inside them. That
+difference is the point: the right chunk size for short posts is not the
+right chunk size for long sectioned guides, and Milestone 3 is where that
+starts to matter.
+
+All three were written for this course. No real people are named.
+
+To switch corpus, either edit `CORPUS` in `config.py`, add
+`AI201_CORPUS=name` to your `.env`, or pass `--corpus name` on the command
+line. Re-run `python app.py index` after switching.
+
+## `campus_life`
+
+**Short posts about student life at a university.** Eighty-eight documents, most of them one to three short paragraphs — the kind of thing one student writes to answer another's question. Dining halls, dorms, courses, and the administrative rules nobody explains properly. Useful information tends to sit in a single sentence.
+
+*Pick this if* you want the closest thing to the brief's framing, and short documents where a chunk can easily hold a whole thought.
+
+88 documents · 27,908 characters · about 317 characters per document
+
+## `advice_threads`
+
+**Question-and-answer threads, with several people replying.** Twenty-three threads, each with three to five replies of very uneven length, disagreeing with each other as often as not. Real answers are spread across replies rather than sitting in one place.
+
+*Pick this if* you want messier material. Chunking is harder here — a reply boundary and a useful boundary are not the same thing — and that makes for a more interesting Milestone 3.
+
+23 documents · 12,490 characters · about 543 characters per document
+
+## `city_guides`
+
+**Long structured travel guides.** Fourteen documents — nine town guides, plus five that cut across all of them (eating, walking, regional transport, seasons, accessibility). Each is one to three thousand characters, divided into labelled sections — getting there, getting around, where to eat, when to go. Information is organised by heading and spread across a paragraph rather than packed into a sentence.
+
+*Pick this if* you want to think about splitting on structure rather than on length. Fixed-size chunks cut through these headings badly, which is exactly the problem worth solving.
+
+14 documents · 28,958 characters · about 2,068 characters per document
+
+## `practice`
+
+Not for your project. This is the small corpus your instructor uses for the
+in-class follow-along, kept separate so nothing done in class touches your
+graded work. It's twenty-eight documents about a board game that doesn't
+exist — twenty-four short ones of a paragraph or two, and four longer sectioned
+guides that a fixed-size chunker cuts straight through the middle of.
+
+28 documents · 15,901 characters · about 567 characters per document
+
+## Bringing your own documents
+
+You're allowed to. Make a folder at `corpora/your_name/documents/`, put
+`.txt` or `.md` files in it, and point `CORPUS` at it.
+
+Two honest warnings. You take on the cleaning work the provided corpora
+already did, and it earns no extra points. And you'll need to check that
+your relevance cutoff still separates in-corpus from out-of-corpus
+questions, since 0.6 was chosen against these three.
+
+That check is Milestone 4, and it is the same check that makes 0.6 a cutoff
+rather than a number. Treat the default as a starting point, not an answer —
+it was set against the corpora above at their shipped chunk settings, and
+changing the chunking moves the distances underneath it. Measuring it
+yourself is the milestone.
+
+===== FILE: .\criteria.md =====
+# Acceptance criteria — The Unofficial Guide
+
+Five criteria that say what "working" means for this system, written in unit 1
+**before** any results existed.
+
+An acceptance criterion names a target: a number, a count, a rate, or something
+a person could plainly observe. _"Retrieval works"_ is an opinion. _"For at
+least 4 of my 5 test questions, the top results include a chunk containing the
+answer"_ is a criterion.
+
+Under each one, write a sentence or two on **why that target** and not a
+stricter or looser one. A reason that says something about your corpus or your
+pipeline earns credit; _"80% seemed reasonable"_ does not.
+
+> Missing your own targets next unit costs you nothing. Setting a target so
+> easy you can't miss it does.
+
+---
+
+## 1. Retrieved chunks contain the answer
+
+For at least 4 of my 5 test questions, the retrieved chunks include one that
+contains the answer.
+
+**Why this target:**
+My five questions cover five different areas of the `campus_life` corpus:
+administrative procedures, dining, courses, housing, and transportation.
+Because semantic retrieval may handle the wording of one topic less accurately
+than the others, I allow one unsuccessful question while still requiring the
+system to retrieve the answer for at least 80% of the test set.
+
+---
+
+## 2. Every answer names a source
+
+Every answer the system produces names at least one source document.
+
+**Why this target:**
+Every stored chunk retains its source filename, and the generation prompt
+instructs the model to identify its source. My baseline housing-lottery answer
+successfully named `admin_housing_lottery.txt`, so requiring a source for every
+produced answer is achievable and necessary for verifying that answers come
+from the `campus_life` documents.
+
+---
+
+## 3. The relevance gate stops out-of-corpus questions
+
+When I ask a question my documents clearly don't cover, the relevance gate
+stops it and the system returns "I don't have enough information about that" —
+in at least 4 of 5 tries.
+
+<!-- The five questions are the ones in `OUT_OF_SCOPE` at the bottom of
+     `questions.py`, and `run_eval.py` puts them through the gate and writes
+     what happened into your run log. Swap them for your own if you'd rather —
+     just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
+
+**Why this target:**
+The relevance gate makes its decision by comparing the best semantic distance
+with a cutoff. An unrelated question could still share words or concepts with
+a campus document and accidentally receive a close distance, so I allow one
+incorrect gate decision while requiring the gate to refuse at least 80% of the
+five out-of-corpus questions.
+
+---
+
+## 4. Something about your chunks
+
+For at least 4 of the 5 chunks printed by
+`python app.py --corpus campus_life chunks -n 5`, a reader must be able to
+write at least one question that the chunk can answer without reading a
+neighboring chunk, and the chunk must not begin or end with a sentence cut in
+half.
+
+**Why this target:**
+The `campus_life` documents are short and focused, with the starter producing
+chunks between 178 and 549 characters. However, several documents contain
+multiple related facts, so I want to verify that my chunking strategy preserves
+enough context to answer a question independently. I allow one imperfect sample
+because the documents vary in structure and paragraph count.
+
+---
+
+## 5. Your choice
+
+For at least 4 of my 5 test questions, the source document named in the
+generated answer must contain the expected phrase recorded in `questions.py`
+or an equivalent fact that directly supports the answer.
+
+**Why this target:**
+
+Naming a source is not sufficient if that source does not support the generated
+answer. Each test question has an `expects` value chosen from its corresponding
+`campus_life` document, so comparing the answer and named source with that value
+provides a repeatable way to check source accuracy. I allow one failure because
+the model may paraphrase a fact or cite a relevant document without reproducing
+the expected phrase exactly.
+
+---
+
+<!-- ─────────────────────────────────────────────────────────────────────────
+     UNIT 2 — read this before you change anything above.
+
+     If a criterion turns out to be BROKEN rather than merely unmet, you can
+     revise it, and that earns credit. But never delete or edit the original
+     line. Add the revision underneath it, like this:
+
+         ## 1. Retrieved chunks contain the answer
+
+         For at least 4 of my 5 test questions, the retrieved chunks include
+         one that contains the answer.
+
+         **Why this target:** ...
+
+         > **Revised in unit 2:** For at least 4 of 5 questions, the top three
+         > results contain the answer.
+         >
+         > **Why revised:** I couldn't judge "the chunks include one that
+         > contains the answer" the same way twice — I scored two questions
+         > differently on Monday than on Wednesday. The new version is
+         > something I can actually check.
+
+     That's a revision because the criterion couldn't be MEASURED.
+
+     Lowering a target because you missed it is not a revision, and it costs
+     you the point:
+
+         ✗ "I said 4 of 5 but got 2 of 5, so 2 of 5 is more realistic."
+
+     A number you missed stays where it is, gets diagnosed, and gets a fix
+     attempted. That's where the points are.
+
+     The whole reason the originals stay visible is so someone can see what you
+     said before you knew the answer.
+     ───────────────────────────────────────────────────────────────────────── -->
+
+===== FILE: .\milestone_unit2.md =====
+NOT FOUND
+
+===== FILE: .\store.py =====
+"""
+Stages 3 and 4 of the pipeline: embedding chunks and retrieving them.
+
+Three things in here are worth knowing about, because they'd quietly break the
+rest of the project if they were wrong:
+
+1. The Chroma collection is created with cosine distance, explicitly. Chroma
+   defaults to squared L2, and the 0.6 threshold the course uses is calibrated
+   against cosine. Getting this wrong makes every distance number meaningless.
+
+2. `search` returns the distance alongside each chunk. Milestone 4 has you
+   compare distances, so they have to be visible.
+
+3. The embedding model is the one Chroma bundles, not one loaded through
+   `sentence-transformers`. It is the same model — `all-MiniLM-L6-v2`, 384
+   dimensions — but it arrives as an ONNX build from Chroma's own CDN, so the
+   install needs neither PyTorch nor a reachable Hugging Face. See `_embedder`.
+"""
+
+import os
+import shutil
+from dataclasses import dataclass
+
+# Must be set BEFORE chromadb is imported. Without it, some Chroma versions
+# print "Failed to send telemetry event ..." on every single call — which looks
+# exactly like a real error, isn't one, and cost a previous cohort a lot of
+# confused help-channel messages.
+os.environ.setdefault("ANONYMIZED_TELEMETRY", "False")
+
+import chromadb  # noqa: E402
+
+import config
+from chunker import Chunk
+
+
+@dataclass
+class Result:
+    """One retrieved chunk and how far it was from the question."""
+
+    text: str
+    source: str
+    label: str
+    distance: float   # LOWER IS BETTER. 0.3 is close, 0.9 is unrelated.
+    produced_by: str
+
+
+_model = None
+
+# The model Chroma bundles. Anything else in config.EMBEDDING_MODEL means
+# "fetch that one from Hugging Face instead" — see `_embedder`.
+BUNDLED_MODEL = "all-MiniLM-L6-v2"
+
+
+class _OnnxEmbedder:
+    """
+    Chroma's built-in embedder, wrapped to look like the other two.
+
+    Chroma's embedding functions are called directly and hand back numpy
+    arrays. The rest of this file wants `.encode(texts)`, so the adapter lives
+    here rather than making every caller care which embedder it got.
+    """
+
+    def __init__(self):
+        from chromadb.utils.embedding_functions import ONNXMiniLM_L6_V2
+
+        self._ef = ONNXMiniLM_L6_V2()
+
+    def encode(self, texts, show_progress_bar: bool = False):
+        return [vector.tolist() for vector in self._ef(list(texts))]
+
+
+def _sentence_transformer(name: str):
+    """
+    The escape hatch: any model that isn't the bundled one.
+
+    Unit 2's "try a second embedding model" stretch option comes through here,
+    and so does anything you set `EMBEDDING_MODEL` to. This path *does* need
+    `sentence-transformers` and a reachable Hugging Face, neither of which the
+    default install has — which is the whole point of the default install.
+    """
+    try:
+        from sentence_transformers import SentenceTransformer
+    except ImportError as exc:
+        raise RuntimeError(
+            f"config.EMBEDDING_MODEL is set to {name!r}, which isn't the model "
+            f"Chroma bundles ({BUNDLED_MODEL!r}), so it has to be downloaded "
+            f"from Hugging Face.\n"
+            f"Install the optional dependency first:\n"
+            f"    pip install 'sentence-transformers>=3.4,<3.5'\n"
+            f"Or set EMBEDDING_MODEL back to {BUNDLED_MODEL!r}."
+        ) from exc
+
+    return SentenceTransformer(name)
+
+
+def _embedder():
+    """
+    Load the embedding model once and keep it.
+
+    First call is slow — it downloads about 80 MB. That's why setup happens
+    before class.
+    """
+    global _model
+
+    if _model is not None:
+        return _model
+
+    # Used only by this repo's own smoke test, which runs where no model can be
+    # downloaded at all. Never set this yourself.
+    if os.getenv("AI201_FAKE_EMBEDDINGS") == "1":
+        from _smoke_embedder import FakeEmbedder
+
+        _model = FakeEmbedder()
+    elif config.EMBEDDING_MODEL == BUNDLED_MODEL:
+        _model = _OnnxEmbedder()
+    else:
+        _model = _sentence_transformer(config.EMBEDDING_MODEL)
+
+    return _model
+
+
+def embed(texts: list[str]) -> list[list[float]]:
+    """Turn text into vectors. Runs on your machine, costs no API quota."""
+    vectors = _embedder().encode(texts, show_progress_bar=False)
+    # sentence-transformers and the smoke stand-in return something with a
+    # .tolist(); _OnnxEmbedder has already done that conversion itself.
+    return vectors.tolist() if hasattr(vectors, "tolist") else vectors
+
+
+def _client():
+    return chromadb.PersistentClient(
+        path=str(config.CHROMA_DIR),
+        settings=chromadb.config.Settings(anonymized_telemetry=False),
+    )
+
+
+def build_index(
+    chunks: list[Chunk],
+    corpus: str | None = None,
+    variant: str = "default",
+) -> int:
+    """
+    Embed every chunk and store it.
+
+    `variant` lets you keep more than one index of the same corpus at the same
+    time. In unit 2, when you compare two chunking strategies, index the second
+    one as variant="v2" and you can query both instead of deleting the first
+    and starting over.
+    """
+    name = config.collection_name(corpus, variant)
+    client = _client()
+
+    try:
+        client.delete_collection(name)
+    except Exception:
+        pass
+
+    collection = client.create_collection(
+        name=name,
+        # ⚠️ Do not remove. Chroma defaults to squared L2, and every distance
+        # number in this course assumes cosine.
+        metadata={"hnsw:space": "cosine"},
+    )
+
+    batch = 256
+    for start in range(0, len(chunks), batch):
+        window = chunks[start : start + batch]
+        collection.add(
+            ids=[f"{c.source}#{c.index}" for c in window],
+            documents=[c.text for c in window],
+            embeddings=embed([c.text for c in window]),
+            metadatas=[
+                {"source": c.source, "index": c.index, "produced_by": c.produced_by}
+                for c in window
+            ],
+        )
+
+    return len(chunks)
+
+
+def search(
+    question: str,
+    top_k: int | None = None,
+    corpus: str | None = None,
+    variant: str = "default",
+) -> list[Result]:
+    """
+    Retrieve the chunks closest in meaning to a question.
+
+    Returns them nearest-first, each with its distance.
+    """
+    top_k = top_k or config.TOP_K
+    name = config.collection_name(corpus, variant)
+
+    try:
+        collection = _client().get_collection(name)
+    except Exception as exc:
+        raise RuntimeError(
+            f"No index called '{name}'. Run `python app.py index` first."
+        ) from exc
+
+    raw = collection.query(
+        query_embeddings=embed([question]),
+        n_results=min(top_k, collection.count()),
+    )
+
+    results: list[Result] = []
+    for text, meta, distance in zip(
+        raw["documents"][0], raw["metadatas"][0], raw["distances"][0]
+    ):
+        results.append(
+            Result(
+                text=text,
+                source=str(meta.get("source", "unknown")),
+                label=f"{meta.get('source', 'unknown')}#{meta.get('index', 0)}",
+                distance=float(distance),
+                produced_by=str(meta.get("produced_by", "unknown")),
+            )
+        )
+    return results
+
+
+def index_exists(corpus: str | None = None, variant: str = "default") -> bool:
+    """Is there an index here to search, without searching it?
+
+    `serve.py`'s health check asks this. It deliberately does not embed
+    anything: loading the embedding model takes 80 MB and a few seconds, and a
+    health check that heavy is a health check nobody can afford to call.
+    """
+    try:
+        collection = _client().get_collection(config.collection_name(corpus, variant))
+        return collection.count() > 0
+    except Exception:
+        return False
+
+
+def reset():
+    """Delete every index. Occasionally the fastest way out of a mess."""
+    if config.CHROMA_DIR.exists():
+        shutil.rmtree(config.CHROMA_DIR)
+
+===== FILE: .\chunker.py =====
+"""
+Stage 2 of the pipeline: splitting documents into chunks.
+
+⚠️ THIS IS THE FILE YOU CHANGE IN MILESTONE 3.
+
+`split_documents` below is deliberately plain. It cuts every document into
+fixed-size pieces with a fixed overlap and pays no attention to where sentences
+or paragraphs end. It works, and it is not good.
+
+On a corpus of short posts it may not cut anything at all: `campus_life` comes
+out as 88 documents and 88 chunks, because almost nothing in it reaches 800
+characters. That is the baseline, not a bug — Milestone 3 is where you decide
+whether one post should stay one chunk.
+
+Your job in Milestone 3 is to replace the *body* of `split_documents` with a
+strategy that fits the documents you actually read in Milestone 1. Keep the
+name and the shape of what it returns — the rest of the pipeline calls it, and
+your README has to name the function that produced your chunks.
+
+If you get stuck for 30 minutes, `fallback_split` is the original. Switch back
+to it, write down what you saw, and move on. That's a real observation about
+your pipeline, not giving up.
+"""
+
+from dataclasses import dataclass
+
+import config
+from ingest import Document
+
+
+@dataclass
+class Chunk:
+    """One piece of one document."""
+
+    text: str
+    source: str        # which file it came from
+    index: int         # which chunk within that file, starting at 0
+    produced_by: str   # the function that made it — cite this in your README
+
+    @property
+    def label(self) -> str:
+        return f"{self.source}#{self.index}"
+
+
+def fallback_split(
+    documents: list[Document],
+    chunk_size: int | None = None,
+    overlap: int | None = None,
+) -> list[Chunk]:
+    """
+    The starter's original chunker. Fixed-size character windows with overlap.
+
+    Keep this function. Milestone 3's stop rule points back at it, and having
+    something to compare your own strategy against is useful in unit 2.
+    """
+    chunk_size = chunk_size or config.CHUNK_SIZE
+    overlap = overlap or config.CHUNK_OVERLAP
+
+    if overlap >= chunk_size:
+        raise ValueError("overlap has to be smaller than chunk_size")
+
+    chunks: list[Chunk] = []
+    for doc in documents:
+        start = 0
+        index = 0
+        while start < len(doc.text):
+            piece = doc.text[start : start + chunk_size].strip()
+            if piece:
+                chunks.append(
+                    Chunk(
+                        text=piece,
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::fallback_split",
+                    )
+                )
+                index += 1
+            start += chunk_size - overlap
+
+    return chunks
+
+
+def split_documents(documents: list[Document]) -> list[Chunk]:
+    """
+    Split documents at paragraph boundaries.
+
+    The campus_life corpus contains short, focused posts. Complete documents
+    remain together when they fit within CHUNK_SIZE. Longer documents are
+    separated between paragraphs instead of at arbitrary character positions.
+    """
+    chunk_size = config.CHUNK_SIZE
+
+    if chunk_size <= 0:
+        raise ValueError("chunk_size must be greater than zero")
+
+    chunks: list[Chunk] = []
+
+    for doc in documents:
+        text = doc.text.strip()
+
+        if not text:
+            continue
+
+        paragraphs = [
+            paragraph.strip()
+            for paragraph in text.split("\n\n")
+            if paragraph.strip()
+        ]
+
+        pieces: list[str] = []
+        current_paragraphs: list[str] = []
+        current_length = 0
+
+        for paragraph in paragraphs:
+            separator_length = 2 if current_paragraphs else 0
+            proposed_length = (
+                current_length
+                + separator_length
+                + len(paragraph)
+            )
+
+            if (
+                current_paragraphs
+                and proposed_length > chunk_size
+            ):
+                pieces.append(
+                    "\n\n".join(current_paragraphs),
+                )
+                current_paragraphs = [paragraph]
+                current_length = len(paragraph)
+            else:
+                current_paragraphs.append(paragraph)
+                current_length = proposed_length
+
+        if current_paragraphs:
+            pieces.append(
+                "\n\n".join(current_paragraphs),
+            )
+
+        document_title = (
+            paragraphs[0]
+            if len(paragraphs) > 1
+            else ""
+        )
+
+        for index, piece in enumerate(pieces):
+            chunk_text = piece
+
+            if (
+                index > 0
+                and document_title
+                and not piece.startswith(document_title)
+            ):
+                chunk_text = (
+                    f"{document_title}\n\n{piece}"
+                )
+
+            chunks.append(
+                Chunk(
+                    text=chunk_text,
+                    source=doc.source,
+                    index=index,
+                    produced_by=(
+                        "chunker.py::split_documents"
+                    ),
+                ),
+            )
+
+    return chunks
+
+
+def describe(chunks: list[Chunk]) -> str:
+    """A one-line summary, printed after indexing."""
+    if not chunks:
+        return "0 chunks"
+    lengths = [len(c.text) for c in chunks]
+    return (
+        f"{len(chunks)} chunks, "
+        f"{sum(lengths) // len(lengths)} characters on average "
+        f"(shortest {min(lengths)}, longest {max(lengths)}), "
+        f"produced by {chunks[0].produced_by}"
+    )
+
+
+if __name__ == "__main__":
+    from ingest import load_documents
+
+    chunks = split_documents(load_documents())
+    print(describe(chunks))
+
+===== FILE: .\config.py =====
+"""
+Settings for The Unofficial Guide.
+
+Everything you're likely to change lives here, at the top, on purpose.
+You'll edit THRESHOLD in Milestone 4 and the chunking numbers in Milestone 3.
+
+Anything you set in your .env file wins over the defaults here.
+"""
+
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).parent
+load_dotenv(ROOT / ".env")
+
+
+# ─── The corpus you're working with ──────────────────────────────────────────
+# Change this to switch corpora, or pass --corpus on the command line.
+# Options are the folder names inside corpora/. See corpora/README.md.
+
+CORPUS = os.getenv("AI201_CORPUS", "campus_life")
+
+
+# ─── Chunking (Milestone 3) ──────────────────────────────────────────────────
+# These are deliberately plain, generic numbers. Milestone 3 is where you
+# replace them with numbers that fit the documents you actually read.
+
+# The campus_life documents are short and focused. A 500-character target
+# keeps 86 of the 88 documents intact and separates only two longer,
+# multi-topic housing posts at paragraph boundaries.
+CHUNK_SIZE = 500        # characters per chunk
+
+# The strategy preserves complete paragraphs instead of using overlapping
+# character windows. Document titles are repeated separately when needed
+# so later chunks retain their subject.
+CHUNK_OVERLAP = 0     # characters shared between neighbouring chunks
+
+
+# ─── Retrieval (Milestone 4) ─────────────────────────────────────────────────
+
+TOP_K = 5               # how many chunks to pull back per question
+
+# The relevance gate. If the best chunk is further away than this, the system
+# refuses to answer instead of handing the model thin material.
+#
+# LOWER IS BETTER: 0.3 is a close match, 0.9 is unrelated.
+#
+# 0.6 was a reasonable starting point, not a right answer. Milestone 4 has you
+# measure your own two groups of distances and put the cutoff in the gap.
+# Most corpora land somewhere between 0.45 and 0.75.
+
+# The highest best distance for the five in-corpus questions was 0.4158.
+# The lowest best distance for the five out-of-corpus questions was 0.8246.
+# A cutoff of 0.62 lies approximately halfway between those groups.
+THRESHOLD = 0.62
+
+
+# ─── Models ──────────────────────────────────────────────────────────────────
+# Embeddings run on your own machine and cost no API quota.
+# Only generation calls out to a service.
+
+# This is the model Chroma bundles, and leaving it alone is the fast path: it
+# downloads about 80 MB from Chroma's own CDN and needs nothing else installed.
+#
+# Setting it to any other name — unit 2's "try a second embedding model"
+# stretch option — switches to loading that model from Hugging Face instead,
+# which needs `pip install 'sentence-transformers>=3.4,<3.5'` first. store.py
+# says so with a real error message rather than a stack trace if you forget.
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"
+MODEL = os.getenv("AI201_MODEL", "gemini-3.5-flash-lite")
+
+
+# ─── Rate limiting and quota guards ──────────────────────────────────────────
+# You should not need to touch these. They exist so that a runaway loop costs
+# you a warning instead of your whole day's allowance.
+
+REQUESTS_PER_MINUTE = 30       # outgoing calls the limiter will allow per minute
+SESSION_REQUEST_BUDGET = 300   # stop and warn rather than draining the daily quota
+MAX_RETRIES = 4                # on 429 / resource-exhausted, with backoff
+
+CACHE_ENABLED = os.getenv("AI201_CACHE", "1") != "0"
+CACHE_DIR = ROOT / ".cache"
+
+
+# ─── Paths ───────────────────────────────────────────────────────────────────
+
+CORPORA_DIR = ROOT / "corpora"
+CHROMA_DIR = ROOT / "chroma_db"
+RESULTS_DIR = ROOT / "results"
+
+
+def corpus_path(name: str | None = None) -> Path:
+    """Folder holding the documents for a corpus."""
+    return CORPORA_DIR / (name or CORPUS) / "documents"
+
+
+def collection_name(name: str | None = None, variant: str = "default") -> str:
+    """
+    Name of the vector-store collection for a corpus.
+
+    `variant` lets you index the same corpus two different ways and query both
+    without deleting anything — you'll want that in unit 2 when you compare
+    chunking strategies.
+
+    Chroma is fussy about collection names: 3 to 63 characters, starting and
+    ending with a letter or digit, and nothing but letters, digits, underscores
+    and hyphens in between. If you bring your own corpus and name the folder
+    something Chroma won't accept, this cleans it up rather than failing.
+    """
+    import re
+
+    raw = f"{name or CORPUS}__{variant}"
+    cleaned = re.sub(r"[^A-Za-z0-9_-]", "-", raw)
+    cleaned = cleaned.strip("_-")          # must start and end alphanumeric
+    if not cleaned or not cleaned[0].isalnum():
+        cleaned = f"c{cleaned}"
+    if not cleaned[-1].isalnum():
+        cleaned = f"{cleaned}0"
+    return cleaned[:63].rstrip("_-") or "collection"
+
+===== CORPUS DOCUMENT PATHS =====
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\README.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_bike_commute.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_changing_major.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_clubs.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_commuting.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_first_gen.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_first_year_regret.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_group_project.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_internship_timing.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_laptop_specs.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_late_work.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_laundry_timing.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_meal_plan_tier.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_office_hours_etiquette.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_parking.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_pass_fail.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_printing.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_professor_email.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_roommate_conflict.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_sleep_schedule.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_study_spots.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_textbook_editions.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_transfer_credits.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\advice_threads\documents\thread_winter_advice.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_add_drop_deadline.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_campus_jobs_and_financial_aid.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_declaring_a_major.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_dining_dollars.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_grade_appeals.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_graduation_requirements.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_housing_lottery.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_library_holds.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_meal_plan_changes.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_parking_permits.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_pass_fail_option.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_printing_quota.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_study_abroad.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_transcript_requests.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_wifi_and_accounts.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\admin_withdrawal_deadline.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\advising_registration.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_biol_160_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_biol_160_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_biol_160.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_210_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_210_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_210.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_340_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_340_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_cs_340.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_econ_101_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_econ_101_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_econ_101.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_engl_205_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_engl_205_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_engl_205.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_hist_118_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_hist_118_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_hist_118.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_math_220_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_math_220_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_math_220.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_phys_130_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_phys_130_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_phys_130.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_stat_150_exams.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_stat_150_workload.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\course_stat_150.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_halden_hall_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_halden_hall.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_kestrel_commons_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_kestrel_commons.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_north_kitchen_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_north_kitchen.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_pellew_dining_hall_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_pellew_dining_hall.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_the_atrium_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_the_atrium.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_the_ridgeway_cafe_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_the_ridgeway_cafe.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_verrill_street_grill_followup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\dining_verrill_street_grill.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\health_center.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_aldridge_hall_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_aldridge_hall_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_aldridge_hall.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_calder_annexe_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_calder_annexe_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_calder_annexe.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_fenwick_court_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_fenwick_court_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_fenwick_court.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_innisfree_hall_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_innisfree_hall_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_innisfree_hall.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_morrow_house_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_morrow_house_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_morrow_house.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_old_brewhouse_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_old_brewhouse_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_old_brewhouse.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_tamsin_court_laundry.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_tamsin_court_noise.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\housing_tamsin_court.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\money_jobs.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\money_textbooks.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\orientation_what_matters.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\study_group_rooms.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\study_library_hours.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\transit_shuttle.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\transit_walking.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\campus_life\documents\winter_gear.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_accessibility.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_brightwater.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_corry_vale.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_eating.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_elder_ness.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_givens_mill.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_halden_bay.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_kestrelford.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_marchwood.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_pellew_sands.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_regional_transport.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_seasons.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_thornby_wells.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\city_guides\documents\guide_walking.md
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_card_list.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_common_errors.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_components.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_contracts.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_crew.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_designer_notes.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_etiquette.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_expansion.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_faq.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_five_players.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_glossary.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_history.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_house_rules.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_market.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_port_reference.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_ports.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_rules_walkthrough.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_scoring_example.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_scoring.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_setup_variants.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_setup.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_solo.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_strategy_guide.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_strategy.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_teaching_new_players.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_timing.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_turn.txt
+D:\FAU\Session Fall 2026\AI201\Project01\ai201-project1-unofficial-guide-starter-v2026\corpora\practice\documents\board_game_variants.txt
