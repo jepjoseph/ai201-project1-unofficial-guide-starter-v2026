@@ -280,16 +280,31 @@ I did find a **retrieval-stage weakness** that the original targets did not coun
 
 ### Run Log — After
 
-<!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
+I ran `python run_eval.py --corpus campus_life --label after` with `top-k: 1`, the same `0.62` cutoff, and three uncached runs per question. The complete report is `results/run_2026-09-25_1815_after.md`.
 
-| Criterion                              | Target | Run 1 | Run 2 | Run 3 | Verdict |
-| -------------------------------------- | ------ | ----- | ----- | ----- | ------- |
-| 1. Retrieved chunk contains the answer | 4 of 5 |       |       |       |         |
-| 2. Every answer names a source         | 5 of 5 |       |       |       |         |
-| 3. Gate stops out-of-corpus questions  | 4 of 5 |       |       |       |         |
-| 4.                                     |        |       |       |       |         |
-| 5.                                     |        |       |       |       |         |
+| Criterion                                               | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+| ------------------------------------------------------- | --------------: | ----: | ----: | ----: | ------- |
+| 1. Retrieved chunks contain the answer                  |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 2. Every answer names a source                          |             5/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 3. Gate stops out-of-corpus questions                   |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 4. Sampled chunks stand alone and have intact sentences |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 5. Named document supports the answer                   |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+
+The chunk sample for criterion 4 did not change because `TOP_K` affects retrieval count, not chunk creation. The out-of-corpus gate again refused 5/5. I inspected each generated answer for its source and checked the supporting source documents.
+
+**Real after-run output:** Produced by `run_eval.py::main`, with retrieval from `store.py::search` and chunks from `chunker.py::split_documents`.
+
+```text
+Question: How long is the wait at Kestrel Commons between 12:15 and 1:00?
+Run 1 — best distance: 0.2129 (passed the gate)
+Sources retrieved: dining_kestrel_commons_followup.txt
+
+The wait at Kestrel Commons between 12:15 and 1:00 is 20 to 25 minutes.
+
+Source: dining_kestrel_commons_followup.txt
+```
+
+The sole retrieved chunk, `dining_kestrel_commons_followup.txt#0`, says that the wait is “20 to 25 minutes between 12:15 and 1:00.” The generated answer names that supporting document.
 
 **Did it help?**
 
@@ -300,6 +315,8 @@ I did find a **retrieval-stage weakness** that the original targets did not coun
 
      Milestone 4. -->
 
+On these five questions, reducing `TOP_K` from 5 to 1 removed four extra chunks per question while all five original criteria remained MET in all three runs. The completed `TOP_K = 5` repeat reported 10,114 session tokens, compared with 3,833 for the `TOP_K = 1` after run—about 62% fewer session tokens. Those totals are from two separate runs, so they are evidence of reduced context use here, not an exact per-answer cost estimate. The best distances were unchanged because the closest chunk stayed the same.
+
 ## What's Still Broken
 
 <!-- For each criterion still missed after your fix: what you'd do about it,
@@ -309,6 +326,8 @@ I did find a **retrieval-stage weakness** that the original targets did not coun
      not.
 
      Milestone 5. -->
+
+No original criterion remained missed after the improvement. The test set does not check questions whose answers require two distinct chunks or documents. `TOP_K = 1` could fail such a question by withholding a needed second passage. I stopped after one pipeline change so I could measure its effect without mixing in another change. My next test would specify a question requiring two source facts before running it, then compare the retrieved evidence and answer at `TOP_K = 1` and a larger value.
 
 ## What I'd Do Differently
 
