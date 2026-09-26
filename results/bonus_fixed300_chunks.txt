@@ -1,0 +1,39 @@
+164 chunks total. Five spread across the corpus.
+
+============================================================
+Chunk 1 | source: admin_add_drop_deadline.txt#0
+Produced by: chunker.py::fallback_split
+============================================================
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer window ù through the end of week six ù but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
+
+============================================================
+Chunk 2 | source: course_biol_160.txt#1
+Produced by: chunker.py::fallback_split
+============================================================
+eputation.
+
+The one piece of advice: the unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
+
+============================================================
+Chunk 3 | source: course_math_220_workload.txt#1
+Produced by: chunker.py::fallback_split
+============================================================
+learning the format.
+
+============================================================
+Chunk 4 | source: dining_the_ridgeway_cafe_followup.txt#0
+Produced by: chunker.py::fallback_split
+============================================================
+Re: The Ridgeway CafΘ
+
+Adding to what people have said about The Ridgeway CafΘ. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.
+
+Also worth saying: seating is tight; about 40 seats f
+
+============================================================
+Chunk 5 | source: housing_innisfree_hall_noise.txt#1
+Produced by: chunker.py::fallback_split
+============================================================
+'s what most people in this building end up doing.

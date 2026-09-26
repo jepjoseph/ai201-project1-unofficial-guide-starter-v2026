@@ -79,6 +79,19 @@ multiple related facts, so I want to verify that my chunking strategy preserves
 enough context to answer a question independently. I allow one imperfect sample
 because the documents vary in structure and paragraph count.
 
+> **Revised in Unit 2 for index-variant comparisons:** For at least 4 of
+> 5 chunks sampled at evenly spaced positions from the strategy used to
+> build the evaluated index variant, a reader can write a question the
+> chunk answers without a neighboring chunk, and the chunk does not begin
+> or end with a sentence cut in half.
+>
+> **Why revised:** The original `app.py chunks -n 5` command always calls
+> `chunker.py::split_documents`, even when the evaluation uses the
+> `fixed300` index built with `chunker.py::fallback_split`. It therefore
+> measures the paragraph-aware strategy instead of the strategy under
+> test. The target remains 4 of 5; only the sample source changes to
+> match the evaluated index.
+
 ---
 
 ## 5. Your choice

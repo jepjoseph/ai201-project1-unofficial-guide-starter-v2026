@@ -348,3 +348,67 @@ context. I will keep the same five questions and acceptance targets, run each
 three times against the new variant, and compare the third run log with my
 `TOP_K = 1` after log. I will report whether the change helped, hurt, or made
 no measurable difference.
+
+## Bonus — Second Measured Improvement
+
+I declared this experiment in the README before implementing it. I built the
+`fixed300` index with `build_bonus_index.py`, using
+`chunker.py::fallback_split`: 300-character windows and 60-character overlap.
+It produced 164 chunks, compared with 90 from the paragraph-aware strategy.
+I kept `TOP_K = 1`, the five questions, the embedding model, and the 0.62
+cutoff unchanged.
+
+I ran `python run_eval.py --corpus campus_life --variant fixed300 --label
+bonus_fixed300`. The complete three-run report is
+`results/run_2026-09-25_2207_bonus_fixed300.md`. The five fixed-window sample
+chunks are in `results/bonus_fixed300_chunks.txt`.
+
+| Criterion                                              | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+| ------------------------------------------------------ | --------------: | ----: | ----: | ----: | ------- |
+| 1. Retrieved chunks contain the answer                 |    At least 4/5 |   4/5 |   4/5 |   4/5 | MET     |
+| 2. Every answer names a source                         |             5/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 3. Gate stops out-of-corpus questions                  |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 4. Chunk quality, revised variant-specific measurement |    At least 4/5 |   1/5 |   1/5 |   1/5 | MISSED  |
+| 5. Named source supports the expected answer           |    At least 4/5 |   4/5 |   4/5 |   4/5 | MET     |
+
+Criterion 4's **original command**, if run literally, still samples the
+paragraph-aware chunker and scores 5/5. It cannot measure the `fixed300`
+variant. The revised, variant-specific sample scores 1/5. The unchanged 4/5
+target is applied to the strategy actually used for this bonus index.
+
+**Real output:** `run_eval.py::main` used `store.py::search` against the
+`fixed300` index, whose chunks were produced by
+`chunker.py::fallback_split`. For the shuttle question, run 1 recorded:
+
+```text
+Best distance: 0.4537 (passed the gate)
+Sources retrieved: transit_shuttle.txt
+
+I do not have enough information to answer this question from the provided document. (Source: transit_shuttle.txt)
+```
+
+Inspection of the exact retrieved `transit_shuttle.txt#0` chunk showed that
+it ends:
+
+```text
+It's free with a student ID. The stop outside Fenwick Court is the one that ge
+```
+
+The source document contains the answer, but this retrieved chunk stops
+before the stop's name appears. The phrase scorer failed the shuttle
+question in all three runs. For criterion 5, I count only the four correct
+answers as supported answers; the shuttle refusal does not answer its
+question.
+
+The sample produced by `chunker.py::fallback_split` includes chunks
+beginning `eputation.` and `learning the format.`, one ending `seats f`,
+and one consisting only of a sentence fragment. Four of five fail the
+intact-boundary condition.
+
+**Did it help?** No. Compared with the paragraph-aware `TOP_K = 1` run,
+the fixed-window strategy reduced answer success from 5/5 to 4/5 on every
+run and reduced the variant-specific chunk-quality sample from 5/5 to
+1/5. The 0.62 gate still passed the shuttle question because its nearest
+chunk had distance 0.4537; the gate checks similarity, not whether the
+chunk contains the entire answer. The paragraph-aware index remains the
+better choice for these documents and this test set.
