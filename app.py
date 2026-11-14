@@ -16,6 +16,7 @@ editing config.py.
 import argparse
 import sys
 import time
+from instrumentation import instrument_request
 
 import config
 
@@ -144,6 +145,7 @@ def cmd_chunks(args):
     print("without reading what came before or after?")
 
 
+@instrument_request(kind="retrieve")
 def cmd_retrieve(args):
     """Milestone 4. Retrieval only, with distances, and no model call."""
     from store import search
@@ -165,6 +167,8 @@ def cmd_retrieve(args):
         )
         decision = gate.check(results)
 
+    from instrumentation import set_request_gate
+    set_request_gate(decision, sources=[r.source for r in results])
     if not results:
         print("Nothing came back. Have you run `python app.py index`?")
         return
@@ -188,6 +192,7 @@ def cmd_retrieve(args):
     print("between the two groups. Your cutoff goes in that gap.")
 
 
+@instrument_request(kind="ask")
 def ask_pipeline(
     question,
     corpus=None,
@@ -234,6 +239,8 @@ def ask_pipeline(
             variant=variant,
         )
         decision = gate.check(results, threshold=threshold)
+    from instrumentation import set_request_gate
+    set_request_gate(decision)
     if on_gate is not None:
         on_gate(decision)
 

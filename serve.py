@@ -28,6 +28,9 @@ this file stays the bare shell until then.
 """
 
 import os
+import time
+from flask import g
+from instrumentation import log_http_error
 
 from flask import Flask, jsonify, request
 
@@ -61,6 +64,27 @@ def health():
             ),
         }
     )
+
+
+@app.before_request
+def _start_request_clock():
+    if request.path == "/ask":
+        g.request_started = time.perf_counter()
+
+
+@app.after_request
+def _log_rejected_http_requests(response):
+    if request.path == "/ask" and response.status_code >= 400:
+        payload = request.get_json(silent=True)
+        if not isinstance(payload, dict):
+            payload = {}
+        log_http_error(
+            question=payload.get("question", ""),
+            retrieval=payload.get("retrieval", "semantic"),
+            status_code=response.status_code,
+            duration_ms=(time.perf_counter() - getattr(g, "request_started", time.perf_counter())) * 1000,
+        )
+    return response
 
 
 @app.post("/ask")
