@@ -75,6 +75,9 @@ def ask():
 
     payload = request.get_json(silent=True) or {}
     question = (payload.get("question") or "").strip()
+    retrieval = payload.get("retrieval", "semantic")
+    if retrieval not in ("semantic", "hybrid"):
+        return jsonify({"error": "retrieval must be semantic or hybrid"}), 400
 
     if not question:
         return (
@@ -88,13 +91,14 @@ def ask():
         )
 
     try:
-        outcome = ask_pipeline(question, corpus=config.CORPUS)
+        outcome = ask_pipeline(question, corpus=config.CORPUS, retrieval=retrieval)
     except Exception as exc:  # noqa: BLE001 — a reader gets this, not a traceback
         return jsonify({"error": f"{type(exc).__name__}: {exc}"}), 500
 
     return jsonify(
         {
             "question": question,
+            "retrieval": retrieval,
             "answer": outcome["answer"],
             "refused": outcome["refused"],
             "sources": outcome["sources"],

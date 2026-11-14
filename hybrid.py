@@ -84,3 +84,23 @@ class BM25Retriever:
                 break
 
         return results
+
+def hybrid_search(question: str, *, top_k: int = 5, corpus=None, variant="default", candidate_k: int = 10):
+    """Retrieve from both engines, then fuse rankings by stable chunk label.
+
+    Returns (fused_results, semantic_candidates). The latter must be used
+    for the cosine-distance relevance gate, not the RRF scores.
+    """
+    from chunker import split_documents
+    from ingest import load_documents
+    from rrf import reciprocal_rank_fusion
+    from store import search as semantic_search
+
+    if top_k <= 0 or candidate_k <= 0:
+        raise ValueError("top_k and candidate_k must be greater than zero")
+    pool_size = max(top_k, candidate_k)
+    chunks = split_documents(load_documents(corpus))
+    keyword = BM25Retriever(chunks).search(question, top_k=pool_size)
+    semantic = semantic_search(question, top_k=pool_size, corpus=corpus, variant=variant)
+    fused = reciprocal_rank_fusion(keyword, semantic, top_k=top_k)
+    return fused, semantic

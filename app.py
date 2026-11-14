@@ -149,27 +149,40 @@ def cmd_retrieve(args):
     from store import search
     import gate
 
-    results = search(
-        args.question,
-        top_k=args.top_k or config.TOP_K,
-        corpus=args.corpus or config.CORPUS,
-        variant=args.variant,
-    )
+    if args.retrieval == "hybrid":
+        from hybrid import hybrid_search
+        results, semantic_candidates = hybrid_search(
+            args.question, top_k=args.top_k or config.TOP_K,
+            corpus=args.corpus or config.CORPUS, variant=args.variant,
+        )
+        decision = gate.check(semantic_candidates)
+    else:
+        results = search(
+            args.question,
+            top_k=args.top_k or config.TOP_K,
+            corpus=args.corpus or config.CORPUS,
+            variant=args.variant,
+        )
+        decision = gate.check(results)
 
     if not results:
         print("Nothing came back. Have you run `python app.py index`?")
         return
 
     print(f"\nQuestion: {args.question}\n")
-    print(f"{'#':<3} {'distance':<10} {'source':<32} preview")
+    metric = "rrf_score" if args.retrieval == "hybrid" else "distance"
+    print(f"{'#':<3} {metric:<10} {'source':<32} preview")
     print("-" * 100)
     for i, r in enumerate(results, 1):
         preview = r.text[:52].replace("\n", " ")
-        print(f"{i:<3} {r.distance:<10.4f} {r.source:<32} {preview}...")
+        score = r.rrf_score if args.retrieval == "hybrid" else r.distance
+        print(f"{i:<3} {score:<10.4f} {r.source:<32} {preview}...")
 
-    decision = gate.check(results)
-    print(f"\nGate: {decision.explanation}")
-    print("\nLower is better. 0.3 is a close match, 0.9 is unrelated.")
+    print(f"\nGate (semantic cosine distance): {decision.explanation}")
+    if args.retrieval == "hybrid":
+        print("RRF score: higher is better; gate uses semantic cosine distance.")
+    else:
+        print("\nLower is better. 0.3 is a close match, 0.9 is unrelated.")
     print("Milestone 4: run your five questions, then the five in OUT_OF_SCOPE")
     print("that your documents clearly don't cover, and look for the gap")
     print("between the two groups. Your cutoff goes in that gap.")
@@ -183,6 +196,7 @@ def ask_pipeline(
     threshold=None,
     on_gate=None,
     on_prompt=None,
+    retrieval="semantic",
 ):
     """Retrieve, gate, answer. Returns the outcome and prints nothing.
 
@@ -203,13 +217,23 @@ def ask_pipeline(
     import gate
     from generate import answer_from_chunks, build_prompt
 
-    results = search(
-        question,
-        top_k=top_k or config.TOP_K,
-        corpus=corpus or config.CORPUS,
-        variant=variant,
-    )
-    decision = gate.check(results, threshold=threshold)
+    if retrieval not in ("semantic", "hybrid"):
+        raise ValueError("retrieval must be 'semantic' or 'hybrid'")
+    if retrieval == "hybrid":
+        from hybrid import hybrid_search
+        results, semantic_candidates = hybrid_search(
+            question, top_k=top_k or config.TOP_K,
+            corpus=corpus or config.CORPUS, variant=variant,
+        )
+        decision = gate.check(semantic_candidates, threshold=threshold)
+    else:
+        results = search(
+            question,
+            top_k=top_k or config.TOP_K,
+            corpus=corpus or config.CORPUS,
+            variant=variant,
+        )
+        decision = gate.check(results, threshold=threshold)
     if on_gate is not None:
         on_gate(decision)
 
@@ -244,6 +268,7 @@ def _ask_one(
     threshold,
     show_distances=True,
     show_prompt=False,
+    retrieval="semantic",
 ):
     import gate
     from generate import GROUNDING_INSTRUCTION
@@ -271,6 +296,7 @@ def _ask_one(
         threshold=threshold,
         on_gate=print_distances if show_distances else None,
         on_prompt=print_prompt if show_prompt else None,
+        retrieval=retrieval,
     )
 
     if outcome["refused"]:
@@ -295,6 +321,7 @@ def cmd_ask(args):
                 args.top_k,
                 args.threshold,
                 show_prompt=args.show_prompt,
+                retrieval=args.retrieval,
             )
         else:
             print("Ask a question, or press Enter on an empty line to quit.\n")
@@ -313,6 +340,7 @@ def cmd_ask(args):
                     args.top_k,
                     args.threshold,
                     show_prompt=args.show_prompt,
+                    retrieval=args.retrieval,
                 )
     finally:
         print(gen.usage())
@@ -360,11 +388,13 @@ def build_parser():
     p_ret = sub.add_parser("retrieve", help="show distances only (Milestone 4)")
     p_ret.add_argument("question")
     p_ret.add_argument("--top-k", type=int)
+    p_ret.add_argument("--retrieval", choices=("semantic", "hybrid"), default="semantic")
     p_ret.set_defaults(func=cmd_retrieve)
 
     p_ask = sub.add_parser("ask", help="ask a question")
     p_ask.add_argument("question", nargs="?")
     p_ask.add_argument("--top-k", type=int)
+    p_ask.add_argument("--retrieval", choices=("semantic", "hybrid"), default="semantic")
     p_ask.add_argument("--threshold", type=float, help="override the gate cutoff")
     p_ask.add_argument(
         "--show-prompt",
