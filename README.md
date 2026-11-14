@@ -412,3 +412,472 @@ run and reduced the variant-specific chunk-quality sample from 5/5 to
 chunk had distance 0.4537; the gate checks similarity, not whether the
 chunk contains the entire answer. The paragraph-aware index remains the
 better choice for these documents and this test set.
+
+---
+
+# Unit 9 — Hybrid RAG Capstone
+
+## What This Extends
+
+This capstone extends **The Unofficial Guide**, the retrieval-augmented generation (RAG) system developed during Units 1 and 2 of CodePath AI201.
+
+The original system retrieves information from the `campus_life` corpus using semantic search, checks relevance using a distance threshold, and generates answers grounded in retrieved documents.
+
+Unit 9 extends that system with:
+
+1. **BM25 keyword retrieval** to find documents using lexical relevance.
+2. **Reciprocal Rank Fusion (RRF)** to combine keyword and semantic rankings.
+3. **Hybrid retrieval** that uses both BM25 and ChromaDB semantic search.
+4. **Structured instrumentation** to record request inputs, outputs, execution times, statuses, and errors.
+5. **Comparative evaluation** to measure semantic and hybrid retrieval using the same questions.
+
+The existing paragraph-aware chunking strategy, ChromaDB index, relevance threshold, and original acceptance criteria remain unchanged.
+
+The objective is not to assume that hybrid retrieval is better, but to implement it, measure its behavior, and report the results.
+
+## The Shape
+
+### System Architecture
+
+The application supports two retrieval modes: semantic and hybrid.
+
+**Semantic retrieval pipeline**
+
+```text
+User Question
+     |
+     v
+Semantic Search (ChromaDB)
+     |
+     v
+Retrieved Document Chunks
+     |
+     v
+Semantic Distance Relevance Gate
+     |
+     +---- Not Relevant ----> Refusal
+     |
+     v
+Grounded Answer Generation
+     |
+     v
+Answer with Source Documents
+```
+
+**Hybrid retrieval pipeline**
+
+```text
+                   User Question
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+       BM25 Keyword Search   ChromaDB Semantic Search
+              |                     |
+              v                     v
+       Keyword Candidates    Semantic Candidates
+              |                     |
+              +----------+----------+
+                         |
+                         v
+              Reciprocal Rank Fusion
+                         |
+                         v
+                Fused Document Chunks
+                         |
+                         v
+             Semantic Distance Relevance Gate
+                         |
+              +----------+----------+
+              |                     |
+           Refuse                Accept
+              |                     |
+              v                     v
+       Refusal Message     Grounded Generation
+                                    |
+                                    v
+                         Answer with Sources
+```
+
+The relevance gate continues to use semantic distances. RRF scores are used to rank combined retrieval results, not to determine whether a question is within the corpus.
+
+### Main Components
+
+| File | Responsibility |
+|---|---|
+| `ingest.py` | Loads documents from the selected corpus |
+| `chunker.py` | Divides documents into meaningful chunks |
+| `store.py` | Performs ChromaDB semantic retrieval |
+| `hybrid.py` | Implements BM25 and coordinates hybrid retrieval |
+| `rrf.py` | Combines ranked results using Reciprocal Rank Fusion |
+| `gate.py` | Determines whether retrieved semantic evidence is sufficiently relevant |
+| `generate.py` | Produces grounded answers from retrieved context |
+| `app.py` | Provides the command-line interface |
+| `serve.py` | Exposes the RAG application through HTTP |
+| `instrumentation.py` | Records structured execution events |
+| `unit9_compare.py` | Evaluates semantic and hybrid retrieval |
+
+### BM25 Keyword Retrieval
+
+BM25 ranks documents according to the relevance of query terms within each document.
+
+Unlike semantic retrieval, which compares vector representations, BM25 emphasizes lexical matches.
+
+This can be useful for questions containing exact terminology, course names, building names, or other specific identifiers.
+
+The implementation uses the existing corpus and chunking strategy to construct BM25 search candidates.
+
+### Reciprocal Rank Fusion
+
+Reciprocal Rank Fusion combines rankings from multiple retrieval methods.
+
+The general formula is:
+
+```text
+RRF(d) = SUM [1 / (k + rank_i(d))]
+```
+
+Where:
+
+- `d` represents a retrieved document chunk.
+- `rank_i(d)` represents the chunk's position in retrieval list `i`.
+- `k` is a rank-smoothing constant.
+- The sum combines contributions from the retrieval lists containing that chunk.
+
+RRF uses ranking positions rather than requiring BM25 relevance scores and semantic distances to have the same numerical scale.
+
+The implementation also uses stable chunk identifiers to combine matching results without treating the same chunk as separate documents.
+
+### Hybrid Retrieval
+
+The hybrid retrieval process:
+
+1. Receives the question.
+2. Retrieves keyword candidates using BM25.
+3. Retrieves semantic candidates from ChromaDB.
+4. Combines both rankings using RRF.
+5. Returns the highest-ranked fused chunks.
+6. Retains semantic retrieval results for the relevance gate.
+
+This preserves the original refusal behavior while allowing keyword and semantic retrieval to contribute to document ranking.
+
+## Running It
+
+The original project setup instructions remain available in `RUNNING.md`.
+
+### Development Environment
+
+The Unit 9 implementation was developed and tested using:
+
+| Component | Configuration |
+|---|---|
+| Operating system | Windows |
+| Python | 3.12.7 |
+| Virtual environment | `.venv312` |
+| Vector database | ChromaDB 0.6.3 |
+| Embedding model | `all-MiniLM-L6-v2` |
+| Corpus | `campus_life` |
+| Corpus documents | 88 |
+| Paragraph-aware chunks | 90 |
+| Relevance threshold | 0.62 |
+| Default top-k | 1 |
+
+The existing ChromaDB index is reused. Rebuilding the index is unnecessary for the Unit 9 comparison.
+
+### Run Semantic Retrieval
+
+From the project root:
+
+```powershell
+.\.venv312\Scripts\python.exe app.py --corpus campus_life retrieve "How much do washing and drying each cost at Old Brewhouse?" --retrieval semantic
+```
+
+### Run Hybrid Retrieval
+
+```powershell
+.\.venv312\Scripts\python.exe app.py --corpus campus_life retrieve "How much do washing and drying each cost at Old Brewhouse?" --retrieval hybrid
+```
+
+These commands demonstrate retrieval without requiring a model-generated answer.
+
+### Run Automated Tests
+
+```powershell
+.\.venv312\Scripts\python.exe -m unittest test_hybrid test_rrf test_hybrid_pipeline test_instrumentation test_unit9_compare test_instrumentation_output
+```
+
+The Milestone 7 validation completed successfully:
+
+```text
+Ran 39 tests in 0.263s
+
+OK
+```
+
+The test suite covers BM25 retrieval, RRF behavior, hybrid integration, instrumentation, and evaluation functionality.
+
+## Semantic vs. Hybrid Evaluation
+
+### Evaluation Method
+
+The comparison used the existing five in-scope questions and five out-of-scope questions from `questions.py`.
+
+Each question was evaluated three times in each retrieval mode.
+
+| Category | Semantic | Hybrid |
+|---|---:|---:|
+| In-scope questions | 5 | 5 |
+| Out-of-scope questions | 5 | 5 |
+| Trials per question | 3 | 3 |
+| Total trials | 30 | 30 |
+
+**Total evaluation records: 60.**
+
+Both modes used the same corpus and existing semantic relevance threshold.
+
+The evaluation measured retrieval behavior rather than newly generated Gemini answers.
+
+### Evaluation Results
+
+| Metric | Semantic | Hybrid |
+|---|---:|---:|
+| In-scope trials | 15 | 15 |
+| Correct in-scope gate decisions | 15/15 | 15/15 |
+| Top-1 expected-phrase matches | 15/15 | 15/15 |
+| Top-k expected-phrase matches | 15/15 | 15/15 |
+| Correct out-of-scope gate decisions | 15/15 | 15/15 |
+| In-scope mean latency | 54.444 ms | 52.573 ms |
+| In-scope median latency | 41.615 ms | 51.586 ms |
+| Out-of-scope mean latency | 40.748 ms | 51.013 ms |
+| Out-of-scope median latency | 40.899 ms | 50.629 ms |
+
+### Analysis
+
+Both retrieval methods successfully retrieved the expected answer phrase for all 15 in-scope trials.
+
+Both methods also correctly classified all 15 out-of-scope trials.
+
+Therefore, hybrid retrieval did not demonstrate an improvement in expected-phrase retrieval accuracy on this evaluation set.
+
+Latency results were mixed.
+
+For in-scope questions, hybrid retrieval had a slightly lower mean latency but a higher median latency.
+
+For out-of-scope questions, hybrid retrieval had both higher mean and median latency.
+
+These measurements show that adding BM25 and RRF introduces additional computational work, but the exact performance impact depends on the questions and execution conditions.
+
+The benchmark does not establish whether hybrid retrieval improves generated-answer quality or source citation accuracy.
+
+### Evaluation Evidence
+
+The complete evaluation results are stored in:
+
+- `results/unit9_compare_20261114-181537-592760.json`
+- `results/unit9_compare_20261114-181537-592760.csv`
+- `results/unit9_compare_20261114-181537-592760.md`
+
+The JSON file contains structured evaluation data, the CSV supports tabular analysis, and the Markdown file summarizes the results.
+
+## Instrumentation
+
+### Purpose
+
+Instrumentation provides visibility into application execution.
+
+Instead of only observing the final answer, the application records information about requests, outcomes, and execution time.
+
+This helps with debugging, evaluation, performance analysis, and identifying unexpected failures.
+
+### Recorded Information
+
+Structured JSONL events include applicable fields such as:
+
+| Field | Purpose |
+|---|---|
+| Timestamp | Identifies when the event occurred |
+| Event kind | Identifies the operation being recorded |
+| Input | Records the request or question |
+| Output | Records the result or refusal |
+| Duration | Measures execution time in milliseconds |
+| Status | Distinguishes success, refusal, and error outcomes |
+| Retrieval context | Identifies relevant retrieval settings |
+| Error type | Identifies the exception category when an error occurs |
+
+JSONL stores one JSON object per line, making logs easier to inspect and process programmatically.
+
+### Milestone 7 Execution Evidence
+
+The final instrumentation verification produced 22 records.
+
+| Event category | Count |
+|---|---:|
+| Successful retrieval | 10 |
+| Out-of-scope refusals | 10 |
+| HTTP validation error | 1 |
+| Python exception | 1 |
+| **Total** | **22** |
+
+The retrieval and relevance-gate operations used the existing local corpus and ChromaDB index.
+
+Generation was deliberately mocked during this evidence run to avoid unnecessary Gemini API calls.
+
+This means the records validate retrieval, gate decisions, request logging, and error instrumentation, but they should not be interpreted as 22 independently generated Gemini answers.
+
+### Instrumentation Evidence
+
+- `results/milestone5_real_requests.jsonl`
+- `results/milestone7_real_requests_20261114-182032.jsonl`
+
+Automated instrumentation tests also verify the expected structure and behavior of recorded events.
+
+### Production Considerations
+
+Request logs can contain user questions, answers, document references, and other application information.
+
+Before deploying this instrumentation in a corporate environment, I would add:
+
+- Sensitive-data redaction.
+- Appropriate access controls.
+- Log rotation and retention policies.
+- Centralized log collection.
+- Monitoring and alerting.
+- Protection against recording API keys or other credentials.
+
+## What It Costs
+
+### Computational Cost
+
+Semantic retrieval searches the existing vector index.
+
+Hybrid retrieval performs additional operations:
+
+1. Load and chunk the corpus for keyword retrieval.
+2. Prepare BM25 search data.
+3. Rank keyword candidates.
+4. Retrieve semantic candidates.
+5. Fuse both result lists using RRF.
+
+In the current implementation, BM25 preparation occurs during hybrid search rather than through a persistent keyword index.
+
+This can increase the work performed per request.
+
+### Measured Latency
+
+For in-scope questions:
+
+| Metric | Semantic | Hybrid |
+|---|---:|---:|
+| Mean | 54.444 ms | 52.573 ms |
+| Median | 41.615 ms | 51.586 ms |
+
+The hybrid median was approximately 24% higher than the semantic median.
+
+For out-of-scope questions:
+
+| Metric | Semantic | Hybrid |
+|---|---:|---:|
+| Mean | 40.748 ms | 51.013 ms |
+| Median | 40.899 ms | 50.629 ms |
+
+These measurements describe local retrieval execution, not full HTTP request latency or hosted service performance.
+
+### Model API Cost
+
+The Unit 9 comparison did not require Gemini-generated answers.
+
+Consequently, the comparison itself did not incur Gemini generation calls.
+
+Normal grounded-answer generation can consume model API requests and tokens depending on the configured provider, model, and account.
+
+### Possible Optimizations
+
+A future implementation could:
+
+- Cache or persist the BM25 index.
+- Avoid repeatedly loading and chunking the same corpus.
+- Benchmark larger document collections.
+- Measure end-to-end latency separately from retrieval latency.
+- Track model token usage and actual API costs.
+
+## Limitations and Next Steps
+
+### Current Limitations
+
+**1. Small evaluation dataset**
+
+The comparison uses five in-scope and five out-of-scope questions. This is useful for a controlled course experiment but insufficient for broad performance claims.
+
+**2. No demonstrated retrieval-accuracy improvement**
+
+Both modes achieved the same expected-phrase results.
+
+Hybrid retrieval therefore did not demonstrate better accuracy on this test set.
+
+**3. No new generated-answer evaluation**
+
+The Unit 9 comparison measures retrieval and relevance-gate behavior.
+
+It does not independently establish that hybrid-generated answers satisfy the original source-naming and source-support criteria.
+
+**4. BM25 initialization overhead**
+
+The current implementation prepares keyword retrieval data during hybrid searches.
+
+This could become inefficient for larger corpora or higher request volumes.
+
+**5. Limited production observability**
+
+The instrumentation captures structured events, but a production deployment would require additional monitoring, security, and log-management controls.
+
+### Future Improvements
+
+I would extend the system by:
+
+1. Evaluating more diverse questions and document types.
+2. Testing questions requiring information from multiple documents.
+3. Comparing generated answers and source citations across retrieval modes.
+4. Persisting or caching the BM25 keyword index.
+5. Measuring latency under concurrent HTTP requests.
+6. Adding production-grade log redaction, retention, and monitoring.
+
+## How I Used AI — Unit 9
+
+I used AI assistance throughout the Unit 9 capstone to support planning, implementation, testing, and documentation.
+
+**Architecture and design:** AI helped me reason about the differences between BM25 keyword search, semantic retrieval, and Reciprocal Rank Fusion. I used those explanations to plan the hybrid retrieval architecture while preserving the existing relevance gate.
+
+**Implementation support:** AI assisted with reviewing code structure, identifying relevant integration points, and preparing PowerShell scripts for controlled inspections and changes.
+
+**Testing and debugging:** AI helped organize test cases, interpret test results, and investigate implementation problems. I verified proposed changes through local execution rather than accepting generated suggestions without testing.
+
+**Evaluation:** AI helped structure the semantic-versus-hybrid comparison and interpret the results. I checked the reported measurements against saved evaluation evidence and avoided claiming improvements that the results did not demonstrate.
+
+**Version control and documentation:** AI assisted with preparing documentation and Git workflows. I used separate commits for implementation milestones and verified changes before pushing them.
+
+My development process prioritized:
+
+- Read-only inspection before modifying existing files.
+- Backups before potentially destructive changes.
+- Preserving the existing corpus and ChromaDB index.
+- Automated testing after implementation changes.
+- Reviewing Git changes before committing.
+- Separating observed results from assumptions.
+
+AI assistance supported the development process, but the saved code, tests, execution logs, and evaluation results provide the evidence for the conclusions reported here.
+
+## Final Reflection
+
+This capstone demonstrated that combining retrieval methods is technically straightforward compared with proving that the combination improves the application.
+
+BM25 and semantic retrieval use different approaches to finding relevant information. Reciprocal Rank Fusion provides a practical way to combine their rankings without directly comparing incompatible relevance scores.
+
+However, my evaluation showed that hybrid retrieval did not outperform semantic retrieval on the selected questions.
+
+Both modes achieved the same expected-phrase and relevance-gate results, while hybrid retrieval generally had higher median latency.
+
+The instrumentation work was also valuable because it made request behavior measurable and easier to investigate.
+
+The main lesson I learned is that adding complexity to a RAG system should be justified by measurable improvements, not simply by the availability of another retrieval technique.
+
+For this dataset, the existing semantic approach remains a strong baseline. Hybrid retrieval is implemented and available for further evaluation, but broader testing is needed before selecting it as the preferred production retrieval method.
