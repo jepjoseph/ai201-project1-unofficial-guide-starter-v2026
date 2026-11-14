@@ -1,4 +1,4 @@
-﻿"""Structured request instrumentation for Unit 9; no secrets or prompts logged."""
+"""Structured request instrumentation for Unit 9; no secrets or prompts logged."""
 import contextvars
 import functools
 import json
@@ -57,7 +57,24 @@ def instrument_request(*, kind):
                 if isinstance(outcome, dict):
                     sources = outcome.get('sources', [])
                     gate = {**gate, 'sources': sources, 'refused': outcome.get('refused', False)}
+                output = None
+                if isinstance(outcome, dict):
+                    output = outcome.get('answer')
+                    if output is None:
+                        output = {
+                            'sources': gate.get('sources', []),
+                            'refused': gate.get('refused'),
+                        }
+                elif status == 'error':
+                    output = {'error_type': error_type}
+                elif kind == 'retrieve':
+                    output = {
+                        'sources': gate.get('sources', []),
+                        'refused': gate.get('refused'),
+                    }
                 record = {
+                    'input': {'question': str(question)},
+                    'output': output,
                     'event': 'rag_request', 'kind': kind,
                     'question': str(question), 'retrieval_mode': str(retrieval),
                     'corpus': corpus or config.CORPUS, 'variant': variant,
@@ -81,6 +98,11 @@ def instrument_request(*, kind):
 def log_http_error(*, question, retrieval, status_code, duration_ms):
     try:
         _write({
+            'input': {'question': str(question)},
+            'output': {
+                'error': 'HTTP request rejected',
+                'http_status': status_code,
+            },
             'event': 'http_request_error', 'kind': 'http',
             'question': str(question), 'retrieval_mode': str(retrieval),
             'corpus': config.CORPUS, 'variant': 'default',
