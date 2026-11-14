@@ -1,0 +1,396 @@
+# Unit 1
+
+## What This Does
+
+The Unofficial Guide is a retrieval-augmented generation system built over the campus_life corpus, a collection of 88 short documents containing unofficial student information. It answers questions about administrative procedures, dining halls, courses, housing, transportation, study resources, and other aspects of campus life. When a user asks a question, the system searches a local vector store for semantically related document chunks and uses the retrieved information to generate a grounded answer. Each generated answer identifies the source document so the user can see where the information came from.
+
+## Chunking Strategy
+
+**Chunk size:** 500 characters
+**Overlap:** 0 characters
+
+The starter used fixed 800-character windows with 120 characters of overlap.
+On the `campus_life` corpus, it produced 88 chunks from 88 documents, with
+chunk lengths ranging from 178 to 549 characters. Because almost every
+document was shorter than the starter limit, the starter kept every document
+as one chunk.
+
+When I read the documents and inspected five starter chunks, I found that the
+posts were short and usually focused on one course, residence, dining hall, or
+administrative subject. The sampled chunks contained complete thoughts, so I
+did not want to divide every document into smaller sentence-level pieces.
+However, the longer housing documents contained several paragraph-level
+subtopics, including building information, advantages, problems, laundry, and
+noise.
+
+I replaced the fixed-character starter with a paragraph-aware strategy using a
+500-character target. It keeps 86 of the 88 documents intact and splits only
+the two longer, multi-topic housing documents:
+`housing_innisfree_hall.txt` and `housing_old_brewhouse.txt`. Splits occur only
+between paragraphs, so the function does not cut sentences at arbitrary
+character positions.
+
+I selected zero character overlap because the strategy preserves complete
+paragraphs rather than sliding character windows. When a document produces
+more than one chunk, its title is repeated at the beginning of the later chunk
+so that the subject remains identifiable without duplicating the surrounding
+content. The final strategy produced 90 chunks averaging 310 characters, with
+lengths ranging from 170 to 461 characters.
+
+## Sample Chunks
+
+**Chunk 1** ΓÇö source: `admin_add_drop_deadline.txt#0` ΓÇö produced by: `chunker.py::split_documents`
+
+```text
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer window ΓÇö through the end of week six ΓÇö but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
+```
+
+**Chunk 2** ΓÇö source: `course_biol_160_exams.txt#0` ΓÇö produced by: `chunker.py::split_documents`
+
+```text
+BIOL 160 Cell Biology ΓÇö assessment
+
+Four unit tests and a cumulative final. Not curved.
+
+The unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
+```
+
+**Chunk 3** ΓÇö source: `course_math_220_exams.txt#0` ΓÇö produced by: `chunker.py::split_documents`
+
+```text
+MATH 220 Linear Algebra ΓÇö assessment
+
+Two midterms and a cumulative final. Curved to a b- median.
+
+The problem sets are the course; the lectures make sense afterwards rather than during.
+```
+
+**Chunk 4** ΓÇö source: `dining_the_ridgeway_cafe.txt#0` ΓÇö produced by: `chunker.py::split_documents`
+
+```text
+The Ridgeway Caf├⌐
+
+Second-year here. Wait times: 10 to 15 minutes at 12:30, none after 2:00. The thing worth going for is the only place on campus with real espresso. The thing to know is that seating is tight; about 40 seats for a building of 900.
+
+Hours are 7:00am to 4:00pm weekdays only. Costs declining balance only, no meal swipes.
+```
+
+**Chunk 5** ΓÇö source: `housing_morrow_house.txt#0` ΓÇö produced by: `chunker.py::split_documents`
+
+```text
+Morrow House ΓÇö what it's actually like
+
+Just finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hallbathrooms.
+
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
+
+The bad: known damp problem on the ground floor; two rooms were taken offline in 2024.
+
+Laundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiethours.
+```
+
+## Sample Answer
+
+<!-- One complete question and answer, pasted as text, with the source line
+     visible. Milestone 4. -->
+
+**Question:**
+How much do washing and drying each cost at Old Brewhouse?
+
+**Answer:**
+
+```text
+At Old Brewhouse, both washing and drying cost $1.50 each (housing_old_brewhouse.txt and housing_old_brewhouse_laundry.txt).
+
+Sources retrieved: housing_calder_annexe_laundry.txt, housing_fenwick_court_laundry.txt, housing_innisfree_hall_laundry.txt, housing_old_brewhouse.txt, housing_old_brewhouse_laundry.txt
+```
+
+The best retrieved distance was `0.221`, which passed the final relevance
+cutoff of `0.62`. The generated answer was supported by
+`housing_old_brewhouse.txt` and `housing_old_brewhouse_laundry.txt`, and it
+named both source documents.
+
+I also tested the relevance gate with the out-of-corpus question, ΓÇ£What is the
+capital of Mongolia?ΓÇ¥ Its best distance was `0.825`, so the gate stopped it and
+returned:
+
+```text
+I don't have enough information about that.
+```
+
+The refusal used zero model calls.
+
+**My relevance cutoff:** `0.62`
+
+The highest best distance among the five in-corpus questions was `0.4158`.
+The lowest best distance among the five out-of-corpus questions was `0.8246`.
+This created a gap of `0.4088`. I selected `0.62` because it is approximately
+the midpoint of that gap:
+
+```text
+(0.4158 + 0.8246) / 2 = 0.6202
+```
+
+<!-- The number you set in config.py, and how you got there.
+
+     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
+     that it clearly doesn't, and wrote down the best distance for each. What
+     did those two groups look like? Where was the gap? Put the actual numbers
+     here ΓÇö the table below wants all ten rows.
+
+     Milestone 4. -->
+
+This cutoff allowed all five in-corpus questions to pass and caused all five
+out-of-corpus questions to be refused.
+
+| Question                                                                                 | In corpus? | Best distance |
+| ---------------------------------------------------------------------------------------- | ---------- | ------------- |
+|                                                                                          |            |               |
+| How are juniors and seniors ordered in the housing lottery?                              | Yes        | 0.2250        |
+| How long is the wait at Kestrel Commons between 12:15 and 1:00?                          | Yes        | 0.2129        |
+| Why should students complete the CS 210 labs even though they are only 10% of the grade? | Yes        | 0.4158        |
+| How much do washing and drying each cost at Old Brewhouse?                               | Yes        | 0.2213        |
+| Which campus shuttle stop may be skipped when the driver is behind schedule?             | Yes        | 0.3853        |
+| What is the capital of Mongolia?                                                         | No         | 0.8246        |
+| How do I change the oil in a diesel engine?                                              | No         | 0.9340        |
+| Who won the 1994 World Cup?                                                              | No         | 0.8859        |
+| What is the recommended dosage of ibuprofen for a headache?                              | No         | 0.8442        |
+| How do I write a for loop in Rust?                                                       | No         | 0.8960        |
+
+## How I Used AI
+
+**1.** Understanding the provided corpora: I asked AI where the documents created by python app.py corpora came from and whether every student received the same text. AI explained that the corpora were supplied with the starter project and were written for the course rather than downloaded from the internet. I compared that explanation with corpora/README.md, which confirmed that the documents were course-created and that no real people were named. This helped me understand that campus_life was a fixed project dataset rather than live university information.
+
+**2.** Evaluating the starter chunking behavior: I asked AI to help me examine four campus_life documents and distinguish direct observations from chunking interpretations. The initial interpretation was that a complete document might be a reasonable chunk because the documents were short and focused. I did not accept that as a final chunking decision. I ran the starter index and recorded that 88 documents produced 88 chunks, with lengths ranging from 178 to 549 characters. I kept the conclusion preliminary until I could implement and inspect my own chunking strategy in Milestone 3.
+
+**3.** For Unit 2, I used AI to help organize the run logs and question whether the scorerΓÇÖs phrase matches proved my acceptance criteria. I checked the verdicts against the saved answers, retrieved chunks, source documents, and original criteria. AI also helped me identify the risk of using only one retrieved chunk.
+
+<!-- ΓöÇΓöÇ Stretch features ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+     Doing one? Say so here BEFORE you start. A feature this README never
+     claims earns nothing.
+     ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ -->
+
+---
+
+# Unit 2
+
+## Run Log ΓÇö Before
+
+I ran `python run_eval.py --label before` against `campus_life` with `top-k: 5` and a relevance cutoff of `0.62`. Each in-corpus question was asked three times with caching off. The complete report is in `results/run_2026-09-23_2103_before.md`.
+
+| Criterion                                               | Original target | Run 1 | Run 2 | Run 3 | Before verdict |
+| ------------------------------------------------------- | --------------- | ----- | ----- | ----- | -------------- |
+| 1. Retrieved chunks contain the answer                  | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 2. Every answer names a source                          | 5 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 3. Gate refuses out-of-corpus questions                 | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 4. Sampled chunks stand alone and have intact sentences | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+| 5. Named documents support the answers                  | 4 of 5          | 5/5   | 5/5   | 5/5   | **MET**        |
+
+Retrieval, the relevance gate, and the five-chunk sample were deterministic in this test, so their counts repeat across the three columns. I checked source naming and source support against the generated answers from all three runs. A `pass` from `scorer.py` alone was not enough to establish all five criteria: that scorer only checks for the expected phrase in the generated answer.
+
+### Real output ΓÇö before
+
+The answers and gate results below were produced by `run_eval.py::main` and `run_eval.py::check_out_of_scope`. Retrieved passages came from `store.py::search`; chunks were produced by `chunker.py::split_documents`. The full 15-answer output is in `results/run_2026-09-23_2103_before.md`.
+
+**Criteria 1, 2, and 5 ΓÇö answer-bearing chunk, generated answer, and supporting source:**
+
+```text
+Question: Which campus shuttle stop may be skipped when the driver is behind schedule?
+
+RETRIEVED: transit_shuttle.txt#0
+DISTANCE: 0.3853
+It's free with a student ID. The stop outside Fenwick Court is the one
+that gets skipped when the driver is behind, which is worth knowing
+if you live there.
+
+Run 1 answer:
+The stop outside Fenwick Court may be skipped when the driver is behind
+schedule (from transit_shuttle.txt).
+```
+
+The text above is in the retrieved chunk and in the named `transit_shuttle.txt` document. I also checked the answer-bearing chunk and named documents for the other four questions.
+
+**Criterion 3 ΓÇö out-of-corpus gate output:**
+
+```text
+What is the capital of Mongolia? | best distance 0.825 | refused
+How do I change the oil in a diesel engine? | best distance 0.934 | refused
+Who won the 1994 World Cup? | best distance 0.886 | refused
+What is the recommended dosage of ibuprofen for a headache? | best distance 0.844 | refused
+How do I write a for loop in Rust? | best distance 0.896 | refused
+```
+
+**Criterion 4 ΓÇö one of the five sampled chunks:** Produced by `chunker.py::split_documents` and printed by `python app.py --corpus campus_life chunks -n 5`.
+
+```text
+Chunk 2 | source: course_biol_160_exams.txt#0
+BIOL 160 Cell Biology ΓÇö assessment
+
+Four unit tests and a cumulative final. Not curved.
+
+The unit tests come fast, roughly every three weeks; falling behind once
+is very hard to recover from.
+```
+
+This chunk can answer ΓÇ£How many unit tests does BIOL 160 have?ΓÇ¥ without a neighboring chunk. I inspected all five printed chunks for a standalone answerable fact and intact sentence boundaries.
+
+## Verdicts
+
+| #   | Criterion                        | Verdict | How I decided                                                     |
+| --- | -------------------------------- | ------- | ----------------------------------------------------------------- |
+| 1   | Answer in retrieved chunks       | MET     | Answer found for 5/5 questions in all three runs.                 |
+| 2   | Answer names a source            | MET     | All 15 answers named a document.                                  |
+| 3   | Gate refuses unrelated questions | MET     | The gate refused 5/5.                                             |
+| 4   | Chunks stand alone               | MET     | All five sampled chunks were answerable and had intact sentences. |
+| 5   | Named source supports answer     | MET     | Sources supported 5/5 answers in all three runs.                  |
+
+I made no revisions to the original criteria in `criteria.md`.
+
+## Diagnoses
+
+None of my five original acceptance criteria was missed, so there was no failed criterion to assign to a pipeline stage. These targets were safe for this particular five-question set: the answer was already in the first retrieved chunk for every question.
+
+I did find a **retrieval-stage weakness** that the original targets did not count as a miss. For the shuttle question, `store.py::search` returned the correct `transit_shuttle.txt#0` chunk first, followed by four dining chunks that did not answer the question. The mechanism was that `TOP_K = 5` included the four next-ranked chunks even though the first chunk already contained the full answer. I chose to measure whether reducing that extra context preserved the five original targets.
+
+## The Improvement
+
+**What I changed:** I changed only the RAG setting `TOP_K` in `config.py` from `5` to `1`. The corpus, existing index, chunking strategy, embedding model, five questions, scorer, relevance cutoff, and grounding prompt remained the same.
+
+**Why I picked it:** The before-run diagnosis showed four unnecessary dining chunks retrieved with the shuttle answer. Since the first chunk contained the answer for each of my five questions, I tested whether retrieving one chunk would remove those distractors without losing answer facts or source citations. One chunk might be insufficient for questions that need multiple sources; the after run tests only the existing five questions.
+
+### Run Log ΓÇö After
+
+I ran `python run_eval.py --corpus campus_life --label after` with `top-k: 1`, the same `0.62` cutoff, and three uncached runs per question. The complete report is `results/run_2026-09-25_1815_after.md`.
+
+| Criterion                                               | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+| ------------------------------------------------------- | --------------: | ----: | ----: | ----: | ------- |
+| 1. Retrieved chunks contain the answer                  |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 2. Every answer names a source                          |             5/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 3. Gate stops out-of-corpus questions                   |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 4. Sampled chunks stand alone and have intact sentences |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 5. Named document supports the answer                   |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+
+The chunk sample for criterion 4 did not change because `TOP_K` affects retrieval count, not chunk creation. The out-of-corpus gate again refused 5/5. I inspected each generated answer for its source and checked the supporting source documents.
+
+**Real after-run output:** Produced by `run_eval.py::main`, with retrieval from `store.py::search` and chunks from `chunker.py::split_documents`.
+
+```text
+Question: How long is the wait at Kestrel Commons between 12:15 and 1:00?
+Run 1 ΓÇö best distance: 0.2129 (passed the gate)
+Sources retrieved: dining_kestrel_commons_followup.txt
+
+The wait at Kestrel Commons between 12:15 and 1:00 is 20 to 25 minutes.
+
+Source: dining_kestrel_commons_followup.txt
+```
+
+The sole retrieved chunk, `dining_kestrel_commons_followup.txt#0`, says that the wait is ΓÇ£20 to 25 minutes between 12:15 and 1:00.ΓÇ¥ The generated answer names that supporting document.
+
+**Did it help?**
+
+<!-- Say plainly whether it did, and how you know. If it made things worse,
+     say that ΓÇö a change that backfired, honestly reported, earns full credit
+     and is more interesting than one that worked. What matters is that you can
+     tell.
+
+     Milestone 4. -->
+
+On these five questions, reducing `TOP_K` from 5 to 1 removed four extra chunks per question while all five original criteria remained MET in all three runs. The completed `TOP_K = 5` repeat reported 10,114 session tokens, compared with 3,833 for the `TOP_K = 1` after runΓÇöabout 62% fewer session tokens. Those totals are from two separate runs, so they are evidence of reduced context use here, not an exact per-answer cost estimate. The best distances were unchanged because the closest chunk stayed the same.
+
+## What's Still Broken
+
+<!-- For each criterion still missed after your fix: what you'd do about it,
+     and why you stopped where you did.
+
+     "I ran out of time" is fine if it's true. Pretending nothing is left is
+     not.
+
+     Milestone 5. -->
+
+No original criterion remained missed after the improvement. The test set does not check questions whose answers require two distinct chunks or documents. `TOP_K = 1` could fail such a question by withholding a needed second passage. I stopped after one pipeline change so I could measure its effect without mixing in another change. My next test would specify a question requiring two source facts before running it, then compare the retrieved evidence and answer at `TOP_K = 1` and a larger value.
+
+## What I'd Do Differently
+
+<!-- Knowing what you know now ΓÇö which of your five criteria would you write
+     differently, and why?
+
+     Milestone 5. -->
+
+For a future evaluation, I would tighten criterion 1 to require the **first** retrieved chunk to contain the answer for at least four of five questions, rather than allowing the answer anywhere among five results. I would also include a question whose complete answer requires more than one chunk, with its expected facts written before testing. These are lessons for a future test; I did not rewrite my original Unit 1 target after seeing the results.
+
+### Stretch feature declared before implementation
+
+I will test a second chunking strategy as a separate index variant. My
+`TOP_K = 1` result depends entirely on the first chunk containing enough
+context. I will keep the same five questions and acceptance targets, run each
+three times against the new variant, and compare the third run log with my
+`TOP_K = 1` after log. I will report whether the change helped, hurt, or made
+no measurable difference.
+
+## Bonus ΓÇö Second Measured Improvement
+
+I declared this experiment in the README before implementing it. I built the
+`fixed300` index with `build_bonus_index.py`, using
+`chunker.py::fallback_split`: 300-character windows and 60-character overlap.
+It produced 164 chunks, compared with 90 from the paragraph-aware strategy.
+I kept `TOP_K = 1`, the five questions, the embedding model, and the 0.62
+cutoff unchanged.
+
+I ran `python run_eval.py --corpus campus_life --variant fixed300 --label
+bonus_fixed300`. The complete three-run report is
+`results/run_2026-09-25_2207_bonus_fixed300.md`. The five fixed-window sample
+chunks are in `results/bonus_fixed300_chunks.txt`.
+
+| Criterion                                              | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+| ------------------------------------------------------ | --------------: | ----: | ----: | ----: | ------- |
+| 1. Retrieved chunks contain the answer                 |    At least 4/5 |   4/5 |   4/5 |   4/5 | MET     |
+| 2. Every answer names a source                         |             5/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 3. Gate stops out-of-corpus questions                  |    At least 4/5 |   5/5 |   5/5 |   5/5 | MET     |
+| 4. Chunk quality, revised variant-specific measurement |    At least 4/5 |   1/5 |   1/5 |   1/5 | MISSED  |
+| 5. Named source supports the expected answer           |    At least 4/5 |   4/5 |   4/5 |   4/5 | MET     |
+
+Criterion 4's **original command**, if run literally, still samples the
+paragraph-aware chunker and scores 5/5. It cannot measure the `fixed300`
+variant. The revised, variant-specific sample scores 1/5. The unchanged 4/5
+target is applied to the strategy actually used for this bonus index.
+
+**Real output:** `run_eval.py::main` used `store.py::search` against the
+`fixed300` index, whose chunks were produced by
+`chunker.py::fallback_split`. For the shuttle question, run 1 recorded:
+
+```text
+Best distance: 0.4537 (passed the gate)
+Sources retrieved: transit_shuttle.txt
+
+I do not have enough information to answer this question from the provided document. (Source: transit_shuttle.txt)
+```
+
+Inspection of the exact retrieved `transit_shuttle.txt#0` chunk showed that
+it ends:
+
+```text
+It's free with a student ID. The stop outside Fenwick Court is the one that ge
+```
+
+The source document contains the answer, but this retrieved chunk stops
+before the stop's name appears. The phrase scorer failed the shuttle
+question in all three runs. For criterion 5, I count only the four correct
+answers as supported answers; the shuttle refusal does not answer its
+question.
+
+The sample produced by `chunker.py::fallback_split` includes chunks
+beginning `eputation.` and `learning the format.`, one ending `seats f`,
+and one consisting only of a sentence fragment. Four of five fail the
+intact-boundary condition.
+
+**Did it help?** No. Compared with the paragraph-aware `TOP_K = 1` run,
+the fixed-window strategy reduced answer success from 5/5 to 4/5 on every
+run and reduced the variant-specific chunk-quality sample from 5/5 to
+1/5. The 0.62 gate still passed the shuttle question because its nearest
+chunk had distance 0.4537; the gate checks similarity, not whether the
+chunk contains the entire answer. The paragraph-aware index remains the
+better choice for these documents and this test set.
+
+---
