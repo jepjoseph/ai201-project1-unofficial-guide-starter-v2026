@@ -1,5 +1,6 @@
 """Bounded in-memory cache for prepared BM25 retrieval data."""
 
+import os
 from collections import OrderedDict
 from threading import RLock
 
@@ -23,29 +24,33 @@ def _signature(corpus):
     if not folder.is_dir():
         raise FileNotFoundError(f"No corpus at {folder}")
 
-    files = sorted(
-        (
-            path for path in folder.iterdir()
-            if path.is_file()
-            and path.suffix.lower() in {".txt", ".md"}
-        ),
-        key=lambda path: path.name,
-    )
+    fingerprint = []
 
-    fingerprint = tuple(
-        (
-            path.name,
-            path.stat().st_size,
-            path.stat().st_mtime_ns,
-        )
-        for path in files
-    )
+    with os.scandir(folder) as entries:
+        for entry in entries:
+            if not entry.name.lower().endswith((".txt", ".md")):
+                continue
+
+            if not entry.is_file():
+                continue
+
+            metadata = entry.stat()
+
+            fingerprint.append(
+                (
+                    entry.name,
+                    metadata.st_size,
+                    metadata.st_mtime_ns,
+                )
+            )
+
+    fingerprint.sort(key=lambda item: item[0])
 
     return (
         str(folder),
         config.CHUNK_SIZE,
         config.CHUNK_OVERLAP,
-        fingerprint,
+        tuple(fingerprint),
     )
 
 
