@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { ragApi } from './services/ragApi'
+import HistoricalComparison from './components/HistoricalComparison'
 import './App.css'
 
 function ResultCard({ document, mode }) {
@@ -770,6 +771,7 @@ function App() {
           </div>
         )}
         <HistoricalEvaluation />
+        <HistoricalComparison />
       </main>
     </div>
   )
