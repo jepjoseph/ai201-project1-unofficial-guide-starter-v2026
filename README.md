@@ -373,6 +373,58 @@ rebuilding were verified successfully.
 The next priority would be evaluating multi-document questions
 and generated-answer citation quality.
 
+
+## Unit 9 — What I Implemented
+
+For my AI201 Unit 9 Capstone, I extended my existing
+Retrieval-Augmented Generation (RAG) system with hybrid retrieval,
+performance optimizations, instrumentation, and a comparison dashboard.
+
+### Implemented Features
+
+1. **Hybrid Search:** Combined semantic vector retrieval with BM25
+   keyword retrieval using Reciprocal Rank Fusion (RRF).
+2. **Relevance Protection:** Preserved the semantic-distance relevance
+   gate to reject unsupported questions.
+3. **Performance Optimization:** Implemented BM25 index caching,
+   optimized cache-signature scanning, and ChromaDB client reuse.
+4. **Instrumentation:** Added structured request logging,
+   retrieval-stage timing, and error tracking.
+5. **Evaluation:** Compared semantic and hybrid retrieval using
+   60 recorded trials per benchmark.
+6. **Visualization:** Added a React dashboard for comparing
+   historical RAG evaluation results.
+
+### Measured Results
+
+| Metric | Before | After | Improvement |
+|---|---:|---:|---:|
+| Semantic retrieval | 46.154 ms | 27.402 ms | 40.63% |
+| Hybrid retrieval | 52.067 ms | 25.030 ms | 51.93% |
+
+- **60/60** correct relevance-gate decisions per benchmark.
+- **30/30** expected top-ranked source matches per benchmark.
+- **55** automated Python tests passed.
+
+### Implementation Evidence
+
+| Evidence | Location |
+|---|---|
+| Acceptance criteria and verdicts | `criteria.md` |
+| Execution instructions | `RUNNING.md` |
+| Hybrid retrieval implementation | `hybrid.py` |
+| BM25 caching | `hybrid_cache.py` |
+| ChromaDB client reuse | `store.py` |
+| Retrieval instrumentation | `retrieval_timing.py` |
+| Benchmark implementation | `unit9_compare.py` |
+| Recorded benchmark results | `results/` |
+| Development history | Git commit history |
+
+The evaluation focuses on retrieval quality and performance.
+It does not establish end-to-end generated-answer accuracy.
+
+---
+
 ### Benchmark evidence
 
 - Baseline: `results/unit9_compare_20261114-213958-711410.json`
