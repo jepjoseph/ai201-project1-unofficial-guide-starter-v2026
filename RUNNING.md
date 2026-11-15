@@ -255,3 +255,77 @@ units.
 
 `results/` is deliberately **not** in `.gitignore`. Your run logs are evidence
 that the test actually happened, and they're part of what gets graded.
+
+## Current Unit 9 Dashboard
+
+This section describes the newer React/FastAPI evaluation dashboard. The earlier Flask and CLI instructions elsewhere in this file remain available for the legacy interface.
+
+### Environment
+
+- Verified Python version: 3.12.7.
+- Python environment used during development: `.venv312`.
+- Frontend: React and Vite.
+- Backend: FastAPI.
+- Local retrieval: ChromaDB semantic search and BM25/RRF hybrid search.
+- Embedding model: all-MiniLM-L6-v2.
+
+### Start the FastAPI backend
+
+From the project root in PowerShell:
+
+```powershell
+.\.venv312\Scripts\python.exe -m uvicorn api.main:app --host 127.0.0.1 --port 8000
+```
+
+Check the health endpoint in another terminal:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/rag/health
+```
+
+The backend requires an existing, ready ChromaDB index. An HTTP response alone does not guarantee that the index is ready.
+
+FastAPI and Uvicorn are additional dashboard dependencies; they are not currently listed in the root `requirements.txt`. Verify they are installed in the selected Python environment before starting.
+
+### Start the React frontend
+
+Open a second PowerShell terminal:
+
+```powershell
+Set-Location "D:\FAU\Session Fall 2026\AI201\Project09\ai201-rag-hybrid-capstone\frontend"
+npm install
+npm run dev
+```
+
+Open the local Vite address shown in the terminal, normally:
+
+http://localhost:5173
+
+The frontend API client targets http://127.0.0.1:8000.
+
+### Run the retrieval evaluation
+
+From the project root:
+
+```powershell
+.\.venv312\Scripts\python.exe unit9_compare.py --runs 3 --top-k 5 --corpus campus_life
+```
+
+This runs retrieval and relevance-gate checks without answer-generation model calls. It writes timestamped JSON, CSV, and Markdown reports under `results`.
+
+The `--top-k 5` evaluation setting is intentional and differs from the historical top-k=1 generation experiment.
+
+### Run the Unit 9 Python tests
+
+```powershell
+.\.venv312\Scripts\python.exe -m unittest test_hybrid test_rrf test_hybrid_pipeline test_instrumentation test_unit9_compare test_instrumentation_output
+```
+
+### Frontend validation
+
+From the `frontend` directory:
+
+```powershell
+npm run lint
+npm run build
+```

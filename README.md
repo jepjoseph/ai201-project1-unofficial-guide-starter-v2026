@@ -195,3 +195,53 @@ I used AI assistance to reason about BM25, semantic search, and RRF; plan change
 ## Conclusion
 
 The updated application provides two working retrieval approaches behind a common relevance gate and grounded-answer workflow. Hybrid retrieval adds a useful architectural option, but the measured dataset did not demonstrate an accuracy advantage over semantic search. The strongest outcome of the capstone is a **testable, instrumented retrieval pipeline** with documented tradeoffs and evidence-based conclusions.
+
+## What This Extends
+
+This capstone extends the earlier campus-life RAG system. The earlier system used document chunking, ChromaDB semantic retrieval, a relevance gate, and grounded answer generation.
+
+Unit 9 adds BM25 keyword retrieval, Reciprocal Rank Fusion (RRF), semantic-versus-hybrid evaluation, structured request instrumentation, and a React/FastAPI evaluation dashboard.
+
+The original semantic retrieval path remains available.
+
+## The Shape
+
+The primary local application has three layers:
+
+- A: React/Vite frontend for submitting questions and viewing retrieval comparisons.
+- B: FastAPI backend for validation, retrieval, comparison, and evaluation-report access.
+- C: Local RAG components: document chunks, BM25, ChromaDB, RRF, and the semantic-distance relevance gate.
+
+The dashboard's retrieval endpoints do not generate model answers. They evaluate retrieval results and gate decisions.
+
+The original CLI and Flask interfaces remain separate run paths.
+
+Out of scope for this capstone are production authentication, distributed deployment, and guarantees about generated-answer correctness based solely on retrieval evaluation.
+
+## Running It
+
+See [RUNNING.md](RUNNING.md), particularly "Current Unit 9 Dashboard", for the local startup procedure.
+
+The verified development environment uses Python 3.12.7. The dashboard uses FastAPI on port 8000 and React/Vite on port 5173.
+
+The local embedding system uses ChromaDB and all-MiniLM-L6-v2. The corpus and existing vector index must be available before retrieval can succeed.
+
+## What It Costs
+
+The Unit 9 comparison uses local retrieval without answer-generation model calls. Its report metadata records `generation_calls: 0`.
+
+The existing comparison reports measure retrieval latency, not hosted-model billing. The historical Unit 2 experiments contain separate token-usage observations and should not be presented as Unit 9 API charges.
+
+At 100 retrieval-only evaluations per day, the workload would be 100 times the measured per-evaluation retrieval work. This is a workload projection, not a verified cloud bill. Exact dollar cost depends on deployment infrastructure, power, hosting, and any additional model calls.
+
+A defensible monetary estimate requires an explicitly stated pricing assumption and measured resource usage; no unverified dollar figure is claimed here.
+
+## What's Still Broken
+
+The current fixed-question comparison does not establish generated-answer correctness, source citation quality, or performance on questions requiring multiple independent source chunks.
+
+The hybrid implementation rebuilds the BM25 index on each request. This may contribute to additional latency, but stage-level timing is needed to determine the dominant cost.
+
+The benchmark is small and uses a fixed corpus. It does not establish production reliability, concurrency behavior, or performance under sustained load.
+
+The first follow-up would be a broader evaluation containing questions that require evidence from multiple chunks. This would directly test the limitations of top-k=1 before optimizing retrieval speed.
