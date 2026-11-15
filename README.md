@@ -245,3 +245,58 @@ The hybrid implementation rebuilds the BM25 index on each request. This may cont
 The benchmark is small and uses a fixed corpus. It does not establish production reliability, concurrency behavior, or performance under sustained load.
 
 The first follow-up would be a broader evaluation containing questions that require evidence from multiple chunks. This would directly test the limitations of top-k=1 before optimizing retrieval speed.
+
+## Unit 9 Performance Experiment — Advance Declaration
+
+**Status:** Declared before implementing the performance instrumentation or optimization described below.
+
+### Observed problem
+
+The existing Unit 9 comparison shows that hybrid retrieval is slower than semantic retrieval on the current fixed-question dataset.
+
+In the repeat comparison, the in-scope median was 42.066 ms for semantic retrieval and 51.051 ms for hybrid retrieval. The out-of-scope median was 41.926 ms for semantic retrieval and 49.440 ms for hybrid retrieval.
+
+Both modes achieved the same expected-phrase and relevance-gate results on this dataset. These measurements do not establish generated-answer accuracy or prove which hybrid stage causes the additional latency.
+
+### Planned diagnostic measurement
+
+I will measure the following stages separately:
+
+1. Document loading.
+2. Document chunking.
+3. BM25 construction and keyword search.
+4. ChromaDB semantic retrieval.
+5. Reciprocal Rank Fusion.
+6. Relevance-gate evaluation.
+
+I will retain the existing total `duration_ms` field for compatibility.
+
+### Planned improvement
+
+If stage measurements show that repeated BM25 construction is a significant cost, I will test reusing the BM25 index for repeated requests against the same corpus and chunking configuration.
+
+The optimization must preserve retrieval ranking, source labels, semantic distances, and gate decisions.
+
+If BM25 construction is not a significant cost, I will document that finding and select an improvement supported by the measured bottleneck instead.
+
+### Evaluation method
+
+I will compare before and after runs using the same corpus, questions, retrieval settings, top-k, threshold, and trial count.
+
+I will record latency distributions and retrieval correctness separately. I will also run the existing automated tests and add targeted tests for any changed behavior.
+
+A successful performance result requires lower hybrid latency without a regression in the measured retrieval outcomes. If the optimization does not help, I will report that result rather than claiming success.
+
+### Additional stretch observation
+
+After completing the required evaluation, I plan to test approximately ten times the normal request rate and record response times, failures, and resource observations where available.
+
+The load test will use retrieval-only endpoints. It will not intentionally trigger paid model-generation calls.
+
+### Evidence boundaries
+
+The existing Unit 2 top-k improvement is historical evidence and is not a Unit 9 hybrid-performance optimization.
+
+The current Unit 9 comparison reports are baseline evidence, not proof of the proposed improvement.
+
+Stage timing, optimized results, and load-test results will be added only after they have been measured.
