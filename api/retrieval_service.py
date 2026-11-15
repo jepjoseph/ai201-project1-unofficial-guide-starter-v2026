@@ -3,6 +3,7 @@
 import config
 import gate
 from hybrid import hybrid_search
+from retrieval_timing import RetrievalTiming
 from store import index_exists, search
 
 
@@ -69,14 +70,16 @@ def run_retrieval(
     validate_index(corpus, variant)
 
     started = time.perf_counter()
+    timing = RetrievalTiming()
 
     if retrieval == "semantic":
-        results = search(
-            question,
-            top_k=top_k,
-            corpus=corpus,
-            variant=variant,
-        )
+        with timing.measure("semantic_search"):
+            results = search(
+                question,
+                top_k=top_k,
+                corpus=corpus,
+                variant=variant,
+            )
         semantic_candidates = results
 
     elif retrieval == "hybrid":
@@ -85,15 +88,17 @@ def run_retrieval(
             top_k=top_k,
             corpus=corpus,
             variant=variant,
+            timing=timing,
         )
 
     else:
         raise ValueError("Unknown retrieval mode.")
 
-    decision = gate.check(
-        semantic_candidates,
-        threshold=threshold,
-    )
+    with timing.measure("relevance_gate"):
+        decision = gate.check(
+            semantic_candidates,
+            threshold=threshold,
+        )
 
     elapsed_ms = (time.perf_counter() - started) * 1000
 
@@ -132,6 +137,7 @@ def run_retrieval(
             "explanation": decision.explanation,
         },
         "duration_ms": round(elapsed_ms, 2),
+        "stage_timings_ms": timing.as_dict(),
         "result_count": len(documents),
         "documents": documents,
     }

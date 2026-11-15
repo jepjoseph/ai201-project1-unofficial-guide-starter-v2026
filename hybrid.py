@@ -6,6 +6,7 @@ Reciprocal Rank Fusion will be added in a later commit.
 """
 
 import re
+from contextlib import nullcontext
 from dataclasses import dataclass
 
 from rank_bm25 import BM25Okapi
@@ -85,7 +86,7 @@ class BM25Retriever:
 
         return results
 
-def hybrid_search(question: str, *, top_k: int = 5, corpus=None, variant="default", candidate_k: int = 10):
+def hybrid_search(question: str, *, top_k: int = 5, corpus=None, variant="default", candidate_k: int = 10, timing=None):
     """Retrieve from both engines, then fuse rankings by stable chunk label.
 
     Returns (fused_results, semantic_candidates). The latter must be used
@@ -99,8 +100,33 @@ def hybrid_search(question: str, *, top_k: int = 5, corpus=None, variant="defaul
     if top_k <= 0 or candidate_k <= 0:
         raise ValueError("top_k and candidate_k must be greater than zero")
     pool_size = max(top_k, candidate_k)
-    chunks = split_documents(load_documents(corpus))
-    keyword = BM25Retriever(chunks).search(question, top_k=pool_size)
-    semantic = semantic_search(question, top_k=pool_size, corpus=corpus, variant=variant)
-    fused = reciprocal_rank_fusion(keyword, semantic, top_k=top_k)
+    def measured(stage):
+        return timing.measure(stage) if timing is not None else nullcontext()
+
+    def prepare_retriever():
+        with measured("document_loading"):
+            documents = load_documents(corpus)
+        with measured("document_chunking"):
+            chunks = split_documents(documents)
+        with measured("bm25_construction"):
+            return BM25Retriever(chunks)
+
+    if corpus is None:
+        retriever = prepare_retriever()
+    else:
+        from hybrid_cache import get_retriever
+
+        with measured("cache_lookup"):
+            retriever, _cache_hit = get_retriever(
+                corpus, prepare_retriever
+            )
+
+    with measured("keyword_search"):
+        keyword = retriever.search(question, top_k=pool_size)
+    with measured("semantic_search"):
+        semantic = semantic_search(
+            question, top_k=pool_size, corpus=corpus, variant=variant
+        )
+    with measured("rrf_fusion"):
+        fused = reciprocal_rank_fusion(keyword, semantic, top_k=top_k)
     return fused, semantic

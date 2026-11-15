@@ -10,21 +10,34 @@ from pathlib import Path
 import config
 import gate
 import questions
+from retrieval_timing import RetrievalTiming
 
 
 def evaluate_one(question, mode, top_k, corpus, variant):
     start = time.perf_counter()
+    timing = RetrievalTiming()
     if mode == 'hybrid':
         from hybrid import hybrid_search
-        results, semantic = hybrid_search(question, top_k=top_k, corpus=corpus, variant=variant)
-        decision = gate.check(semantic)
+        results, semantic = hybrid_search(
+            question, top_k=top_k, corpus=corpus,
+            variant=variant, timing=timing
+        )
+        with timing.measure("relevance_gate"):
+            decision = gate.check(semantic)
     else:
         from store import search
-        results = search(question, top_k=top_k, corpus=corpus, variant=variant)
-        decision = gate.check(results)
+        with timing.measure("semantic_search"):
+            results = search(
+                question, top_k=top_k,
+                corpus=corpus, variant=variant
+            )
+        with timing.measure("relevance_gate"):
+            decision = gate.check(results)
     duration = round((time.perf_counter() - start) * 1000, 3)
     return {
-        'duration_ms': duration, 'refused': not decision.passed,
+        'duration_ms': duration,
+        'stage_timings_ms': timing.as_dict(),
+        'refused': not decision.passed,
         'best_distance': round(decision.best_distance, 6),
         'sources': [r.source for r in results],
         'labels': [r.label for r in results],
@@ -98,7 +111,15 @@ def main():
         writer = csv.DictWriter(f, fieldnames=list(rows[0]))
         writer.writeheader()
         for row in rows:
-            writer.writerow({**row, 'sources': '; '.join(row['sources']), 'labels': '; '.join(row['labels']), 'texts': ' || '.join(row['texts'])})
+            writer.writerow({
+                **row,
+                'sources': '; '.join(row['sources']),
+                'labels': '; '.join(row['labels']),
+                'texts': ' || '.join(row['texts']),
+                'stage_timings_ms': json.dumps(
+                    row['stage_timings_ms'], sort_keys=True
+                ),
+            })
     lines = ['# Unit 9 â€” Semantic vs Hybrid Retrieval', '', f'- Corpus: `{args.corpus}`', f'- top-k: {args.top_k}', f'- Trials per question per mode: {args.runs}', '- No generation/API calls; measures retrieval and gate only', '- Expected-source matches are filename-based proxies; manual review is needed for answer-bearing evidence', '', '| Mode | Scope | Trials | Gate correct | Top-1 expected phrase | Top-k expected phrase | Mean ms | Median ms |', '|---|---|---:|---:|---:|---:|---:|---:|']
     for s in summary:
         lines.append(f"| {s['mode']} | {s['scope']} | {s['trials']} | {s['gate_correct']} | {s['expected_source_top1']} | {s['expected_source_topk']} | {s['mean_ms']} | {s['median_ms']} |")
