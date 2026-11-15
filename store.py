@@ -20,6 +20,7 @@ rest of the project if they were wrong:
 import os
 import shutil
 from dataclasses import dataclass
+from functools import lru_cache
 
 # Must be set BEFORE chromadb is imported. Without it, some Chroma versions
 # print "Failed to send telemetry event ..." on every single call — which looks
@@ -127,7 +128,9 @@ def embed(texts: list[str]) -> list[list[float]]:
     return vectors.tolist() if hasattr(vectors, "tolist") else vectors
 
 
+@lru_cache(maxsize=1)
 def _client():
+    """Reuse the ChromaDB client within this process."""
     return chromadb.PersistentClient(
         path=str(config.CHROMA_DIR),
         settings=chromadb.config.Settings(anonymized_telemetry=False),
