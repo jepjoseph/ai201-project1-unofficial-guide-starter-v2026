@@ -300,3 +300,83 @@ The existing Unit 2 top-k improvement is historical evidence and is not a Unit 9
 The current Unit 9 comparison reports are baseline evidence, not proof of the proposed improvement.
 
 Stage timing, optimized results, and load-test results will be added only after they have been measured.
+
+## Unit 9 Final Evaluation Evidence
+
+### Baseline versus optimized retrieval
+
+| Mode | Baseline mean | Final mean | Improvement |
+|---|---:|---:|---:|
+| Semantic | 46.154 ms | 27.402 ms | 40.63% |
+| Hybrid | 52.067 ms | 25.030 ms | 51.93% |
+
+Both benchmark runs contain 60 retrieval records: five in-scope
+and five out-of-scope questions, three trials each, in both modes.
+
+Each run achieved 60/60 correct gate decisions and 30/30
+in-scope top-ranked expected-source matches.
+
+### Five criteria and three-trial verdicts
+
+| Criterion | Evidence | Verdict |
+|---|---|---|
+| U9-1 Hybrid source | 15/15 in-scope trials | MET |
+| U9-2 Hybrid gate | 30/30 trials | MET |
+| U9-3 Semantic regression | 15/15 sources, 30/30 gate | MET |
+| U9-4 Timing | 60/60 records | MET |
+| U9-5 Performance | 51.93% hybrid improvement | MET |
+
+The individual question, trial, retrieval result, gate decision,
+and timing records are available in the benchmark JSON files.
+
+### Diagnosis and improvement
+
+The original hybrid path performed repeated BM25 preparation.
+Stage profiling identified additional cache-signature scanning
+and ChromaDB client construction overhead.
+
+The implemented improvements were BM25 index reuse,
+`os.scandir` signature scanning, and process-local
+ChromaDB client caching.
+
+The measured improvements preserved the evaluated retrieval
+correctness while reducing latency.
+
+### Measured cost and daily projection
+
+The optimized benchmark measured 27.402 ms per semantic
+request and 25.030 ms per hybrid request.
+
+At 100 retrieval-only requests per day:
+
+- Semantic: 100 × 27.402 ms = 2.740 seconds
+  of accumulated measured retrieval time per day.
+- Hybrid: 100 × 25.030 ms = 2.503 seconds
+  of accumulated measured retrieval time per day.
+
+These measurements represent local elapsed retrieval time,
+not CPU consumption or hosting cost.
+
+No answer-generation model calls were made during these
+benchmarks, so observed generation API charges were $0.
+Hosting, electricity, and operational costs are not measured.
+
+### Limitations and next priority
+
+The evaluation uses only ten fixed questions and does not
+measure generated-answer quality, concurrency, or sustained load.
+
+A full-directory ChromaDB reset can fail on Windows when
+database files are open. Isolated collection deletion and
+rebuilding were verified successfully.
+
+The next priority would be evaluating multi-document questions
+and generated-answer citation quality.
+
+### Benchmark evidence
+
+- Baseline: `results/unit9_compare_20261114-213958-711410.json`
+- Final: `results/unit9_compare_20261114-221740-516295.json`
+
+The criteria in `criteria.md` were documented retrospectively;
+they are not represented as pre-experiment declarations.

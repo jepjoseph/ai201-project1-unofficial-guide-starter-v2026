@@ -1,0 +1,2486 @@
+{
+  "metadata": {
+    "runs": 3,
+    "top_k": 5,
+    "corpus": "campus_life",
+    "variant": "default",
+    "generation_calls": 0
+  },
+  "summary": [
+    {
+      "mode": "hybrid",
+      "scope": "in",
+      "trials": 15,
+      "mean_ms": 25.697,
+      "median_ms": 24.631,
+      "gate_correct": 15,
+      "expected_source_top1": 15,
+      "expected_source_topk": 15
+    },
+    {
+      "mode": "hybrid",
+      "scope": "out",
+      "trials": 15,
+      "mean_ms": 24.363,
+      "median_ms": 24.301,
+      "gate_correct": 15,
+      "expected_source_top1": 0,
+      "expected_source_topk": 0
+    },
+    {
+      "mode": "semantic",
+      "scope": "in",
+      "trials": 15,
+      "mean_ms": 33.497,
+      "median_ms": 22.42,
+      "gate_correct": 15,
+      "expected_source_top1": 15,
+      "expected_source_topk": 15
+    },
+    {
+      "mode": "semantic",
+      "scope": "out",
+      "trials": 15,
+      "mean_ms": 21.307,
+      "median_ms": 21.116,
+      "gate_correct": 15,
+      "expected_source_top1": 0,
+      "expected_source_topk": 0
+    }
+  ],
+  "records": [
+    {
+      "timestamp": "2026-11-15T03:17:39.118808+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 1,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 186.948,
+      "stage_timings_ms": {
+        "semantic_search": 186.92,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "admin_parking_permits.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "admin_parking_permits.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "On the parking permits\n\nStudent permits for the west lots go on sale in August and sell out in about three days. The east lot never sells out because it's a 12-minute walk. There is no waitlist — people who miss the window park on Verrill Street and walk in, which is legal but unmarked and confuses everyone.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.142911+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 2,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 23.775,
+      "stage_timings_ms": {
+        "semantic_search": 23.744,
+        "relevance_gate": 0.006
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "admin_parking_permits.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "admin_parking_permits.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "On the parking permits\n\nStudent permits for the west lots go on sale in August and sell out in about three days. The east lot never sells out because it's a 12-minute walk. There is no waitlist — people who miss the window park on Verrill Street and walk in, which is legal but unmarked and confuses everyone.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.164447+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 3,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 21.734,
+      "stage_timings_ms": {
+        "semantic_search": 21.709,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "admin_parking_permits.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "admin_parking_permits.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "On the parking permits\n\nStudent permits for the west lots go on sale in August and sell out in about three days. The east lot never sells out because it's a 12-minute walk. There is no waitlist — people who miss the window park on Verrill Street and walk in, which is legal but unmarked and confuses everyone.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.186570+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 1,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 21.488,
+      "stage_timings_ms": {
+        "semantic_search": 21.46,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "dining_halden_hall_followup.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.208725+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 2,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 22.081,
+      "stage_timings_ms": {
+        "semantic_search": 22.052,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "dining_halden_hall_followup.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.233239+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 3,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 24.311,
+      "stage_timings_ms": {
+        "semantic_search": 24.285,
+        "relevance_gate": 0.006
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "dining_halden_hall_followup.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.253846+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 1,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 20.837,
+      "stage_timings_ms": {
+        "semantic_search": 20.808,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "course_stat_150.txt",
+        "course_cs_340_exams.txt",
+        "course_phys_130.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_phys_130.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "PHYS 130 Mechanics\n\nJust finished a year in this building. Format is lecture with a compulsory lab that meets fortnightly. Assessment: three midterms, no final, plus a lab practical. Not curved, but the lowest midterm is dropped.\n\nExpect 7 hours a week, plus 3 on lab weeks.\n\nThe one piece of advice: the lab practical is worth 20% and almost nobody prepares for it."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.275626+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 2,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 21.445,
+      "stage_timings_ms": {
+        "semantic_search": 21.411,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "course_stat_150.txt",
+        "course_cs_340_exams.txt",
+        "course_phys_130.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_phys_130.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "PHYS 130 Mechanics\n\nJust finished a year in this building. Format is lecture with a compulsory lab that meets fortnightly. Assessment: three midterms, no final, plus a lab practical. Not curved, but the lowest midterm is dropped.\n\nExpect 7 hours a week, plus 3 on lab weeks.\n\nThe one piece of advice: the lab practical is worth 20% and almost nobody prepares for it."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.296327+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 3,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 19.957,
+      "stage_timings_ms": {
+        "semantic_search": 19.935,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "course_stat_150.txt",
+        "course_cs_340_exams.txt",
+        "course_phys_130.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_phys_130.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "PHYS 130 Mechanics\n\nJust finished a year in this building. Format is lecture with a compulsory lab that meets fortnightly. Assessment: three midterms, no final, plus a lab practical. Not curved, but the lowest midterm is dropped.\n\nExpect 7 hours a week, plus 3 on lab weeks.\n\nThe one piece of advice: the lab practical is worth 20% and almost nobody prepares for it."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.319937+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 1,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 24.248,
+      "stage_timings_ms": {
+        "semantic_search": 24.201,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_fenwick_court_laundry.txt",
+        "housing_calder_annexe_laundry.txt",
+        "housing_innisfree_hall_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_fenwick_court_laundry.txt#0",
+        "housing_calder_annexe_laundry.txt#0",
+        "housing_innisfree_hall_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Innisfree Hall\n\nMachines take $1.75 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.343243+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 2,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 22.848,
+      "stage_timings_ms": {
+        "semantic_search": 22.813,
+        "relevance_gate": 0.006
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_fenwick_court_laundry.txt",
+        "housing_calder_annexe_laundry.txt",
+        "housing_innisfree_hall_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_fenwick_court_laundry.txt#0",
+        "housing_calder_annexe_laundry.txt#0",
+        "housing_innisfree_hall_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Innisfree Hall\n\nMachines take $1.75 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.368048+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 3,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 24.402,
+      "stage_timings_ms": {
+        "semantic_search": 24.369,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_fenwick_court_laundry.txt",
+        "housing_calder_annexe_laundry.txt",
+        "housing_innisfree_hall_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_fenwick_court_laundry.txt#0",
+        "housing_calder_annexe_laundry.txt#0",
+        "housing_innisfree_hall_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Laundry in Innisfree Hall\n\nMachines take $1.75 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.390879+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 1,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 22.42,
+      "stage_timings_ms": {
+        "semantic_search": 22.39,
+        "relevance_gate": 0.008
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_north_kitchen_followup.txt",
+        "dining_halden_hall_followup.txt",
+        "dining_kestrel_commons_followup.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.413159+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 2,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 22.109,
+      "stage_timings_ms": {
+        "semantic_search": 22.076,
+        "relevance_gate": 0.006
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_north_kitchen_followup.txt",
+        "dining_halden_hall_followup.txt",
+        "dining_kestrel_commons_followup.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.436808+00:00",
+      "mode": "semantic",
+      "scope": "in",
+      "trial": 3,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 23.853,
+      "stage_timings_ms": {
+        "semantic_search": 23.825,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_north_kitchen_followup.txt",
+        "dining_halden_hall_followup.txt",
+        "dining_kestrel_commons_followup.txt",
+        "dining_the_ridgeway_cafe_followup.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "dining_halden_hall_followup.txt#0",
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "Re: Halden Hall\n\nAdding to what people have said about Halden Hall. The wait figure of rarely more than 8 minutes matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closes at 7:00pm, which catches people out. Nobody tells you this at orientation.",
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.457321+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 1,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 20.019,
+      "stage_timings_ms": {
+        "semantic_search": 19.998,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_morrow_house.txt",
+        "housing_morrow_house_laundry.txt",
+        "course_hist_118_workload.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_morrow_house.txt#0",
+        "housing_morrow_house_laundry.txt#0",
+        "course_hist_118_workload.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.",
+        "Laundry in Morrow House\n\nMachines take $1.50 wash, $1.25 dry, coin or card. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.478353+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 2,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 21.524,
+      "stage_timings_ms": {
+        "semantic_search": 21.496,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_morrow_house.txt",
+        "housing_morrow_house_laundry.txt",
+        "course_hist_118_workload.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_morrow_house.txt#0",
+        "housing_morrow_house_laundry.txt#0",
+        "course_hist_118_workload.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.",
+        "Laundry in Morrow House\n\nMachines take $1.50 wash, $1.25 dry, coin or card. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.498866+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 3,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 20.386,
+      "stage_timings_ms": {
+        "semantic_search": 20.366,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_morrow_house.txt",
+        "housing_morrow_house_laundry.txt",
+        "course_hist_118_workload.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_morrow_house.txt#0",
+        "housing_morrow_house_laundry.txt#0",
+        "course_hist_118_workload.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours.",
+        "Laundry in Morrow House\n\nMachines take $1.50 wash, $1.25 dry, coin or card. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.522229+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 1,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 22.604,
+      "stage_timings_ms": {
+        "semantic_search": 22.576,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "course_econ_101_exams.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "course_engl_205_exams.txt",
+        "course_stat_150_exams.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "course_econ_101_exams.txt#0",
+        "housing_old_brewhouse_laundry.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_stat_150_exams.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "STAT 150 Applied Statistics — assessment\n\nThree equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nThe dropped midterm makes the first one low-stakes; use it to learn the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.544071+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 2,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 21.756,
+      "stage_timings_ms": {
+        "semantic_search": 21.727,
+        "relevance_gate": 0.007
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "course_econ_101_exams.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "course_engl_205_exams.txt",
+        "course_stat_150_exams.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "course_econ_101_exams.txt#0",
+        "housing_old_brewhouse_laundry.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_stat_150_exams.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "STAT 150 Applied Statistics — assessment\n\nThree equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nThe dropped midterm makes the first one low-stakes; use it to learn the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.564583+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 3,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 20.386,
+      "stage_timings_ms": {
+        "semantic_search": 20.364,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "course_econ_101_exams.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "course_engl_205_exams.txt",
+        "course_stat_150_exams.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "course_econ_101_exams.txt#0",
+        "housing_old_brewhouse_laundry.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_stat_150_exams.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "STAT 150 Applied Statistics — assessment\n\nThree equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nThe dropped midterm makes the first one low-stakes; use it to learn the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.585609+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 1,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 21.116,
+      "stage_timings_ms": {
+        "semantic_search": 21.086,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_innisfree_hall.txt",
+        "admin_study_abroad.txt",
+        "course_engl_205_exams.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_innisfree_hall.txt#0",
+        "admin_study_abroad.txt#0",
+        "course_engl_205_exams.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September.",
+        "On the study abroad\n\nApplications open in October for the following academic year. The financial aid package travels with you, which is the single most misunderstood fact about the programme — most students assume it doesn't and rule themselves out.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.609352+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 2,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 23.181,
+      "stage_timings_ms": {
+        "semantic_search": 23.145,
+        "relevance_gate": 0.008
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_innisfree_hall.txt",
+        "admin_study_abroad.txt",
+        "course_engl_205_exams.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_innisfree_hall.txt#0",
+        "admin_study_abroad.txt#0",
+        "course_engl_205_exams.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September.",
+        "On the study abroad\n\nApplications open in October for the following academic year. The financial aid package travels with you, which is the single most misunderstood fact about the programme — most students assume it doesn't and rule themselves out.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.630866+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 3,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 21.461,
+      "stage_timings_ms": {
+        "semantic_search": 21.434,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "housing_innisfree_hall.txt",
+        "admin_study_abroad.txt",
+        "course_engl_205_exams.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_innisfree_hall.txt#0",
+        "admin_study_abroad.txt#0",
+        "course_engl_205_exams.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September.",
+        "On the study abroad\n\nApplications open in October for the following academic year. The financial aid package travels with you, which is the single most misunderstood fact about the programme — most students assume it doesn't and rule themselves out.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.651020+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 1,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 20.415,
+      "stage_timings_ms": {
+        "semantic_search": 20.393,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "money_textbooks.txt",
+        "course_hist_118.txt",
+        "course_econ_101.txt",
+        "course_cs_340_exams.txt",
+        "course_engl_205.txt"
+      ],
+      "labels": [
+        "money_textbooks.txt#0",
+        "course_hist_118.txt#0",
+        "course_econ_101.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_engl_205.txt#0"
+      ],
+      "texts": [
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ECON 101 Introduction to Economics\n\nTook this last spring. Format is large lecture, 300 people, with small discussion sections. Assessment: two midterms and a final, all multiple choice. Curved, and generously.\n\nExpect 4 hours a week outside class.\n\nThe one piece of advice: the discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.671035+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 2,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 20.183,
+      "stage_timings_ms": {
+        "semantic_search": 20.162,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "money_textbooks.txt",
+        "course_hist_118.txt",
+        "course_econ_101.txt",
+        "course_cs_340_exams.txt",
+        "course_engl_205.txt"
+      ],
+      "labels": [
+        "money_textbooks.txt#0",
+        "course_hist_118.txt#0",
+        "course_econ_101.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_engl_205.txt#0"
+      ],
+      "texts": [
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ECON 101 Introduction to Economics\n\nTook this last spring. Format is large lecture, 300 people, with small discussion sections. Assessment: two midterms and a final, all multiple choice. Curved, and generously.\n\nExpect 4 hours a week outside class.\n\nThe one piece of advice: the discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.694720+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 3,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 23.048,
+      "stage_timings_ms": {
+        "semantic_search": 23.02,
+        "relevance_gate": 0.007
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "money_textbooks.txt",
+        "course_hist_118.txt",
+        "course_econ_101.txt",
+        "course_cs_340_exams.txt",
+        "course_engl_205.txt"
+      ],
+      "labels": [
+        "money_textbooks.txt#0",
+        "course_hist_118.txt#0",
+        "course_econ_101.txt#0",
+        "course_cs_340_exams.txt#0",
+        "course_engl_205.txt#0"
+      ],
+      "texts": [
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ECON 101 Introduction to Economics\n\nTook this last spring. Format is large lecture, 300 people, with small discussion sections. Assessment: two midterms and a final, all multiple choice. Curved, and generously.\n\nExpect 4 hours a week outside class.\n\nThe one piece of advice: the discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "CS 340 Databases — assessment\n\nOne midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nStart the term project in week three, not week eight; everyone learns this the hard way.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.715759+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 1,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 20.768,
+      "stage_timings_ms": {
+        "semantic_search": 20.74,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "course_hist_118.txt",
+        "housing_calder_annexe_laundry.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_calder_annexe_laundry.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.736787+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 2,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 20.967,
+      "stage_timings_ms": {
+        "semantic_search": 20.94,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "course_hist_118.txt",
+        "housing_calder_annexe_laundry.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_calder_annexe_laundry.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.758307+00:00",
+      "mode": "semantic",
+      "scope": "out",
+      "trial": 3,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 21.787,
+      "stage_timings_ms": {
+        "semantic_search": 21.756,
+        "relevance_gate": 0.007
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "course_hist_118.txt",
+        "housing_calder_annexe_laundry.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "course_hist_118.txt#0",
+        "housing_calder_annexe_laundry.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Laundry in Calder Annexe\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.804336+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 1,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 45.293,
+      "stage_timings_ms": {
+        "document_loading": 11.68,
+        "document_chunking": 0.231,
+        "bm25_construction": 3.157,
+        "cache_lookup": 15.56,
+        "keyword_search": 0.386,
+        "semantic_search": 20.614,
+        "rrf_fusion": 0.055,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "housing_old_brewhouse.txt",
+        "housing_morrow_house.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "housing_old_brewhouse.txt#0",
+        "housing_morrow_house.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "Old Brewhouse — what it's actually like\n\nTook this last spring. Built 1902 as a brewery, converted to housing in 1998. Rooms are doubles and triples with unusual floor plans, no two alike.\n\nThe good: the most characterful building on campus and people get attached to it.\n\nThe bad: the heating is uneven — some rooms run hot all winter and can't be adjusted.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.826685+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 2,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 22.514,
+      "stage_timings_ms": {
+        "cache_lookup": 0.648,
+        "keyword_search": 0.449,
+        "semantic_search": 21.285,
+        "rrf_fusion": 0.069,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "housing_old_brewhouse.txt",
+        "housing_morrow_house.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "housing_old_brewhouse.txt#0",
+        "housing_morrow_house.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "Old Brewhouse — what it's actually like\n\nTook this last spring. Built 1902 as a brewery, converted to housing in 1998. Rooms are doubles and triples with unusual floor plans, no two alike.\n\nThe good: the most characterful building on campus and people get attached to it.\n\nThe bad: the heating is uneven — some rooms run hot all winter and can't be adjusted.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.852529+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 3,
+      "question": "How are juniors and seniors ordered in the housing lottery?",
+      "expects": "credit hours",
+      "duration_ms": 25.668,
+      "stage_timings_ms": {
+        "cache_lookup": 1.148,
+        "keyword_search": 0.566,
+        "semantic_search": 23.835,
+        "rrf_fusion": 0.044,
+        "relevance_gate": 0.004
+      },
+      "refused": false,
+      "best_distance": 0.224974,
+      "sources": [
+        "admin_housing_lottery.txt",
+        "advising_registration.txt",
+        "housing_tamsin_court.txt",
+        "housing_old_brewhouse.txt",
+        "housing_morrow_house.txt"
+      ],
+      "labels": [
+        "admin_housing_lottery.txt#0",
+        "advising_registration.txt#0",
+        "housing_tamsin_court.txt#0",
+        "housing_old_brewhouse.txt#0",
+        "housing_morrow_house.txt#0"
+      ],
+      "texts": [
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Registration and your adviser\n\nYou need an adviser hold lifted before you can register, and advisers get busy in the week before registration opens. Book two weeks out.\n\nRegistration times are staggered by credit hours, same as the housing lottery. Popular courses fill in the first two days.",
+        "Tamsin Court — what it's actually like\n\nI lived here my sophomore year. Built 2021. Rooms are studio apartments with private kitchen and bathroom.\n\nThe good: the most independent housing on campus, and the only option with a full kitchen.\n\nThe bad: the most expensive tier by a wide margin, and isolating if you're new.\n\nLaundry costs in-unit washer-dryer. On noise: quiet, structurally — concrete floors between units.",
+        "Old Brewhouse — what it's actually like\n\nTook this last spring. Built 1902 as a brewery, converted to housing in 1998. Rooms are doubles and triples with unusual floor plans, no two alike.\n\nThe good: the most characterful building on campus and people get attached to it.\n\nThe bad: the heating is uneven — some rooms run hot all winter and can't be adjusted.",
+        "Morrow House — what it's actually like\n\nJust finished a year in this building. Built 1954, partially renovated 2008. Rooms are singles and doubles, hall bathrooms.\n\nThe good: cheapest housing tier by about $900 a year, and the singles are real singles.\n\nThe bad: known damp problem on the ground floor; two rooms were taken offline in 2024.\n\nLaundry costs $1.50 wash, $1.25 dry, coin or card. On noise: loud until about 1am on weekends, no enforced quiet hours."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.878557+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 1,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 26.296,
+      "stage_timings_ms": {
+        "cache_lookup": 0.973,
+        "keyword_search": 0.628,
+        "semantic_search": 24.596,
+        "rrf_fusion": 0.042,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "dining_the_atrium_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "dining_the_atrium_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Re: The Atrium\n\nAdding to what people have said about The Atrium. The wait figure of no queue matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: picked clean by 1:15 and not restocked again until the next morning. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.904238+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 2,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 25.02,
+      "stage_timings_ms": {
+        "cache_lookup": 0.893,
+        "keyword_search": 0.623,
+        "semantic_search": 23.4,
+        "rrf_fusion": 0.044,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "dining_the_atrium_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "dining_the_atrium_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Re: The Atrium\n\nAdding to what people have said about The Atrium. The wait figure of no queue matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: picked clean by 1:15 and not restocked again until the next morning. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.928366+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 3,
+      "question": "How long is the wait at Kestrel Commons between 12:15 and 1:00?",
+      "expects": "20 to 25 minutes",
+      "duration_ms": 24.439,
+      "stage_timings_ms": {
+        "cache_lookup": 0.541,
+        "keyword_search": 0.558,
+        "semantic_search": 23.209,
+        "rrf_fusion": 0.063,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.212891,
+      "sources": [
+        "dining_kestrel_commons_followup.txt",
+        "dining_kestrel_commons.txt",
+        "transit_walking.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "dining_the_atrium_followup.txt"
+      ],
+      "labels": [
+        "dining_kestrel_commons_followup.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "transit_walking.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "dining_the_atrium_followup.txt#0"
+      ],
+      "texts": [
+        "Re: Kestrel Commons\n\nAdding to what people have said about Kestrel Commons. The wait figure of 20 to 25 minutes between 12:15 and 1:00 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: the salad bar wilts after 1:30. Nobody tells you this at orientation.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Walking times across campus\n\nRough numbers, measured rather than guessed. Aldridge Hall to the science quad: 4 minutes. Fenwick Court to central campus: 18 minutes. Morrow House to Kestrel Commons: 7 minutes. Library to Ridgeway Café: 3 minutes.\n\nAdd four minutes in winter. The path past the pond genuinely ices over and people take the long way round.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Re: The Atrium\n\nAdding to what people have said about The Atrium. The wait figure of no queue matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: picked clean by 1:15 and not restocked again until the next morning. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.953549+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 1,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 24.35,
+      "stage_timings_ms": {
+        "cache_lookup": 0.702,
+        "keyword_search": 0.627,
+        "semantic_search": 22.923,
+        "rrf_fusion": 0.047,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "admin_grade_appeals.txt",
+        "course_stat_150.txt",
+        "course_cs_210_workload.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "admin_grade_appeals.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_210_workload.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "On the grade appeals\n\nA grade appeal starts with the instructor and has to be raised within fifteen days of the grade posting. Only after that does it go to the department. Skipping the instructor step gets the appeal returned, which wastes most of the fifteen days.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "Workload for CS 210 Data Structures\n\nPeople keep asking so: 8 to 10 hours a week outside class. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:39.977761+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 2,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 24.631,
+      "stage_timings_ms": {
+        "cache_lookup": 0.524,
+        "keyword_search": 0.464,
+        "semantic_search": 23.534,
+        "rrf_fusion": 0.057,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "admin_grade_appeals.txt",
+        "course_stat_150.txt",
+        "course_cs_210_workload.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "admin_grade_appeals.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_210_workload.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "On the grade appeals\n\nA grade appeal starts with the instructor and has to be raised within fifteen days of the grade posting. Only after that does it go to the department. Skipping the instructor step gets the appeal returned, which wastes most of the fifteen days.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "Workload for CS 210 Data Structures\n\nPeople keep asking so: 8 to 10 hours a week outside class. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.001270+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 3,
+      "question": "Why should students complete the CS 210 labs even though they are only 10% of the grade?",
+      "expects": "exams reuse the lab problems",
+      "duration_ms": 23.063,
+      "stage_timings_ms": {
+        "cache_lookup": 0.92,
+        "keyword_search": 0.707,
+        "semantic_search": 21.317,
+        "rrf_fusion": 0.058,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.415805,
+      "sources": [
+        "course_cs_210_exams.txt",
+        "course_cs_210.txt",
+        "admin_grade_appeals.txt",
+        "course_stat_150.txt",
+        "course_cs_210_workload.txt"
+      ],
+      "labels": [
+        "course_cs_210_exams.txt#0",
+        "course_cs_210.txt#0",
+        "admin_grade_appeals.txt#0",
+        "course_stat_150.txt#0",
+        "course_cs_210_workload.txt#0"
+      ],
+      "texts": [
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "CS 210 Data Structures\n\nI'm a junior and I've done this twice now. Format is lecture with weekly labs; slides go up after class, not before. Assessment: two midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nExpect 8 to 10 hours a week outside class.\n\nThe one piece of advice: do the labs even though they're only 10% — the exams reuse the lab problems.",
+        "On the grade appeals\n\nA grade appeal starts with the instructor and has to be raised within fifteen days of the grade posting. Only after that does it go to the department. Skipping the instructor step gets the appeal returned, which wastes most of the fifteen days.",
+        "STAT 150 Applied Statistics\n\nTransferred in last year, so take this with a grain of salt. Format is flipped: watch the recordings, class time is problem sets. Assessment: three equally weighted midterms, no final. No curve, but the lowest midterm is dropped.\n\nExpect 5 to 6 hours a week outside class.\n\nThe one piece of advice: the dropped midterm makes the first one low-stakes; use it to learn the format.",
+        "Workload for CS 210 Data Structures\n\nPeople keep asking so: 8 to 10 hours a week outside class. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.027884+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 1,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 26.784,
+      "stage_timings_ms": {
+        "cache_lookup": 0.976,
+        "keyword_search": 0.519,
+        "semantic_search": 25.136,
+        "rrf_fusion": 0.08,
+        "relevance_gate": 0.008
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_innisfree_hall.txt",
+        "admin_transcript_requests.txt",
+        "housing_fenwick_court_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "admin_transcript_requests.txt#0",
+        "housing_fenwick_court_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "On the transcript requests\n\nOfficial transcripts cost $8 and take three business days electronically, or ten by post. Unofficial ones are free and instant from the student portal, and are accepted by most employers and by every graduate programme at the application stage.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.051027+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 2,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 23.196,
+      "stage_timings_ms": {
+        "cache_lookup": 0.919,
+        "keyword_search": 0.519,
+        "semantic_search": 21.656,
+        "rrf_fusion": 0.048,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_innisfree_hall.txt",
+        "admin_transcript_requests.txt",
+        "housing_fenwick_court_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "admin_transcript_requests.txt#0",
+        "housing_fenwick_court_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "On the transcript requests\n\nOfficial transcripts cost $8 and take three business days electronically, or ten by post. Unofficial ones are free and instant from the student portal, and are accepted by most employers and by every graduate programme at the application stage.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.073048+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 3,
+      "question": "How much do washing and drying each cost at Old Brewhouse?",
+      "expects": "$1.50",
+      "duration_ms": 21.498,
+      "stage_timings_ms": {
+        "cache_lookup": 0.8,
+        "keyword_search": 0.34,
+        "semantic_search": 20.218,
+        "rrf_fusion": 0.076,
+        "relevance_gate": 0.007
+      },
+      "refused": false,
+      "best_distance": 0.221338,
+      "sources": [
+        "housing_old_brewhouse.txt",
+        "housing_old_brewhouse_laundry.txt",
+        "housing_innisfree_hall.txt",
+        "admin_transcript_requests.txt",
+        "housing_fenwick_court_laundry.txt"
+      ],
+      "labels": [
+        "housing_old_brewhouse.txt#1",
+        "housing_old_brewhouse_laundry.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "admin_transcript_requests.txt#0",
+        "housing_fenwick_court_laundry.txt#0"
+      ],
+      "texts": [
+        "Old Brewhouse — what it's actually like\n\nLaundry costs $1.50 wash, $1.50 dry, coin only, and the machines are old. On noise: sound carries strangely because of the original brick; a room two floors up can be louder than next door.",
+        "Laundry in Old Brewhouse\n\nMachines take $1.50 wash, $1.50 dry, coin only, and the machines are old. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "On the transcript requests\n\nOfficial transcripts cost $8 and take three business days electronically, or ten by post. Unofficial ones are free and instant from the student portal, and are accepted by most employers and by every graduate programme at the application stage.",
+        "Laundry in Fenwick Court\n\nMachines take $2.00 wash, $1.75 dry, app-based. There are eight washers and six dryers for the building, which is the wrong ratio and means the dryers back up on Sunday evenings.\n\nBest time to do laundry here is Tuesday or Wednesday morning. Sunday after 6pm you will wait."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.096745+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 1,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 22.857,
+      "stage_timings_ms": {
+        "cache_lookup": 0.777,
+        "keyword_search": 0.614,
+        "semantic_search": 21.362,
+        "rrf_fusion": 0.047,
+        "relevance_gate": 0.004
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_verrill_street_grill.txt",
+        "admin_dining_dollars.txt",
+        "dining_north_kitchen_followup.txt",
+        "admin_campus_jobs_and_financial_aid.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "admin_dining_dollars.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "admin_campus_jobs_and_financial_aid.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "On the campus jobs and financial aid\n\nWork-study earnings don't count against your financial aid the way ordinary income does. Non-work-study campus jobs pay the same and do count, which is a difference worth understanding before you take the first job offered."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.121155+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 2,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 25.08,
+      "stage_timings_ms": {
+        "cache_lookup": 1.017,
+        "keyword_search": 0.599,
+        "semantic_search": 23.324,
+        "rrf_fusion": 0.072,
+        "relevance_gate": 0.006
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_verrill_street_grill.txt",
+        "admin_dining_dollars.txt",
+        "dining_north_kitchen_followup.txt",
+        "admin_campus_jobs_and_financial_aid.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "admin_dining_dollars.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "admin_campus_jobs_and_financial_aid.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "On the campus jobs and financial aid\n\nWork-study earnings don't count against your financial aid the way ordinary income does. Non-work-study campus jobs pay the same and do count, which is a difference worth understanding before you take the first job offered."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.146347+00:00",
+      "mode": "hybrid",
+      "scope": "in",
+      "trial": 3,
+      "question": "Which campus shuttle stop may be skipped when the driver is behind schedule?",
+      "expects": "Fenwick Court",
+      "duration_ms": 24.759,
+      "stage_timings_ms": {
+        "cache_lookup": 0.924,
+        "keyword_search": 0.667,
+        "semantic_search": 23.06,
+        "rrf_fusion": 0.049,
+        "relevance_gate": 0.005
+      },
+      "refused": false,
+      "best_distance": 0.385288,
+      "sources": [
+        "transit_shuttle.txt",
+        "dining_verrill_street_grill.txt",
+        "admin_dining_dollars.txt",
+        "dining_north_kitchen_followup.txt",
+        "admin_campus_jobs_and_financial_aid.txt"
+      ],
+      "labels": [
+        "transit_shuttle.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "admin_dining_dollars.txt#0",
+        "dining_north_kitchen_followup.txt#0",
+        "admin_campus_jobs_and_financial_aid.txt#0"
+      ],
+      "texts": [
+        "The campus shuttle\n\nRuns a loop every 20 minutes from 7am to 11pm on weekdays and every 40 minutes on weekends. The published timetable is optimistic by about five minutes in the morning and accurate the rest of the day.\n\nIt's free with a student ID. The stop outside Fenwick Court is the one that gets skipped when the driver is behind, which is worth knowing if you live there.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears.",
+        "Re: North Kitchen\n\nAdding to what people have said about North Kitchen. The wait figure of none matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: closed all summer and during reading week. Nobody tells you this at orientation.",
+        "On the campus jobs and financial aid\n\nWork-study earnings don't count against your financial aid the way ordinary income does. Non-work-study campus jobs pay the same and do count, which is a difference worth understanding before you take the first job offered."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": true,
+      "expected_source_topk": true
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.170560+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 1,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 23.537,
+      "stage_timings_ms": {
+        "cache_lookup": 0.938,
+        "keyword_search": 0.38,
+        "semantic_search": 22.093,
+        "rrf_fusion": 0.064,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "housing_innisfree_hall.txt",
+        "course_hist_118.txt",
+        "orientation_what_matters.txt",
+        "admin_dining_dollars.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "course_hist_118.txt#0",
+        "orientation_what_matters.txt#0",
+        "admin_dining_dollars.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "What actually matters in orientation week\n\nMost of it is optional and framed as though it isn't. The two sessions worth going to are the one where you meet your academic adviser and the library walkthrough, because both save you time later.\n\nThe club fair is genuinely useful but goes on for four hours and you only need the first forty minutes.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.195186+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 2,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 24.831,
+      "stage_timings_ms": {
+        "cache_lookup": 0.661,
+        "keyword_search": 0.343,
+        "semantic_search": 23.702,
+        "rrf_fusion": 0.072,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "housing_innisfree_hall.txt",
+        "course_hist_118.txt",
+        "orientation_what_matters.txt",
+        "admin_dining_dollars.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "course_hist_118.txt#0",
+        "orientation_what_matters.txt#0",
+        "admin_dining_dollars.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "What actually matters in orientation week\n\nMost of it is optional and framed as though it isn't. The two sessions worth going to are the one where you meet your academic adviser and the library walkthrough, because both save you time later.\n\nThe club fair is genuinely useful but goes on for four hours and you only need the first forty minutes.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.220840+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 3,
+      "question": "What is the capital of Mongolia?",
+      "expects": null,
+      "duration_ms": 25.654,
+      "stage_timings_ms": {
+        "cache_lookup": 0.614,
+        "keyword_search": 0.459,
+        "semantic_search": 24.462,
+        "rrf_fusion": 0.064,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.824593,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "housing_innisfree_hall.txt",
+        "course_hist_118.txt",
+        "orientation_what_matters.txt",
+        "admin_dining_dollars.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "housing_innisfree_hall.txt#1",
+        "course_hist_118.txt#0",
+        "orientation_what_matters.txt#0",
+        "admin_dining_dollars.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Innisfree Hall — what it's actually like\n\nLaundry costs $1.75 wash, $1.75 dry, app-based. On noise: moderate; the building is L-shaped and the short wing is much quieter.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "What actually matters in orientation week\n\nMost of it is optional and framed as though it isn't. The two sessions worth going to are the one where you meet your academic adviser and the library walkthrough, because both save you time later.\n\nThe club fair is genuinely useful but goes on for four hours and you only need the first forty minutes.",
+        "On the dining dollars\n\nDeclining balance — what everyone calls dining dollars — rolls over from the autumn semester to the spring, but not from spring to the following autumn. Whatever is left in May disappears."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.247737+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 1,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 26.378,
+      "stage_timings_ms": {
+        "cache_lookup": 0.537,
+        "keyword_search": 0.352,
+        "semantic_search": 25.394,
+        "rrf_fusion": 0.051,
+        "relevance_gate": 0.004
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "dining_kestrel_commons.txt",
+        "dining_verrill_street_grill.txt",
+        "course_econ_101_exams.txt",
+        "dining_verrill_street_grill_followup.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "course_econ_101_exams.txt#0",
+        "dining_verrill_street_grill_followup.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Re: Verrill Street Grill\n\nAdding to what people have said about Verrill Street Grill. The wait figure of up to 30 minutes on Friday evenings matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: one register, so the queue is a single line no matter how busy. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.272271+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 2,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 24.301,
+      "stage_timings_ms": {
+        "cache_lookup": 0.919,
+        "keyword_search": 0.503,
+        "semantic_search": 22.721,
+        "rrf_fusion": 0.084,
+        "relevance_gate": 0.007
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "dining_kestrel_commons.txt",
+        "dining_verrill_street_grill.txt",
+        "course_econ_101_exams.txt",
+        "dining_verrill_street_grill_followup.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "course_econ_101_exams.txt#0",
+        "dining_verrill_street_grill_followup.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Re: Verrill Street Grill\n\nAdding to what people have said about Verrill Street Grill. The wait figure of up to 30 minutes on Friday evenings matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: one register, so the queue is a single line no matter how busy. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.295846+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 3,
+      "question": "How do I change the oil in a diesel engine?",
+      "expects": null,
+      "duration_ms": 23.814,
+      "stage_timings_ms": {
+        "cache_lookup": 0.933,
+        "keyword_search": 0.502,
+        "semantic_search": 22.259,
+        "rrf_fusion": 0.062,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.934011,
+      "sources": [
+        "admin_meal_plan_changes.txt",
+        "dining_kestrel_commons.txt",
+        "dining_verrill_street_grill.txt",
+        "course_econ_101_exams.txt",
+        "dining_verrill_street_grill_followup.txt"
+      ],
+      "labels": [
+        "admin_meal_plan_changes.txt#0",
+        "dining_kestrel_commons.txt#0",
+        "dining_verrill_street_grill.txt#0",
+        "course_econ_101_exams.txt#0",
+        "dining_verrill_street_grill_followup.txt#0"
+      ],
+      "texts": [
+        "On the meal plan changes\n\nYou can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.",
+        "Kestrel Commons\n\nI'm a junior and I've done this twice now. Wait times: 20 to 25 minutes between 12:15 and 1:00, under 5 minutes before 11:45. The thing worth going for is the stir-fry station, made to order. The thing to know is that the salad bar wilts after 1:30.\n\nHours are 7:00am to 9:00pm weekdays, 9:00am to 8:00pm weekends. Costs one meal swipe, or $12.50 cash.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm.",
+        "ECON 101 Introduction to Economics — assessment\n\nTwo midterms and a final, all multiple choice. Curved, and generously.\n\nThe discussion section is where the exam-style questions get worked; attendance isn't taken but it correlates.",
+        "Re: Verrill Street Grill\n\nAdding to what people have said about Verrill Street Grill. The wait figure of up to 30 minutes on Friday evenings matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: one register, so the queue is a single line no matter how busy. Nobody tells you this at orientation."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.317360+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 1,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 22.169,
+      "stage_timings_ms": {
+        "cache_lookup": 0.596,
+        "keyword_search": 0.213,
+        "semantic_search": 21.252,
+        "rrf_fusion": 0.06,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "admin_housing_lottery.txt",
+        "course_hist_118_workload.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "admin_housing_lottery.txt#0",
+        "course_hist_118_workload.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.342893+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 2,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 24.669,
+      "stage_timings_ms": {
+        "cache_lookup": 0.616,
+        "keyword_search": 0.294,
+        "semantic_search": 23.584,
+        "rrf_fusion": 0.109,
+        "relevance_gate": 0.009
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "admin_housing_lottery.txt",
+        "course_hist_118_workload.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "admin_housing_lottery.txt#0",
+        "course_hist_118_workload.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.367091+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 3,
+      "question": "Who won the 1994 World Cup?",
+      "expects": null,
+      "duration_ms": 23.509,
+      "stage_timings_ms": {
+        "cache_lookup": 1.109,
+        "keyword_search": 0.36,
+        "semantic_search": 21.916,
+        "rrf_fusion": 0.06,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.88586,
+      "sources": [
+        "course_hist_118_exams.txt",
+        "course_hist_118.txt",
+        "admin_housing_lottery.txt",
+        "course_hist_118_workload.txt",
+        "housing_innisfree_hall.txt"
+      ],
+      "labels": [
+        "course_hist_118_exams.txt#0",
+        "course_hist_118.txt#0",
+        "admin_housing_lottery.txt#0",
+        "course_hist_118_workload.txt#0",
+        "housing_innisfree_hall.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "On the housing lottery\n\nThe housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.",
+        "Workload for HIST 118 Modern World History\n\nPeople keep asking so: a lot of reading, about 120 pages a week, but no problem sets. That's real time, not optimistic time.\n\nIt's front-loaded — the first month is heavier than the rest, partly because you're learning the format.",
+        "Innisfree Hall — what it's actually like\n\nTransferred in last year, so take this with a grain of salt. Built 1991, renovated 2022. Rooms are doubles arranged as pairs sharing one bathroom between two rooms.\n\nThe good: the shared-bathroom-between-two-rooms arrangement is the best compromise on campus.\n\nThe bad: no air conditioning, which matters for the first three weeks of September."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.391886+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 1,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 24.722,
+      "stage_timings_ms": {
+        "cache_lookup": 0.701,
+        "keyword_search": 0.45,
+        "semantic_search": 23.419,
+        "rrf_fusion": 0.083,
+        "relevance_gate": 0.007
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "course_hist_118.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "money_textbooks.txt"
+      ],
+      "labels": [
+        "course_hist_118.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "money_textbooks.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.416404+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 2,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 24.828,
+      "stage_timings_ms": {
+        "cache_lookup": 0.758,
+        "keyword_search": 0.459,
+        "semantic_search": 23.481,
+        "rrf_fusion": 0.065,
+        "relevance_gate": 0.005
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "course_hist_118.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "money_textbooks.txt"
+      ],
+      "labels": [
+        "course_hist_118.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "money_textbooks.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.440425+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 3,
+      "question": "What is the recommended dosage of ibuprofen for a headache?",
+      "expects": null,
+      "duration_ms": 23.367,
+      "stage_timings_ms": {
+        "cache_lookup": 0.59,
+        "keyword_search": 0.348,
+        "semantic_search": 22.298,
+        "rrf_fusion": 0.079,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.844232,
+      "sources": [
+        "course_hist_118.txt",
+        "course_engl_205.txt",
+        "course_engl_205_exams.txt",
+        "dining_the_ridgeway_cafe_followup.txt",
+        "money_textbooks.txt"
+      ],
+      "labels": [
+        "course_hist_118.txt#0",
+        "course_engl_205.txt#0",
+        "course_engl_205_exams.txt#0",
+        "dining_the_ridgeway_cafe_followup.txt#0",
+        "money_textbooks.txt#0"
+      ],
+      "texts": [
+        "HIST 118 Modern World History\n\nTransferred in last year, so take this with a grain of salt. Format is discussion-led seminar, attendance is 15% of the grade. Assessment: no exams; two essays and a final project. Not curved.\n\nExpect a lot of reading, about 120 pages a week, but no problem sets.\n\nThe one piece of advice: the essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "ENGL 205 Writing for the Sciences — assessment\n\nNo exams; a portfolio of six revised pieces. Not curved.\n\nThe portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "Re: The Ridgeway Café\n\nAdding to what people have said about The Ridgeway Café. The wait figure of 10 to 15 minutes at 12:30 matches what I've seen. If you're trying to eat between classes, go before 11:45 and it's a different building entirely.\n\nAlso worth saying: seating is tight; about 40 seats for a building of 900. Nobody tells you this at orientation.",
+        "Textbooks without paying full price\n\nThe library holds one copy of most required texts on two-hour reserve. For courses where the text is used constantly that isn't enough, but for the reading-light courses it's genuinely all you need.\n\nThe campus store price-matches, which is not advertised anywhere and you have to ask at the counter with the other listing on your phone."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.469071+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 1,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 27.189,
+      "stage_timings_ms": {
+        "cache_lookup": 1.233,
+        "keyword_search": 0.427,
+        "semantic_search": 25.397,
+        "rrf_fusion": 0.06,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_engl_205.txt",
+        "course_cs_340.txt",
+        "course_cs_210_exams.txt",
+        "course_hist_118_exams.txt",
+        "dining_verrill_street_grill.txt"
+      ],
+      "labels": [
+        "course_engl_205.txt#0",
+        "course_cs_340.txt#0",
+        "course_cs_210_exams.txt#0",
+        "course_hist_118_exams.txt#0",
+        "dining_verrill_street_grill.txt#0"
+      ],
+      "texts": [
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "CS 340 Databases\n\nI'm a junior and I've done this twice now. Format is lecture twice a week plus a project that runs the whole term. Assessment: one midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nExpect 6 hours a week early, 15 in the last three weeks when the project lands.\n\nThe one piece of advice: start the term project in week three, not week eight; everyone learns this the hard way.",
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.492782+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 2,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 23.745,
+      "stage_timings_ms": {
+        "cache_lookup": 0.522,
+        "keyword_search": 0.391,
+        "semantic_search": 22.702,
+        "rrf_fusion": 0.076,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_engl_205.txt",
+        "course_cs_340.txt",
+        "course_cs_210_exams.txt",
+        "course_hist_118_exams.txt",
+        "dining_verrill_street_grill.txt"
+      ],
+      "labels": [
+        "course_engl_205.txt#0",
+        "course_cs_340.txt#0",
+        "course_cs_210_exams.txt#0",
+        "course_hist_118_exams.txt#0",
+        "dining_verrill_street_grill.txt#0"
+      ],
+      "texts": [
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "CS 340 Databases\n\nI'm a junior and I've done this twice now. Format is lecture twice a week plus a project that runs the whole term. Assessment: one midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nExpect 6 hours a week early, 15 in the last three weeks when the project lands.\n\nThe one piece of advice: start the term project in week three, not week eight; everyone learns this the hard way.",
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    },
+    {
+      "timestamp": "2026-11-15T03:17:40.516295+00:00",
+      "mode": "hybrid",
+      "scope": "out",
+      "trial": 3,
+      "question": "How do I write a for loop in Rust?",
+      "expects": null,
+      "duration_ms": 22.736,
+      "stage_timings_ms": {
+        "cache_lookup": 0.68,
+        "keyword_search": 0.35,
+        "semantic_search": 21.573,
+        "rrf_fusion": 0.075,
+        "relevance_gate": 0.006
+      },
+      "refused": true,
+      "best_distance": 0.895998,
+      "sources": [
+        "course_engl_205.txt",
+        "course_cs_340.txt",
+        "course_cs_210_exams.txt",
+        "course_hist_118_exams.txt",
+        "dining_verrill_street_grill.txt"
+      ],
+      "labels": [
+        "course_engl_205.txt#0",
+        "course_cs_340.txt#0",
+        "course_cs_210_exams.txt#0",
+        "course_hist_118_exams.txt#0",
+        "dining_verrill_street_grill.txt#0"
+      ],
+      "texts": [
+        "ENGL 205 Writing for the Sciences\n\nTransferred in last year, so take this with a grain of salt. Format is workshop format, you write every week and peers read it. Assessment: no exams; a portfolio of six revised pieces. Not curved.\n\nExpect 4 to 5 hours a week, mostly writing and rewriting.\n\nThe one piece of advice: the portfolio is graded on revision, so keep your drafts — you're marked on the distance travelled.",
+        "CS 340 Databases\n\nI'm a junior and I've done this twice now. Format is lecture twice a week plus a project that runs the whole term. Assessment: one midterm and a final, both open-book. Lightly curved, usually two or three points.\n\nExpect 6 hours a week early, 15 in the last three weeks when the project lands.\n\nThe one piece of advice: start the term project in week three, not week eight; everyone learns this the hard way.",
+        "CS 210 Data Structures — assessment\n\nTwo midterms and a final, all drawn from lecture material rather than the textbook. Midterms are curved, the final is not.\n\nDo the labs even though they're only 10% — the exams reuse the lab problems.",
+        "HIST 118 Modern World History — assessment\n\nNo exams; two essays and a final project. Not curved.\n\nThe essay rubric is posted in week 2 and it's followed exactly — read it early.",
+        "Verrill Street Grill\n\nI'm a junior and I've done this twice now. Wait times: up to 30 minutes on Friday evenings, otherwise under 10. The thing worth going for is the burger, which is the only late-night hot food on campus. The thing to know is that one register, so the queue is a single line no matter how busy.\n\nHours are 11:00am to 1:00am daily during term. Costs declining balance, or cash after 11:00pm."
+      ],
+      "gate_correct": true,
+      "expected_source_top1": false,
+      "expected_source_topk": false
+    }
+  ]
+}

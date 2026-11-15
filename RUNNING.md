@@ -329,3 +329,21 @@ From the `frontend` directory:
 npm run lint
 npm run build
 ```
+
+## Unit 9 Verified Evaluation Commands
+
+Verified development environment: Python 3.12.7, Windows PowerShell.
+
+Run the Python regression tests:
+
+`.\.venv312\Scripts\python.exe -m unittest discover -p "test_*.py"`
+
+Run the retrieval-only comparison:
+
+`.\.venv312\Scripts\python.exe unit9_compare.py --runs 3 --top-k 5 --corpus campus_life --variant default`
+
+This evaluation uses the existing ChromaDB index and writes
+JSON, CSV, and Markdown reports under `results/`.
+
+The earlier Unit 9 dashboard section contains the FastAPI
+and React startup commands.

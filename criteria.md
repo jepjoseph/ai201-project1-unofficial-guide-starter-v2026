@@ -146,3 +146,56 @@ the expected phrase exactly.
      The whole reason the originals stay visible is so someone can see what you
      said before you knew the answer.
      ───────────────────────────────────────────────────────────────────────── -->
+
+## Unit 9 Capstone Acceptance Criteria
+
+These five criteria supplement the original Unit 1/2 criteria.
+They are retrospective evaluation targets, documented after the
+initial Unit 9 implementation and performance experiments.
+
+### U9-1. Hybrid source correctness
+
+Target: The expected source ranks first for all five in-scope
+questions across three trials each (15/15).
+
+Why: Hybrid retrieval must preserve supporting evidence.
+
+### U9-2. Hybrid relevance gate
+
+Target: All 30 hybrid decisions across five in-scope and five
+out-of-scope questions, each repeated three times, are correct.
+
+Why: RRF must not bypass the semantic-distance relevance gate.
+
+### U9-3. Semantic regression protection
+
+Target: Semantic retrieval achieves 15/15 in-scope top-1 source
+matches and 30/30 correct gate decisions.
+
+Why: Adding hybrid retrieval must not break the original mode.
+
+### U9-4. Retrieval instrumentation
+
+Target: All 60 final benchmark records include timestamp,
+retrieval mode, duration, and stage timings.
+
+Why: Timing evidence is necessary to diagnose performance.
+
+### U9-5. Hybrid performance
+
+Target: Reduce hybrid mean retrieval latency by at least 20%
+relative to the recorded baseline without correctness regression.
+
+Why: The baseline showed significant repeated retrieval overhead.
+
+### Recorded verdicts
+
+| Criterion | Observed | Verdict |
+|---|---|---|
+| U9-1 | 15/15 hybrid top-1 matches | MET |
+| U9-2 | 30/30 hybrid gate decisions | MET |
+| U9-3 | 15/15 semantic top-1; 30/30 gate | MET |
+| U9-4 | 60/60 records contain required timing fields | MET |
+| U9-5 | Hybrid mean latency improved by 51.93% | MET |
+
+These are retrieval-only results, not newly generated answer-quality results.
